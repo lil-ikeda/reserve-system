@@ -1,5 +1,7 @@
+import './bootstrap';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from './store'
 import HeaderComponent from "./components/HeaderComponent";
 import EventListComponent from "./components/EventListComponent";
 import EventCreateComponent from "./components/EventCreateComponent";
@@ -69,5 +71,6 @@ Vue.component('header-component', HeaderComponent);
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store
 });
