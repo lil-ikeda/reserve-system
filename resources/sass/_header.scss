@@ -1,0 +1,17 @@
+.header {
+  height: 56px;
+  background-color: #2ecc87;
+  color: #fff;
+  &__wrapper {
+    text-align: center;
+    max-width: 425px;
+    margin: 0 auto;
+    line-height: 56px;
+    &--title {
+      font-weight: bold;
+      font-size: 18px;
+      font-style: italic;
+      text-align: center;
+    }
+  }
+}

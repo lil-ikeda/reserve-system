@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use App\Event;
+
+class EventTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        for ($i = 1; $i < 10; $i++) {
+            Event::create([
+                'name' => 'イベント'.$i,
+                'description' => 'イベントの詳細'.$i,
+                'date' => '202'.$i.'-01-01',
+                'open_time' => '10:00',
+                'close_time' => '22:00',
+                'place' => '開催場所'.$i,
+                'price' => $i.'000'
+            ]);
+        }
+    }
+}

@@ -1,0 +1,31 @@
+// 自作デフォルト
+
+.font-black {
+  color: #2e2e2e;
+  &:hover {
+    color: #2e2e2e;
+  }
+}
+
+.font-white {
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+}
+
+.btn-submit {
+  background-color: #2ecc87;
+  color: #fff;
+  padding: 5px 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.btn-danger {
+  background-color: rgb(224, 36, 94);
+  color: #fff;
+  padding: 5px 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
