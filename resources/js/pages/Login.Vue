@@ -1,6 +1,5 @@
 <template>
     <div class="login-wrapper">
-        
         <ul class="tab">
             <li class="tab__item tab__item--login"
                 :class="{'tab__item--active': tab === 1}"
@@ -21,7 +20,7 @@
                 <label for="login-email">メールアドレス</label>
                 <input type="text" id="login-email" v-model="loginForm.email">
                 <label for="login-password">パスワード</label>
-                <input type="text" id="login-password" v-model="loginForm.password">
+                <input type="password" id="login-password" v-model="loginForm.password">
                 <button type="submit" class="btn-submit">ログイン</button>
             </form>
         </div>
@@ -30,19 +29,19 @@
             <form @submit.prevent="register">
                 <label for="name">名前</label>
                 <input type="text" id="name" v-model="registerForm.name">
-                <label for="name">メールアドレス</label>
+                <label for="email">メールアドレス</label>
                 <input type="text" id="email" v-model="registerForm.email">
-                <label for="name">パスワード</label>
-                <input type="text" id="name" v-model="registerForm.password">
-                <label for="name">パスワード確認用</label>
-                <input type="text" id="name" v-model="registerForm.password_confirmation">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" v-model="registerForm.password">
+                <label for="password_confirmation">パスワード確認用</label>
+                <input type="password" id="password-confirmation" v-model="registerForm.password_confirmation">
                 <button type="submit" class="btn-submit">新規登録</button>
             </form>
         </div>
     </div>
 </template>
 
-<script>
+<script>    
     export default {
         data() {
             return {
@@ -62,14 +61,18 @@
         methods: {
             async login() {
                 await this.$store.dispatch('auth/login', this.loginForm)
-                this.$router.push('/events')
+                // console.log(this.loginForm)
+                this.$router.push('/')
             },
             async register() {
-                // authストアのregisterアクションを呼び出す
+                // auth.jsのregisterアクションを呼び出す
                 await this.$store.dispatch('auth/register', this.registerForm)
-                // トップページへ
-                this.$router.push('/events')
+                this.$router.push('/')
+            },
+            async logout() {
+                await this.$store.dispatch('auth/logout')
+                this.$router.push('/login')
             }
-        }
+        },
     }
 </script>

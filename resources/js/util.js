@@ -7,7 +7,7 @@ export function getCookieValue (searchKey) {
   if (typeof searchKey === 'undefined') {
     return ''
   }
-
+  
   let val = ''
 
   document.cookie.split(';').forEach(cookie => {
@@ -16,6 +16,6 @@ export function getCookieValue (searchKey) {
       return val = value
     }
   })
-
+  
   return val
 }

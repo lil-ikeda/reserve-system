@@ -1,13 +1,20 @@
-import './bootstrap';
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import './bootstrap'
+import Vue from 'vue'
+// router.jsのルーティングをインポート
+import router from './router'
 import store from './store'
-import HeaderComponent from "./components/HeaderComponent";
-import EventListComponent from "./components/EventListComponent";
-import EventCreateComponent from "./components/EventCreateComponent";
-import EventShowComponent from "./components/EventShowComponent";
-import LoginComponent from "./components/LoginComponent";
-// import EventEditComponent from "./components/EventEditComponent";
+// App.vueのルートコンポーネントをインポート
+import App from './App.vue'
+
+
+
+new Vue({
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App />'
+})
 
 
 /**
@@ -16,38 +23,7 @@ import LoginComponent from "./components/LoginComponent";
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
 
-window.Vue = require('vue');
-
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-    mode: 'history',
-    routes: [
-        {
-            path: '/login',
-            name: 'login',
-            component: LoginComponent,
-        },
-        {
-            path: '/events',
-            name: 'event.list',
-            component: EventListComponent
-        },
-        {
-            path: '/events/create',
-            name: 'event.create',
-            component: EventCreateComponent
-        },
-        {
-            path: '/events/eventId',
-            name: 'event.show',
-            component: EventShowComponent,
-            props: true
-        },
-    ]
-});
 
 /**
  * The following block of code may be used to automatically register your
@@ -60,17 +36,9 @@ const router = new VueRouter({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('header-component', HeaderComponent);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-    router,
-    store
-});

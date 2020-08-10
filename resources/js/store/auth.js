@@ -1,27 +1,32 @@
-import Axios from "axios"
 
 const state = {
     user: null
 }
 
-const getters = {}
+const getters = {
+    // check: state => !! state.user,
+    // username: state => state.user ? state.user.name : ''
+}
 
 const mutations = {
     setUser(state, user) {
+        // console.log(user)
+        // stateのuserを更新
         state.user = user
     }
 }
 
 const actions = {
-    async register (context, data) {
+    async register(context, data) {
         const response = await axios.post('/api/register', data)
+        // mutationを呼び出し
         context.commit('setUser', response.data)
     },
-    async login (context, data) {
+    async login(context, data) {
         const response = await axios.post('/api/login', data)
         context.commit('setUser', response.data)
     },
-    async logout (context) {
+    async logout(context, data) {
         const response = await axios.post('/api/logout')
         context.commit('setUser', null)
     }

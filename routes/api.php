@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 // Event関連
 Route::get('/events', 'EventController@index');
 Route::post('/events', 'EventController@store');
@@ -27,6 +23,9 @@ Route::put('/events/{event}', 'EventController@update');
 Route::delete('/events/{event}', 'EventController@destroy');
 
 // Auth関連
+// 会員登録
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
+// ログイン
 Route::post('/login', 'Auth\LoginController@login')->name('login');
+// ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
