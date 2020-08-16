@@ -3,15 +3,18 @@
   background-color: #2ecc87;
   color: #fff;
   &__wrapper {
-    text-align: center;
-    max-width: 425px;
-    margin: 0 auto;
     line-height: 56px;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
     &--title {
       font-weight: bold;
       font-size: 18px;
       font-style: italic;
       text-align: center;
     }
+  }
+  &__link {
+    cursor: pointer;
   }
 }

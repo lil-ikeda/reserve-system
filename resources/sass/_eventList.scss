@@ -1,8 +1,8 @@
 .event-container {
-  &__inner {
+
     max-width: 425px;
     margin: 0 auto;
-  }
+
 }
 
 .cards-box {
@@ -22,6 +22,11 @@
         border-radius: 7px 0 0 7px;
         width: 100%;
         height: 100%;
+        img {
+          height: 140px;
+          width: 140px;
+          border-radius: 10px 0 0 10px;
+        }
       }
     }
     &__right {
