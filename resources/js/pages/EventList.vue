@@ -2,10 +2,12 @@
     <div class="event-container">
         <div class="cards-box" v-for="event in events">
             <!-- イベントカード -->
-            <router-link class="text-decoration-none font-black" v-bind:to="{ name: 'event.show', params: {eventId: event.id} }">
+            <router-link class="text-decoration-none font-black" v-bind:to="{ name: 'event.show', params: {id: event.id} }">
                 <div class="event-card">
                     <div class="event-card__left">
-                        <div class="event-card__left--img"></div>
+                        <div class="event-card__left--img">
+                            <img :src="`/storage/${event.image}`">
+                        </div>
                     </div>
                     <div class="event-card__right">
                         <p class="event-card__right--title">{{ event.name }}</p>
@@ -25,6 +27,12 @@
 
 <script>
     export default {
+        props: {
+            item: {
+                type: Object,
+                // required: true
+            }
+        },
         data: function() {
             return {
                 events: []

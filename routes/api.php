@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 // Event関連
 Route::get('/events', 'EventController@index');
+// Route::get('/events/create', 'EventController@create');
 Route::post('/events', 'EventController@store');
-Route::get('/events/{event}', 'EventController@show');
+Route::get('/events/{id}', 'EventController@show');
 Route::put('/events/{event}', 'EventController@update');
 Route::delete('/events/{event}', 'EventController@destroy');
 
@@ -29,3 +30,7 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/user', function() {
+  return Auth::user();
+})->name('user');

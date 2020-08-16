@@ -6,6 +6,9 @@
             </router-link>
             <div class="header__link" v-if='isLogin'>
                 <span>{{ username }}</span>
+                <router-link v-bind:to="{name: 'event.create'}">
+                    <span>イベント作成</span>
+                </router-link>
                 <span @click="logout">ログアウト</span>
             </div>
             <div class="header__link" v-else>
@@ -16,8 +19,6 @@
 </template>
 
 <script>
-    import { mapGetters, mapState } from 'vuex'
-
     export default {
         computed: {
             isLogin() {

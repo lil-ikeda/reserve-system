@@ -15,8 +15,19 @@
             </li>
         </ul>
 
+        <!-- ログイン -->
         <div class="panel" v-show="tab === 1">
             <form @submit.prevent="login">
+                <!-- エラーメッセージ -->
+                <div v-if="loginErrors" class="errors">
+                    <ul v-if="loginErrors.email">
+                    <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
+                    </ul>
+                    <ul v-if="loginErrors.password">
+                    <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
+                    </ul>
+                </div>
+                <!-- 入力フォーム -->
                 <label for="login-email">メールアドレス</label>
                 <input type="text" id="login-email" v-model="loginForm.email">
                 <label for="login-password">パスワード</label>
@@ -25,8 +36,22 @@
             </form>
         </div>
 
+        <!-- 新規登録 -->
         <div class="panel" v-show="tab === 2">
             <form @submit.prevent="register">
+                <!-- エラーメッセージ -->
+                <div v-if="registerErrors" class="errors">
+                    <ul v-if="registerErrors.name">
+                    <li v-for="msg in registerErrors.name" :key="msg">{{ msg }}</li>
+                    </ul>
+                    <ul v-if="registerErrors.email">
+                    <li v-for="msg in registerErrors.email" :key="msg">{{ msg }}</li>
+                    </ul>
+                    <ul v-if="registerErrors.password">
+                    <li v-for="msg in registerErrors.password" :key="msg">{{ msg }}</li>
+                    </ul>
+                </div>
+                <!-- 入力フォーム -->
                 <label for="name">名前</label>
                 <input type="text" id="name" v-model="registerForm.name">
                 <label for="email">メールアドレス</label>
@@ -41,7 +66,9 @@
     </div>
 </template>
 
-<script>    
+<script>
+import { mapState, mapGetters } from 'vuex'
+
     export default {
         data() {
             return {
@@ -58,21 +85,49 @@
                 }
             }
         },
+        computed: {
+            apiStatus() {
+                return this.$store.state.auth.apiStatus
+            },
+            loginErrors() {
+                return this.$store.state.auth.loginErrorMessages
+            },
+            registerErrors() {
+                return this.$store.state.auth.registerErrorMessages
+            },
+            apiStatus() {
+                return this.$store.state.auth.apiStatus
+            },
+            ...mapGetters({
+                isLogin: 'auth/check'
+            })
+        },
         methods: {
             async login() {
                 await this.$store.dispatch('auth/login', this.loginForm)
-                // console.log(this.loginForm)
-                this.$router.push('/')
+                if(this.apiStatus) {
+                    this.$router.push('/')
+                }
             },
             async register() {
-                // auth.jsのregisterアクションを呼び出す
                 await this.$store.dispatch('auth/register', this.registerForm)
-                this.$router.push('/')
+                if(this.apiStatus) {
+                    this.$router.push('/')
+                }
             },
             async logout() {
                 await this.$store.dispatch('auth/logout')
-                this.$router.push('/login')
+                if(this.apiStatus) {
+                    this.$router.push('/login')
+                }
+            },
+            clearError() {
+                this.$store.commit('auth/setLoginErrorMessages', null)
+                this.$store.commit('auth/setRegisterErrorMessages', null)
             }
+        },
+        created() {
+            this.clearError()
         },
     }
 </script>
