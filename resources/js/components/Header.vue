@@ -5,11 +5,11 @@
                 <span class="header__wrapper--title">予約システム</span>
             </router-link>
             <div class="header__link" v-if='isLogin'>
-                <span>{{ username }}</span>
                 <router-link v-bind:to="{name: 'event.create'}">
                     <span>イベント作成</span>
                 </router-link>
                 <span @click="logout">ログアウト</span>
+                <img :src="`/storage/${useravatar}`" class="header__avatar">
             </div>
             <div class="header__link" v-else>
                 <span @click="login">ログイン</span>
@@ -26,6 +26,9 @@
             },
             username() {
                 return this.$store.getters['auth/username']
+            },
+            useravatar() {
+                return this.$store.getters['auth/useravatar']
             }
         },
         methods: {

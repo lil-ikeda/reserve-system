@@ -17,4 +17,9 @@
   &__link {
     cursor: pointer;
   }
+  &__avatar {
+    height: 48px;
+    border-radius: 50%;
+    margin-bottom: 2px;
+  }
 }

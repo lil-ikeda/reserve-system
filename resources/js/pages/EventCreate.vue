@@ -93,7 +93,7 @@ import Loader from '../components/Loader.vue'
                 formData.append('price', this.event.price)
 
                 const response = await axios.post('/api/events', formData)
-                this.loafing = false
+                this.loading = false
                 // バリデーションエラーハンドリング
                 if(response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors

@@ -10,7 +10,8 @@ const state = {
 
 const getters = {
     check: state => !! state.user,
-    username: state => state.user ? state.user.name : ''
+    username: state => state.user ? state.user.name : '',
+    useravatar: state => state.user ? state.user.avatar : ''
 }
 
 // ステートを更新するため
@@ -34,7 +35,7 @@ const actions = {
     async register(context, data) {
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/register', data)
-        
+
         if(response.status === CREATED) {
             context.commit('setApiStatus', true)
             context.commit('setUser', response.data)
@@ -69,7 +70,7 @@ const actions = {
     async logout(context) {
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/logout')
-
+        
         if(response.status === OK) {
             context.commit('setApiStatus', true)
             context.commit('setUser', null)

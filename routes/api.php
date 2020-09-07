@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 // Event関連
 Route::get('/events', 'EventController@index');
-// Route::get('/events/create', 'EventController@create');
 Route::post('/events', 'EventController@store');
 Route::get('/events/{id}', 'EventController@show');
 Route::put('/events/{event}', 'EventController@update');
