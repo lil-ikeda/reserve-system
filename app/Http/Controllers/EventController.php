@@ -35,7 +35,6 @@ class EventController extends Controller
     {
         // 写真の拡張子を取得
         // $extension = $request->image->extension();
-
         $event = new Event();
         $event->name  = $request->name;
         $event->description  = $request->description;
@@ -74,5 +73,36 @@ class EventController extends Controller
     {
         $event->delete();
         return $event;
+    }
+
+    public function adminIndex()
+    {
+        $events = Event::all();
+        return view('admin.events.index', ['events' => $events]);
+    }
+    
+    public function adminCreate()
+    {
+        return view('admin.events.create');
+    }
+
+    public function adminStore(Request $request)
+    {
+        $event = new Event;
+        $event->fill($request->all())->save();
+        return redirect()->route('admin.events.show', $event->id);
+    }
+    
+    public function adminShow(Request $request)
+    {
+        $event = Event::find($request->id);
+        return view('admin.events.show', ['event'=>$event]);
+    }
+
+    public function adminUpdate(Request $request)
+    {
+        $event = Event::find($request->id);
+        $event->fill($request->all())->save();
+        return redirect()->route('admin.events.show', $event->id);
     }
 }

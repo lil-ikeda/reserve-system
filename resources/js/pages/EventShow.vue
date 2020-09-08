@@ -27,7 +27,8 @@
                     <li>せいやま</li>
                 </ul>
             </div>
-            <button class="btn-danger" v-on:click="deleteEvent(event.id)">削除する</button>
+            <!-- <button class="btn-danger" v-on:click="deleteEvent(event.id)">削除する</button> -->
+            <button class="btn btn-primary" v-on:click="deleteEvent(event.id)">エントリーする</button>
         </div>
     </div>
 </template>

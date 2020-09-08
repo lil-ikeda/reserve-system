@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -39,16 +38,19 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user)
+    /**
+     * 管理者ログイン
+     */
+    public function adminLogin()
     {
-        return $user;
+        return view('auth/login');
     }
 
-    protected function loggedOut(Request $request)
+    /**
+     * 管理者新規登録
+     */
+    public function adminRegister()
     {
-        $request->session()->regenerate();
-        return response()->json();
+        return view('auth/register');
     }
 }
-
-

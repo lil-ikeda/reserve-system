@@ -52,6 +52,10 @@
                     </ul>
                 </div>
                 <!-- 入力フォーム -->
+                <input type="file" @change="onFileChange" name="fileinfo">
+                <output v-if="preview">
+                    <img :src="preview" alt="" class="event-form-wrapper__img-preview">
+                </output>
                 <label for="name">名前</label>
                 <input type="text" id="name" v-model="registerForm.name">
                 <label for="email">メールアドレス</label>
@@ -82,7 +86,9 @@ import { mapState, mapGetters } from 'vuex'
                     email: '',
                     password: '',
                     password_confirmation: ''
-                }
+                },
+                preview: null,
+                image: null,
             }
         },
         computed: {
@@ -110,7 +116,19 @@ import { mapState, mapGetters } from 'vuex'
                 }
             },
             async register() {
-                await this.$store.dispatch('auth/register', this.registerForm)
+                // アイコンの送信処理
+                // console.log(this.registerForm.name)
+                const formData = new FormData()
+                formData.append('image', this.image)
+                formData.append('name', this.registerForm.name)
+                formData.append('email', this.registerForm.email)
+                formData.append('password', this.registerForm.password)
+                formData.append('password_confirmation', this.registerForm.password_confirmation)
+                
+                // const response = await axios.post('/api/register', formData)
+                // その他のユーザー情報
+                // await this.$store.dispatch('auth/register', this.registerForm)
+                await this.$store.dispatch('auth/register', formData)
                 if(this.apiStatus) {
                     this.$router.push('/')
                 }
@@ -124,7 +142,32 @@ import { mapState, mapGetters } from 'vuex'
             clearError() {
                 this.$store.commit('auth/setLoginErrorMessages', null)
                 this.$store.commit('auth/setRegisterErrorMessages', null)
-            }
+            },
+            onFileChange(event) {
+                // 何も選択されていなかったら処理中断
+                if(event.target.files.length === 0) {
+                    this.reset()
+                    return false
+                }
+                // ファイルが画像ではなかったら処理中断
+                if(! event.target.files[0].type.match('image.*')) {
+                    this.reset()
+                    return false
+                }
+                const reader = new FileReader()
+
+                reader.onload = e => {
+                    this.preview = e.target.result
+                }
+                
+                reader.readAsDataURL(event.target.files[0])
+                this.image = event.target.files[0]
+            },
+            reset() {
+                this.preview = ''
+                this.image = null
+                this.$el.querySelector('input[type="file"]').value = null
+            },
         },
         created() {
             this.clearError()
