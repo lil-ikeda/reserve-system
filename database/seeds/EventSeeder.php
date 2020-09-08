@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Event;
 
-class EventTableSeeder extends Seeder
+class EventSeeder extends Seeder
 {
     /**
      * Run the database seeds.
