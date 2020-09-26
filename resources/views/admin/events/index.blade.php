@@ -11,7 +11,7 @@
 <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         @foreach ($events as $event)
-        <a href="events/{{ $event->id }}" class="text-decoration-none">
+        <a href="{{ route('admin.events.show', $event->id) }}" class="text-decoration-none">
           <div class="card card-primary card-outline">
             {{-- <div class="event-card__left">
                 <div class="event-card__left--img">

@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Event;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -41,6 +41,6 @@ class User extends Authenticatable
     // アソシエーション
     public function events()
     {
-        return $this->belongsToMany('App\Event');
+        return $this->belongsToMany('App\Models\Event');
     }
 }

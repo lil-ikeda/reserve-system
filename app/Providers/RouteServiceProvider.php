@@ -24,6 +24,13 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * 管理トップ
+     *
+     * @var string
+     */
+    public const ADMIN_TOP = '/admin/events';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void

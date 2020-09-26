@@ -11,14 +11,15 @@
         <div class="card-header">
             <h3 class="card-title">イベント作成</h3>
         </div>
-        <form action="admin.events.store" method="post" role="form">
+        <form action="{{ route('admin.events.store')}}" method="POST">
             <div class="card-body">
+{{--                @method('PUT')--}}
                 @csrf
                 <div class="form-group">
                   <label for="exampleInputFile">イメージ画像</label>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="exampleInputFile">
+                      <input type="file" class="custom-file-input" id="exampleInputFile" name="image">
                       <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
                     <div class="input-group-append">
@@ -61,7 +62,7 @@
             </div>
         </form>
     </div>
-    
+
 @stop
 
 @section('css')

@@ -24,7 +24,14 @@ class StoreEvent extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'file|mimes:jpg,jpeg,png'
+            'image' => 'file|mimes:jpg,jpeg,png',
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:2000',
+            'date' => 'required|date',
+            'open_time' => 'required',
+            'close_time' => 'required',
+            'place' => 'required|string|max:100',
+            'price' => 'required|integer',
         ];
     }
 }

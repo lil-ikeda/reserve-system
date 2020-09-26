@@ -5,27 +5,20 @@ namespace App\Providers;
 use App\Contracts\Repositories\EventRepositoryContract;
 use App\Repositories\Eloquents\EventEloquentRepository;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
-class AppServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-        //
+        app()->bind(EventRepositoryContract::class, EventEloquentRepository::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
-        Schema::defaultStringLength(191);
     }
 }

@@ -21,7 +21,7 @@
     <div class="card-body">
       <div class="tab-content">
         <div class="tab-pane" id="tab_1">
-          <form action="admin.events.update" method="post" role="form">
+          <form action="{{ route('admin.events.update', $event->id) }}" method="PUT" role="form">
             <div class="card-body">
                 @csrf
                 <div class="form-group">
