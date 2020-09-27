@@ -23,6 +23,16 @@ class Event extends Model
         'name', 'description', 'date', 'open_time', 'close_time', 'place', 'price', 'image'
     ];
 
+    // JSONに含める属性
+//    protected $visible = [
+//        'id', 'name'
+//    ];
+
+    // JSONに含めない属性
+//    protected $hidden = [
+//        self::CREATED_AT, self::UPDATED_AT
+//    ];
+
     /**
      * ランダムなID値をid属性に代入する
      */

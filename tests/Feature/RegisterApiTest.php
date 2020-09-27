@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
 
 class RegisterApiTest extends TestCase
 {
@@ -21,7 +21,7 @@ class RegisterApiTest extends TestCase
             'password' => 'hogehoge',
             'password_confirmation' => 'hogehoge',
         ];
-        
+
         $response = $this->json('POST', route('register'), $data);
 
         $user = User::first();

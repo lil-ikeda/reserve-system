@@ -9,7 +9,7 @@
                     <span>イベント作成</span>
                 </router-link>
                 <span @click="logout">ログアウト</span>
-                <img :src="`/storage/${useravatar}`" class="header__avatar">
+<!--                <img :src="`/storage/${useravatar}`" class="header__avatar">-->
             </div>
             <div class="header__link" v-else>
                 <span @click="login">ログイン</span>
@@ -33,6 +33,7 @@
         },
         methods: {
             async logout() {
+                console.log('OK')
                 await this.$store.dispatch('auth/logout')
                 this.$router.push('/login')
             },

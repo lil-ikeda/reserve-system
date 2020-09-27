@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Event;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-
 class EventController extends Controller
 {
-
     public function __construct()
     {
+        // exceptの引数以外は認証が必要
         $this->middleware('auth')->except(['index', 'show']);
     }
 
@@ -44,18 +43,18 @@ class EventController extends Controller
         $event->place  = $request->place;
         $event->price  = $request->price;
         $event->image = $request->file('image')->store('events');
-        
+
         // $event->image = $request->image;
         // dd($event->image);
         // $directory = '/storage/app/public/eventImage';
         // Storage::disk('local')->put($request->image, $event->image);
         // dd(Storage::url($event->image));
         DB::beginTransaction();
-        
+
         try {
             $event->save();
             DB::commit();
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             DB::rollback();
             Storage::disk('local')->delete($event->image);
             throw $exception;
@@ -80,7 +79,7 @@ class EventController extends Controller
         $events = Event::all();
         return view('admin.events.index', ['events' => $events]);
     }
-    
+
     public function adminCreate()
     {
         return view('admin.events.create');
@@ -92,7 +91,7 @@ class EventController extends Controller
         $event->fill($request->all())->save();
         return redirect()->route('admin.events.show', $event->id);
     }
-    
+
     public function adminShow(Request $request)
     {
         $event = Event::find($request->id);

@@ -7,7 +7,7 @@
             </div>
             <div class="event-title">
                 <!-- <p>Reknot</p> -->
-                <!-- <input type="text" readonly id="id" v-model="event.name"> -->
+<!--                 <input type="text" readonly id="id" v-model="event.name">-->
                 {{ event.name }}
             </div>
             <div class="event-description">{{ event.description }}</div>
@@ -59,12 +59,12 @@ export default {
             }
             this.event = response.data
         },
-        // getEvent() {
-        //     axios.get('/api/events/' + this.id)
-        //         .then((res) => {
-        //             this.event = res.data;
-        //         });
-        // },
+        getEvent() {
+            axios.get('/api/events/' + this.id)
+                .then((res) => {
+                    this.event = res.data;
+                });
+        },
         deleteEvent(id) {
             axios.delete('/api/events/' + id, this.event)
                 .then((res) => {
@@ -83,7 +83,7 @@ export default {
             },
             immediate: true
         }
-    }
+    },
     // mounted() {
     //     this.getEvent();
     // }

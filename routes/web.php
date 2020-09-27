@@ -12,27 +12,17 @@
 */
 
 // 管理者ページ
-Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
-    // Auth関連
-    Auth::routes();
-
-    Route::middleware('auth:admin')->group(function () {
-        // トップページ
-        Route::get('home', 'HomeController@index')->name('home');
-        // イベント関連
-        Route::resource('events', 'EventController');
-    });
-    Route::get('settings', 'HomeController@settings');
-
-//    Route::get('/events', 'EventController@adminIndex')->name('admin.events.index');
-//    Route::get('/events/create', 'EventController@adminCreate')->name('admin.events.create');
-//    Route::post('/events/{id}', 'EventController@adminStore')->name('admin.events.store');
-//    Route::get('/events/{id}', 'EventController@adminShow')->name('admin.events.show');
-//    Route::post('/events/{id}/update', 'EventController@adminUpdate')->name('admin.events.update');
-
-
-//    Route::get('/users/{id}', 'UsersController@adminShow')->name('admin.users.show');
-});
+//Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+//    // Auth関連
+//    Auth::routes();
+//
+//    Route::middleware('auth:admin')->group(function () {
+//        Route::get('home', 'HomeController@index')->name('home');
+//        Route::resource('events', 'EventController');
+//    });
+//
+//    Route::get('settings', 'HomeController@settings');
+//});
 
 
 // Route::get('admin', function() {

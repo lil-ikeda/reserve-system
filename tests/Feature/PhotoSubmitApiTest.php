@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use App\Photo;
+use App\Models\User;
+//use App\Models\Photo;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -14,7 +14,7 @@ use Tests\TestCase;
 class PhotoSubmitApiTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -31,7 +31,7 @@ class PhotoSubmitApiTest extends TestCase
             ->json('POST', route('photo.create'), [
                 'photo' => UploadedFile::fake()->image('photo.jpg'),
             ]);
-        
+
             // レスポンスがCREATEDであること
             $response->assertStatus(201);
             $photo = Photo::first();

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Event関連
-Route::get('/events', 'EventController@index');
+Route::get('/events', 'EventController@index')->name('event.index');
 Route::post('/events', 'EventController@store');
 Route::get('/events/{id}', 'EventController@show');
 Route::put('/events/{event}', 'EventController@update');
@@ -30,6 +30,6 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/user', function() {
-  return Auth::user();
+Route::get('/user', function () {
+    return Auth::user();
 })->name('user');
