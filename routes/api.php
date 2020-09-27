@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 // Event関連
 Route::get('/events', 'EventController@index')->name('event.index');
 Route::post('/events', 'EventController@store');
-Route::get('/events/{id}', 'EventController@show');
+Route::get('/events/{id}', 'EventController@show')->name('event.show');
 Route::put('/events/{event}', 'EventController@update');
 Route::delete('/events/{event}', 'EventController@destroy');
+Route::post('/events/{event}/join', 'EventController@join')->name('event.join');
 
 // Auth関連
 // 会員登録

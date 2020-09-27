@@ -3,11 +3,8 @@
         <div class="event-container__inner">
             <div v-if="event" class="event-img">
                 <img class="event-img__file" :src="`/storage/${event.image}`">
-                <!-- <div class="event-img__file"></div> -->
             </div>
             <div class="event-title">
-                <!-- <p>Reknot</p> -->
-<!--                 <input type="text" readonly id="id" v-model="event.name">-->
                 {{ event.name }}
             </div>
             <div class="event-description">{{ event.description }}</div>
@@ -21,14 +18,15 @@
             </div>
             <div class="event-entry">
                 <p>エントリーユーザー一覧</p>
-                <ul>
-                    <li>ゆってぃ</li>
-                    <li>タスク</li>
-                    <li>せいやま</li>
+                <ul v-if="event.users.length > 0">
+                    <li
+                      v-for="user in event.users"
+                      :key="user.name"
+                      >{{ user.name }}
+                    </li>
                 </ul>
             </div>
-            <!-- <button class="btn-danger" v-on:click="deleteEvent(event.id)">削除する</button> -->
-            <button class="btn btn-primary" v-on:click="deleteEvent(event.id)">エントリーする</button>
+            <button class="btn btn-primary" v-on:click="joinEvent(event.id)">エントリーする</button>
         </div>
     </div>
 </template>
@@ -39,7 +37,7 @@ import { OK } from '../util'
 export default {
     props: {
         id: {
-            type: String,
+            type: Number,
             required: true
         }
     },
@@ -50,13 +48,13 @@ export default {
     },
     methods: {
         async fetchEvent() {
-            // console.log(this.id)
             const response = await axios.get(`/api/events/${this.id}`);
 
             if(response.status !== OK) {
                 this.$store.commit('error/setCode', response.status)
                 return false
             }
+
             this.event = response.data
         },
         getEvent() {
@@ -65,15 +63,25 @@ export default {
                     this.event = res.data;
                 });
         },
-        deleteEvent(id) {
-            axios.delete('/api/events/' + id, this.event)
+        // deleteEvent(id) {
+        //     axios.delete('/api/events/' + id, this.event)
+        //         .then((res) => {
+        //             this.$router.push({name: 'event.list'});
+        //         });
+        //     this.$store.commit('message/setContent', {
+        //             content: 'イベントが削除されました！',
+        //             timeout: 6000
+        //         })
+        // },
+        joinEvent: function(id) {
+            axios.post('/api/events/' + this.id + '/join', this.id)
                 .then((res) => {
-                    this.$router.push({name: 'event.list'});
+                    this.$router.push({name: 'event.show'});
                 });
             this.$store.commit('message/setContent', {
-                    content: 'イベントが削除されました！',
-                    timeout: 6000
-                })
+                content: 'イベントにエントリーしました！',
+                timeout: 6000
+            })
         }
     },
     watch: {
@@ -84,8 +92,8 @@ export default {
             immediate: true
         }
     },
-    // mounted() {
-    //     this.getEvent();
-    // }
+    mounted() {
+        this.getEvent();
+    }
 }
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,92 +17,87 @@ class EventController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
+    /**
+     * イベント一覧
+     */
     public function index()
     {
-        // $events = Event::all()->orderBy(Event::CREATED_AT, 'desc')->paginate();
-        // dd('OK');
         $events = DB::table('events')->orderBy('created_at', 'desc')->get();
         return $events;
     }
 
-    public function show(string $id)
+    /**
+     * イベント詳細
+     */
+    public function show(int $id)
     {
-        $event = Event::find($id);
+        $event = Event::where('id', $id)->with('users')->first();
+
         return $event ?? abort(404);
     }
 
-    public function store(Request $request)
+    // イベントにエントリー
+    public function join($id)
     {
-        // 写真の拡張子を取得
-        // $extension = $request->image->extension();
-        $event = new Event();
-        $event->name  = $request->name;
-        $event->description  = $request->description;
-        $event->date  = $request->date;
-        $event->open_time  = $request->open_time;
-        $event->close_time  = $request->close_time;
-        $event->place  = $request->place;
-        $event->price  = $request->price;
-        $event->image = $request->file('image')->store('events');
+        $eventUser = new EventUser();
+        $eventUser->event_id = $id;
+        $eventUser->user_id = Auth::user()->id;
+        $eventUser->save();
 
-        // $event->image = $request->image;
-        // dd($event->image);
-        // $directory = '/storage/app/public/eventImage';
-        // Storage::disk('local')->put($request->image, $event->image);
-        // dd(Storage::url($event->image));
-        DB::beginTransaction();
+        // Entry::create([
+        //     'event_id' => $id,
+        //     'user_id' => Auth::user()->id
+        // ]);
 
-        try {
-            $event->save();
-            DB::commit();
-        } catch (\Exception $exception) {
-            DB::rollback();
-            Storage::disk('local')->delete($event->image);
-            throw $exception;
-        }
-        return response($event, 201);
+        return response(201);
     }
 
-    public function update(Request $request, Event $event)
-    {
-        $event->update($request->all());
-        return $event;
-    }
+    // /**
+    //  * イベント保存
+    //  */
+    // public function store(Request $request)
+    // {
+    //     // 写真の拡張子を取得
+    //     // $extension = $request->image->extension();
+    //     $event = new Event();
+    //     $event->name  = $request->name;
+    //     $event->description  = $request->description;
+    //     $event->date  = $request->date;
+    //     $event->open_time  = $request->open_time;
+    //     $event->close_time  = $request->close_time;
+    //     $event->place  = $request->place;
+    //     $event->price  = $request->price;
+    //     if ($request->file('image') !== null) {
+    //         $event->image = $request->file('image')->store('events');
+    //     }
 
-    public function destroy(Event $event)
-    {
-        $event->delete();
-        return $event;
-    }
+    //     DB::beginTransaction();
+    //     try {
+    //         $event->save();
+    //         DB::commit();
+    //     } catch (\Exception $exception) {
+    //         DB::rollback();
+    //         Storage::disk('local')->delete($event->image);
+    //         throw $exception;
+    //     }
+    //     return response($event, 201);
+    // }
 
-    public function adminIndex()
-    {
-        $events = Event::all();
-        return view('admin.events.index', ['events' => $events]);
-    }
+    // /**
+    //  * イベント更新
+    //  */
+    // public function update(Request $request, Event $event)
+    // {
+    //     $event->update($request->all());
+    //     return $event;
+    // }
 
-    public function adminCreate()
-    {
-        return view('admin.events.create');
-    }
-
-    public function adminStore(Request $request)
-    {
-        $event = new Event;
-        $event->fill($request->all())->save();
-        return redirect()->route('admin.events.show', $event->id);
-    }
-
-    public function adminShow(Request $request)
-    {
-        $event = Event::find($request->id);
-        return view('admin.events.show', ['event'=>$event]);
-    }
-
-    public function adminUpdate(Request $request)
-    {
-        $event = Event::find($request->id);
-        $event->fill($request->all())->save();
-        return redirect()->route('admin.events.show', $event->id);
-    }
+    // /**
+    //  * イベント削除
+    //  */
+    // public function destroy(Event $event)
+    // {
+    //     $event->delete();
+    //     return $event;
+    // }
 }

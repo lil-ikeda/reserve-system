@@ -12,17 +12,17 @@
 */
 
 // 管理者ページ
-//Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
-//    // Auth関連
-//    Auth::routes();
-//
-//    Route::middleware('auth:admin')->group(function () {
-//        Route::get('home', 'HomeController@index')->name('home');
-//        Route::resource('events', 'EventController');
-//    });
-//
-//    Route::get('settings', 'HomeController@settings');
-//});
+Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+   // Auth関連
+   Auth::routes();
+
+   Route::middleware('auth:admin')->group(function () {
+       Route::get('home', 'HomeController@index')->name('home');
+       Route::resource('events', 'EventController');
+   });
+
+   Route::get('settings', 'HomeController@settings');
+});
 
 
 // Route::get('admin', function() {
