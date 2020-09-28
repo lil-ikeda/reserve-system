@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class EventUser extends Model
 {
@@ -11,4 +12,6 @@ class EventUser extends Model
     protected $fillable = [
         'event_id', 'user_id',
     ];
+
+    
 }

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Event;
+use App\Models\Entry;
 
 class User extends Authenticatable
 {
@@ -41,6 +42,7 @@ class User extends Authenticatable
     // アソシエーション
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');;
+        return $this->belongsToMany('App\Models\Event')
+        ->withTimestamps();
     }
 }

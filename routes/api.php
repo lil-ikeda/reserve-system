@@ -21,7 +21,8 @@ Route::post('/events', 'EventController@store');
 Route::get('/events/{id}', 'EventController@show')->name('event.show');
 Route::put('/events/{event}', 'EventController@update');
 Route::delete('/events/{event}', 'EventController@destroy');
-Route::post('/events/{event}/join', 'EventController@join')->name('event.join');
+Route::put('/events/{event}/join', 'EventController@join')->name('event.join');
+Route::delete('/events/{event}/join', 'EventController@unjoin')->name('event.unjoin');
 
 // Auth関連
 // 会員登録

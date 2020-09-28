@@ -16,17 +16,23 @@
                     <li>場所：{{ event.place }}</li>
                 </ul>
             </div>
+            <button
+              class="button button__join"
+              :class="{ 'button button__joined' : event.joined_by_user }"
+              @click.prevent="onJoinClick">
+                <span v-if="event.joined_by_user">エントリーをやめる</span>
+                <span v-else>エントリーする</span>
+            </button>
             <div class="event-entry">
                 <p>エントリーユーザー一覧</p>
-                <ul v-if="event.users.length > 0">
-                    <li
-                      v-for="user in event.users"
-                      :key="user.name"
-                      >{{ user.name }}
-                    </li>
-                </ul>
+                <div v-if="event.users.length > 0">
+                    <ul 
+                    v-for="user in event.users"
+                    :key="user.name">
+                        <li>{{ user.name }}</li>
+                    </ul>
+                </div>
             </div>
-            <button class="btn btn-primary" v-on:click="joinEvent(event.id)">エントリーする</button>
         </div>
     </div>
 </template>
@@ -37,7 +43,7 @@ import { OK } from '../util'
 export default {
     props: {
         id: {
-            type: Number,
+            type: String,
             required: true
         }
     },
@@ -56,32 +62,38 @@ export default {
             }
 
             this.event = response.data
+            console.log(this.event)
         },
-        getEvent() {
-            axios.get('/api/events/' + this.id)
-                .then((res) => {
-                    this.event = res.data;
-                });
+        onJoinClick () {
+            if (! this.$store.getters['auth/check']) {
+                alert('エントリー機能を使うにはログインしてください')
+                return false
+            }
+
+            if (this.event.joined_by_user) {
+                this.unjoin()
+            } else {
+                this.join()
+            }
         },
-        // deleteEvent(id) {
-        //     axios.delete('/api/events/' + id, this.event)
-        //         .then((res) => {
-        //             this.$router.push({name: 'event.list'});
-        //         });
-        //     this.$store.commit('message/setContent', {
-        //             content: 'イベントが削除されました！',
-        //             timeout: 6000
-        //         })
-        // },
-        joinEvent: function(id) {
-            axios.post('/api/events/' + this.id + '/join', this.id)
-                .then((res) => {
-                    this.$router.push({name: 'event.show'});
-                });
-            this.$store.commit('message/setContent', {
-                content: 'イベントにエントリーしました！',
-                timeout: 6000
-            })
+        async join() {
+            const response = await axios.put(`/api/events/${this.id}/join`)
+            // エラー時はエラーメッセージ表示
+            if (response.status !== OK) {
+                this.$store.commit('error/setCode', response.status)
+                return false
+            }
+            this.event.joined_by_user = true
+        },
+        async unjoin() {
+            const response = await axios.delete(`/api/events/${this.id}/join`)
+
+            if (response.status !== OK) {
+                this.$store.commit('error/setCode', response.status)
+                return false
+            }
+
+            this.event.joined_by_user = false
         }
     },
     watch: {
@@ -92,8 +104,6 @@ export default {
             immediate: true
         }
     },
-    mounted() {
-        this.getEvent();
-    }
+
 }
 </script>

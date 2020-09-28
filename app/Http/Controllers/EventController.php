@@ -31,25 +31,42 @@ class EventController extends Controller
      */
     public function show(int $id)
     {
-        $event = Event::where('id', $id)->with('users')->first();
+        $event = Event::where('id', $id)->with(['users'])->first();
 
         return $event ?? abort(404);
     }
 
     // イベントにエントリー
-    public function join($id)
+    public function join(string $id)
     {
-        $eventUser = new EventUser();
-        $eventUser->event_id = $id;
-        $eventUser->user_id = Auth::user()->id;
-        $eventUser->save();
+        $event = Event::where('id', $id)->with('users')->first();
 
-        // Entry::create([
-        //     'event_id' => $id,
-        //     'user_id' => Auth::user()->id
-        // ]);
+        if (! $event) {
+            abort(404);
+        }
 
-        return response(201);
+        $event->users()->detach(Auth::user()->id);
+        $event->users()->attach(Auth::user()->id);
+
+        // $eventUser = new EventUser();
+        // $eventUser->event_id = $id;
+        // $eventUser->user_id = Auth::user()->id;
+        // $eventUser->save();
+
+        return ['event_id' => $id];
+    }
+
+    public function unjoin(string $id)
+    {
+        $event = Event::where('id', $id)->with('users')->first();
+
+        if (! $event) {
+            abort(404);
+        }
+
+        $event->users()->detach(Auth::user()->id);
+
+        return ['event_id' => $id];
     }
 
     // /**
