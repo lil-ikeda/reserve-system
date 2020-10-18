@@ -32,7 +32,7 @@ interface EventRepositoryContract
      * @param string $closeTime
      * @param string $place
      * @param int $price
-     * @param string $image
+     * @param object $image
      */
     public function store(
         string $name,
@@ -42,7 +42,7 @@ interface EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        string $image
+        object $image
     ): void;
 
     /**

@@ -13,15 +13,14 @@
 
 // 管理者ページ
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
-   // Auth関連
-   Auth::routes();
 
-   Route::middleware('auth:admin')->group(function () {
-       Route::get('home', 'HomeController@index')->name('home');
-       Route::resource('events', 'EventController');
-   });
+    // Auth関連
+    Auth::routes();
 
-   Route::get('settings', 'HomeController@settings');
+    Route::middleware('auth:admin')->group(function () {
+        Route::resource('events', 'EventController');
+        Route::resource('users', 'UserController')->only(['show', 'destroy']);
+    });
 });
 
 

@@ -57,7 +57,7 @@ class EventController extends Controller
         $closeTime = $request->close_time;
         $place = $request->place;
         $price = $request->price;
-        $image = $request->image;
+        $image = $request->file('image');
 
         $this->eventRepository->store(
             $name,

@@ -7,29 +7,32 @@
 @stop
 
 @section('content')
-<!-- Style -->
-<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <!-- Style -->
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         @foreach ($events as $event)
-        <a href="{{ route('admin.events.show', $event->id) }}" class="text-decoration-none">
-          <div class="card card-primary card-outline">
-            {{-- <div class="event-card__left">
-                <div class="event-card__left--img">
-                    <img :src="`/storage/${event.image}`">
+            <a href="{{ route('admin.events.show', $event->id) }}" class="text-decoration-none">
+                <div class="card card-primary card-outline">
+                    <div class="event-card__left">
+                        <div class="event-card__left--img">
+                            @if(isset($event->image))
+                                <img src="{{ asset('/storage/events/'.$event->image) }}">
+                            @endif
+                            <img src="storage/app/public/events/VxhZ2gdPtwXi6nuFtX6PPFuqk3v8tgQlylOcLYdP.jpeg">
+                        </div>
+                    </div>
+                    <div class="event-card__right">
+                        <p class="card-header">{{ $event->name }}</p>
+                        <div class="card-body">
+                            <ul>
+                                <li>日程：{{ $event->date }}</li>
+                                <li>時間：{{ $event->open_time }} - {{ $event->close_time }}</li>
+                                <li>場所：{{ $event->place }}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div> --}}
-            {{-- <div class="event-card__right"> --}}
-                <p class="card-header">{{ $event->name }}</p>
-                <div class="card-body">
-                    <ul>
-                        <li>日程：{{ $event->date }}</li>
-                        <li>時間：{{ $event->open_time }} - {{ $event->close_time }}</li>
-                        <li>場所：{{ $event->place }}</li>
-                    </ul>
-                </div>
-            {{-- </div> --}}
-        </div>
-        </a>
+            </a>
         @endforeach
     </div>
 @stop

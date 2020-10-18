@@ -59,7 +59,7 @@ class EventEloquentRepository implements EventRepositoryContract
      * @param string $closeTime
      * @param string $place
      * @param int $price
-     * @param string $image
+     * @param object $image
      */
     public function store(
         string $name,
@@ -69,7 +69,7 @@ class EventEloquentRepository implements EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        string $image
+        object $image
     ): void {
         $this->event->name = $name;
         $this->event->description = $description;
@@ -78,8 +78,8 @@ class EventEloquentRepository implements EventRepositoryContract
         $this->event->close_time = $closeTime;
         $this->event->place = $place;
         $this->event->price = $price;
-        $this->event->image = $image;
-
+        $path = $image->store('public/events');
+        $this->event->image = basename($path);
         $this->event->save();
     }
 

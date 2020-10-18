@@ -11,7 +11,7 @@
         <div class="card-header">
             <h3 class="card-title">イベント作成</h3>
         </div>
-        <form action="{{ route('admin.events.store')}}" method="POST">
+        <form action="{{ route('admin.events.store')}}" method="POST" enctype='multipart/form-data'>
             <div class="card-body">
 {{--                @method('PUT')--}}
                 @csrf
