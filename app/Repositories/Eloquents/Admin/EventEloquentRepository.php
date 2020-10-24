@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories\Eloquents;
+namespace App\Repositories\Eloquents\Admin;
 
 use App\Models\Event;
-use App\Contracts\Repositories\EventRepositoryContract;
+use App\Contracts\Repositories\Admin\EventRepositoryContract;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class EventEloquentRepository implements EventRepositoryContract
 {
@@ -59,7 +60,7 @@ class EventEloquentRepository implements EventRepositoryContract
      * @param string $closeTime
      * @param string $place
      * @param int $price
-     * @param string $image
+     * @param object $image
      */
     public function store(
         string $name,
@@ -69,7 +70,7 @@ class EventEloquentRepository implements EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        string $image
+        object $image
     ): void {
         $this->event->name = $name;
         $this->event->description = $description;
@@ -78,7 +79,13 @@ class EventEloquentRepository implements EventRepositoryContract
         $this->event->close_time = $closeTime;
         $this->event->place = $place;
         $this->event->price = $price;
-        $this->event->image = $image;
+        
+        // $image->store('events', 'public');
+        // $path = $image->store('public/events');
+        $path = Storage::disk('s3')->putfile('/', $image, 'public');
+        $url = Storage::disk('s3')->url($path);
+
+        $this->event->image = '/' . basename(parse_url($url, PHP_URL_PATH));
 
         $this->event->save();
     }
@@ -93,7 +100,7 @@ class EventEloquentRepository implements EventRepositoryContract
      * @param string $closeTime
      * @param string $place
      * @param int $price
-     * @param string $image
+     * @param object $image
      */
     public function update(
         int $id,
@@ -104,7 +111,7 @@ class EventEloquentRepository implements EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        string $image
+        object $image
     ): void {
         $event = $this->findById($id);
 
@@ -115,8 +122,18 @@ class EventEloquentRepository implements EventRepositoryContract
         $event->close_time = $closeTime;
         $event->place = $place;
         $event->price = $price;
-        $event->image = $image;
-
         $this->event->save();
+        
+        $image->store('events', 'public');
+    }
+
+    public function getEntriedUsers(int $id): Collection
+    {
+        return $this->findById($id)->users;
+    }
+
+    public function destroy(int $id): bool
+    {
+        return $this->event->destroy($id);
     }
 }

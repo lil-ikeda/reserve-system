@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Contracts\Repositories\EventRepositoryContract;
-use App\Repositories\Eloquents\EventEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 

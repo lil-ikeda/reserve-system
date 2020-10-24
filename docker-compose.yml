@@ -21,6 +21,7 @@ services:
 
   mysql:
     image: mysql:5.7
+    container_name: reserve_mysql
     ports:
       - "3306:3306"
     volumes:
@@ -70,5 +71,10 @@ services:
     image: phpmyadmin/phpmyadmin
     depends_on:
       - mysql
+    environment: 
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: reserve_mysql
+      PMA_USER: ${DB_USERNAME:-root}
+      PMA_PASSWORD: ${DB_PASSWORD:-root}
     ports:
       - "9090:80"

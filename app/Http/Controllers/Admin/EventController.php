@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\Repositories\EventRepositoryContract;
+use App\Contracts\Repositories\Admin\EventRepositoryContract;
 use App\Models\Event;
 use App\ViewModels\Admin\Event\ShowViewModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Event\IndexViewModel;
 use Carbon\Carbon;
+
 
 class EventController extends Controller
 {
@@ -57,7 +58,9 @@ class EventController extends Controller
         $closeTime = $request->close_time;
         $place = $request->place;
         $price = $request->price;
-        $image = $request->image;
+        $image = $request->file('image');
+        // $image = Storage::putFile('events', $request->file('image'));
+        // \dd($image);
 
         $this->eventRepository->store(
             $name,
@@ -111,5 +114,12 @@ class EventController extends Controller
         );
 
         return redirect()->route('admin.events.index');
+    }
+
+    public function destroy(int $id)
+    {
+        $this->eventRepository->destroy($id);
+
+        return redirect(route('admin.events.index'));
     }
 }

@@ -30,6 +30,6 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 // });
 
 // 一般ユーザー
-Route::get('/{any?}', function () {
-    return view('index');
-})->where('any', '.+');
+// Route::get('/{any?}', function () {
+//     return view('index');
+// })->where('any', '.+');

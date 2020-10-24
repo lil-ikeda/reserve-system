@@ -20,7 +20,7 @@ class EventSeeder extends Seeder
                 'open_time' => '10:00',
                 'close_time' => '22:00',
                 'place' => '開催場所'.$i,
-                'price' => $i.'000'
+                'price' => $i.'000',
             ]);
         }
     }

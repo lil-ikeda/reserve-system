@@ -26,12 +26,16 @@ Route::delete('/events/{event}/join', 'EventController@unjoin')->name('event.unj
 
 // Auth関連
 // 会員登録
-Route::post('/register', 'Auth\RegisterController@register')->name('register');
-// ログイン
-Route::post('/login', 'Auth\LoginController@login')->name('login');
-// ログアウト
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+// Route::post('/register', 'Auth\RegisterController@register')->name('register');
+// // ログイン
+// Route::post('/login', 'Auth\LoginController@login')->name('login');
+// // ログアウト
+// Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/user', function () {
-    return Auth::user();
-})->name('user');
+// Route::get('/user', function () {
+//     return Auth::user();
+// })->name('user');
+
+Route::namespace('Api')->name('api')->group(function() {
+
+});

@@ -48,12 +48,7 @@ class EventController extends Controller
         $event->users()->detach(Auth::user()->id);
         $event->users()->attach(Auth::user()->id);
 
-        // $eventUser = new EventUser();
-        // $eventUser->event_id = $id;
-        // $eventUser->user_id = Auth::user()->id;
-        // $eventUser->save();
-
-        return ['event_id' => $id];
+        return ['user' => Auth::user()];
     }
 
     public function unjoin(string $id)

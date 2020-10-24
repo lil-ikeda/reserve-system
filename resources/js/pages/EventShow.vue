@@ -32,6 +32,9 @@
                         <li>{{ user.name }}</li>
                     </ul>
                 </div>
+                <div v-else>
+                    <p>エントリー中のユーザーがいません</p>
+                </div>
             </div>
         </div>
     </div>
@@ -62,7 +65,6 @@ export default {
             }
 
             this.event = response.data
-            console.log(this.event)
         },
         onJoinClick () {
             if (! this.$store.getters['auth/check']) {
@@ -75,6 +77,8 @@ export default {
             } else {
                 this.join()
             }
+
+
         },
         async join() {
             const response = await axios.put(`/api/events/${this.id}/join`)
@@ -84,6 +88,8 @@ export default {
                 return false
             }
             this.event.joined_by_user = true
+            // エントリーしたユーザーを非同期で画面に反映
+            this.fetchEvent();
         },
         async unjoin() {
             const response = await axios.delete(`/api/events/${this.id}/join`)
@@ -94,6 +100,8 @@ export default {
             }
 
             this.event.joined_by_user = false
+            // エントリーをやめたユーザーを非同期で画面に反映
+            this.fetchEvent();
         }
     },
     watch: {

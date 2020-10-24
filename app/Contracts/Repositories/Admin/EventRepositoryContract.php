@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Repositories;
+namespace App\Contracts\Repositories\Admin;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -32,7 +32,7 @@ interface EventRepositoryContract
      * @param string $closeTime
      * @param string $place
      * @param int $price
-     * @param string $image
+     * @param object $image
      */
     public function store(
         string $name,
@@ -42,7 +42,7 @@ interface EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        string $image
+        object $image
     ): void;
 
     /**
@@ -55,7 +55,7 @@ interface EventRepositoryContract
      * @param string $closeTime
      * @param string $place
      * @param int $price
-     * @param string $image
+     * @param object $image
      */
     public function update(
         int $id,
@@ -66,6 +66,13 @@ interface EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        string $image
+        object $image
     ): void;
+
+    public function getEntriedUsers(int $id): Collection;
+
+    /**
+     * イベントを削除
+     */
+    public function destroy(int $id): bool;
 }

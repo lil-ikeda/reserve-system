@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Contracts\Repositories\EventRepositoryContract;
-use App\Repositories\Eloquents\EventEloquentRepository;
+use App\Contracts\Repositories\Admin\EventRepositoryContract;
+use App\Repositories\Eloquents\Admin\EventEloquentRepository;
 use App\Contracts\Repositories\User\UserRepositoryContract;
 use App\Repositories\Eloquents\User\UserEloquentRepository;
 

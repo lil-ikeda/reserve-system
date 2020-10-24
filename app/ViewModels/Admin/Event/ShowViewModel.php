@@ -3,7 +3,7 @@
 namespace App\ViewModels\Admin\Event;
 
 use App\ViewModels\Base\ViewModel;
-use App\Contracts\Repositories\EventRepositoryContract;
+use App\Contracts\Repositories\Admin\EventRepositoryContract;
 
 class ShowViewModel extends ViewModel
 {
@@ -32,6 +32,7 @@ class ShowViewModel extends ViewModel
 
         return [
             'event' => $this->eventRepository->findById($id),
+            'users' => $this->eventRepository->getEntriedUsers($id),
         ];
     }
 

@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->time('close_time');
             $table->string('place');
             $table->integer('price');
+            $table->string('image')->nullable();
 
             $table->timestamps();
         });

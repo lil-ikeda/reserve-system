@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ADMIN_TOP;
 
     public function showLoginForm()
     {
@@ -58,10 +58,10 @@ class LoginController extends Controller
 //    /**
 //     * 管理者ログイン
 //     */
-//    public function adminLogin()
-//    {
-//        return view('auth/login');
-//    }
+    public function adminLogin()
+    {
+        return view('auth/login');
+    }
 
     /**
      * 管理者新規登録
