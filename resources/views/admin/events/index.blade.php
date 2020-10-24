@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-<!-- Style -->
-<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <!-- Style -->
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         <h3>イベント一覧</h3>
         @foreach ($events as $event)

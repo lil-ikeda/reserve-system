@@ -23,6 +23,7 @@ class EventController extends Controller
     public function index()
     {
         $events = DB::table('events')->orderBy('created_at', 'desc')->get();
+
         return $events;
     }
 

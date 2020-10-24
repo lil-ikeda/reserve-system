@@ -3,12 +3,30 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>マイページ</h1>
 @stop
 
 @section('content')
-    <p>マイページです</p>
-    
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                {{ $user->name }}
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <strong>メールアドレス：　</strong>{{ $user->email }}
+                </div>
+                <div class="btn btn-outline-primary">パスワードを変更する</div>
+                <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}" onSubmit="return deleteCheck()">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger" >
+                        アカウントを削除する
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -16,5 +34,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script></script>
 @stop
