@@ -19,6 +19,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::resource('events', 'EventController');
+        Route::get('users/invite', 'UserController@invite')->name('users.invite');
+        Route::post('users/invite', 'UserController@sendInviteMail')->name('users.send');
         Route::resource('users', 'UserController')->only(['show', 'destroy']);
     });
 });

@@ -14,11 +14,10 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        // 認証が完了していないユーザーは管理者ログイン画面にリダイレクト
         if (! $request->expectsJson()) {
             if ($request->is('admin*')) {
                 return route('admin.login');
-            } else {
-                return route('login');
             }
         }
     }

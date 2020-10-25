@@ -18,18 +18,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-//        dd(Auth::guard($guard)->check());
-//        dd(Auth::guard($guard)->check());
-
         if (Auth::guard($guard)->check()) {
             if ($guard == 'admin') {
-                return redirect(RouteServiceProvider::ADMIN_TOP);
-            } else {
-                // ログインユーザー返却用APIへ
-                return redirect()->route('user');
+                // return redirect(RouteServiceProvider::ADMIN_TOP);
+                return redirect('/admin/events');
             }
         }
-//        dd($request);
+
         return $next($request);
     }
 }

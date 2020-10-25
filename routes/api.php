@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 
 // Event関連
-Route::get('/events', 'EventController@index')->name('event.index');
-Route::post('/events', 'EventController@store');
-Route::get('/events/{id}', 'EventController@show')->name('event.show');
-Route::put('/events/{event}', 'EventController@update');
-Route::delete('/events/{event}', 'EventController@destroy');
-Route::put('/events/{event}/join', 'EventController@join')->name('event.join');
-Route::delete('/events/{event}/join', 'EventController@unjoin')->name('event.unjoin');
+// Route::get('/events', 'EventController@index')->name('event.index');
+// Route::post('/events', 'EventController@store');
+// Route::get('/events/{id}', 'EventController@show')->name('event.show');
+// Route::put('/events/{event}', 'EventController@update');
+// Route::delete('/events/{event}', 'EventController@destroy');
+// Route::put('/events/{event}/join', 'EventController@join')->name('event.join');
+// Route::delete('/events/{event}/join', 'EventController@unjoin')->name('event.unjoin');
 
 // Auth関連
 // 会員登録
@@ -36,6 +36,6 @@ Route::delete('/events/{event}/join', 'EventController@unjoin')->name('event.unj
 //     return Auth::user();
 // })->name('user');
 
-Route::namespace('Api')->name('api')->group(function() {
+// Route::namespace('Api')->name('api')->group(function() {
 
-});
+// });

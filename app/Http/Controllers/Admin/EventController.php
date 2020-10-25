@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Event\IndexViewModel;
 use Carbon\Carbon;
+use App\Http\Requests\StoreEvent;
 
 
 class EventController extends Controller
@@ -49,7 +50,7 @@ class EventController extends Controller
         return view('admin.events.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreEvent $request)
     {
         $name = $request->name;
         $description = $request->description;
@@ -59,8 +60,6 @@ class EventController extends Controller
         $place = $request->place;
         $price = $request->price;
         $image = $request->file('image');
-        // $image = Storage::putFile('events', $request->file('image'));
-        // \dd($image);
 
         $this->eventRepository->store(
             $name,

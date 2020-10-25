@@ -80,11 +80,8 @@ class EventEloquentRepository implements EventRepositoryContract
         $this->event->place = $place;
         $this->event->price = $price;
         
-        // $image->store('events', 'public');
-        // $path = $image->store('public/events');
         $path = Storage::disk('s3')->putfile('/', $image, 'public');
         $url = Storage::disk('s3')->url($path);
-
         $this->event->image = '/' . basename(parse_url($url, PHP_URL_PATH));
 
         $this->event->save();

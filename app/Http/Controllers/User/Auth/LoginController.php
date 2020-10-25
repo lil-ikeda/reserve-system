@@ -38,19 +38,19 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * 管理者ログイン
-     */
-    public function adminLogin()
-    {
-        return view('auth/login');
-    }
+    // /**
+    //  * 管理者ログイン
+    //  */
+    // public function adminLogin()
+    // {
+    //     return view('auth/login');
+    // }
 
     /**
      * 管理者新規登録
      */
-    public function adminRegister()
-    {
-        return view('auth/register');
-    }
+    // public function adminRegister()
+    // {
+    //     return view('auth/register');
+    // }
 }

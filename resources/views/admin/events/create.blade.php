@@ -27,8 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">イベント詳細</label>
-                        {{-- <input type="text" name="description" class="form-control"> --}}
-                        <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="description" id="" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="date">日程</label>

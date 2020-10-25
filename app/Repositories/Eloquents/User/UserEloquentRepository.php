@@ -29,6 +29,6 @@ class UserEloquentRepository implements UserRepositoryContract
 
     public function join()
     {
-        dd('OK');
+        
     }
 }

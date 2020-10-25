@@ -14,18 +14,18 @@ Vue.use(VueRouter)
 
 // パスとコンポーネントのマッピング
 const routes = [
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    beforeEnter(to, from, next) {
-      if(store.getters['auth/check']) {
-        next('/')
-      } else {
-        next()
-      }
-    }
-  },
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   component: Login,
+  //   beforeEnter(to, from, next) {
+  //     if(store.getters['auth/check']) {
+  //       next('/')
+  //     } else {
+  //       next()
+  //     }
+  //   }
+  // },
   {
     path: '/',
     name: 'event.list',

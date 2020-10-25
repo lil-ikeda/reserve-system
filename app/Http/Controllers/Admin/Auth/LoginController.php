@@ -29,22 +29,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::ADMIN_TOP;
-
-    public function showLoginForm()
-    {
-        return view('auth/login');
-    }
-
-    /**
-     * Get the guard to be used during registration.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard('admin');
-    }
-
+    
     /**
      * Create a new controller instance.
      *
@@ -55,24 +40,33 @@ class LoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
-//    /**
-//     * 管理者ログイン
-//     */
-    public function adminLogin()
+    public function showLoginForm()
     {
-        return view('auth/login');
+        return view('admin.auth.login');
     }
-
+    
     /**
-     * 管理者新規登録
+     * Get the guard to be used during registration.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    public function adminRegister()
+    protected function guard()
     {
-        return view('auth/register');
+        return Auth::guard('admin');
     }
 
     protected function loggedOut(Request $request)
     {
         return redirect(route('admin.login'));
+    }
+
+    /**
+     * ログイン後の処理オーバーライド
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // ログイン後のリダイレクト
+        // 追記しないとJsonがレスポンスされてしまっていたため追記
+        return redirect(RouteServiceProvider::ADMIN_TOP);
     }
 }

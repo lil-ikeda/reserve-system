@@ -188,17 +188,18 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'admin/home',
+    'dashboard_url' => 'admin/login',
 
     'logout_url' => 'admin/logout',
 
     'login_url' => 'admin/login',
 
-    'register_url' => 'admin/register',
+    // 'register_url' => 'admin/register',
+    'register_url' => '',
 
-    'password_reset_url' => 'password/reset',
+    'password_reset_url' => 'admin/password/reset',
 
-    'password_email_url' => 'password/email',
+    'password_email_url' => 'admin/password/email',
 
     'profile_url' => false,
 
@@ -252,11 +253,16 @@ return [
             'url'         => 'admin/events/create',
             'icon'        => 'fa fa-plus',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'アカウント管理'],
         [
             'text' => 'マイページ',
             'url'  => 'admin/users/show',
             'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'ユーザー招待',
+            'url'  => 'admin/users/invite',
+            'icon' => 'fas fa-fw fa-envelope',
         ],
     ],
 

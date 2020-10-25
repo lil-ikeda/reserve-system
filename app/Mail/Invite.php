@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MailgunTest extends Mailable
+class Invite extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,11 +28,11 @@ class MailgunTest extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.mail')
-        ->text('mails.mail')
-        ->subject('タイトル')
+        return $this->view('admin.mails.invite')
+        ->text('admin.mails.invite')
+        ->subject('Welcome to Skill Hack！！')
         ->with([
-            'text' => '本文',
+            'text' => "以下のリンクよりアカウント登録を行ってください。",
         ]);
     }
 }

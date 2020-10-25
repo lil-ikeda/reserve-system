@@ -130,7 +130,7 @@
     <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST">
       @method('DELETE')
       @csrf
-      <button type="submit" class="btn btn-danger" onclick="return deleteConfirm()">イベントを削除</button>
+      <button type="submit" class="btn btn-outline-danger" onclick="return deleteConfirm()">イベントを削除</button>
     </form>
   </div>
 

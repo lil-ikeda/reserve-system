@@ -34,7 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ADMIN_TOP;
 
     /**
      * Create a new controller instance.
@@ -79,5 +79,15 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * 新規登録後の処理をオーバーライド
+     */
+    public function registered(Request $request, $user)
+    {
+        $user->save();
+
+        return $user;
     }
 }
