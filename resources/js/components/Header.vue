@@ -5,9 +5,6 @@
                 <span class="header__wrapper--title">予約システム</span>
             </router-link>
             <div class="header__link" v-if='isLogin'>
-                <router-link v-bind:to="{name: 'event.create'}">
-                    <span>イベント作成</span>
-                </router-link>
                 <span @click="logout">ログアウト</span>
 <!--                <img :src="`/storage/${useravatar}`" class="header__avatar">-->
             </div>

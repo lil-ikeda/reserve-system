@@ -52,13 +52,13 @@ const actions = {
     async login(context, data) {
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/login', data)
-        
+
         if(response.status === OK) {
             context.commit('setApiStatus', true)
             context.commit('setUser', response.data)
             return false
         }
-        
+
         context.commit('setApiStatus', false)
         if(response.status === UNPROCESSABLE_ENTITY) {
             context.commit('setLoginErrorMessages', response.data.errors)
@@ -70,7 +70,7 @@ const actions = {
     async logout(context) {
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/logout')
-        
+
         if(response.status === OK) {
             context.commit('setApiStatus', true)
             context.commit('setUser', null)

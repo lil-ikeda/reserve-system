@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Event;
-use App\Models\EventUser;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use App\Mail\Canceled;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
     public function __construct()
     {
-        // exceptの引数以外は認証が必要
         $this->middleware('auth')->except(['index', 'show']);
     }
 
@@ -29,25 +28,111 @@ class EventController extends Controller
 
     /**
      * イベント詳細
+     *
+     * @param int $id
      */
     public function show(int $id)
     {
-        $event = Event::where('id', $id)->with(['users'])->first();
+        $event = Event::where('id', $id)->with('users')->first();
 
         return $event ?? abort(404);
     }
 
-    // イベントにエントリー
+    /**
+     * イベントエントリー画面の表示
+     *
+     * @param int $id
+     */
+    public function entry(int $id)
+    {
+        $event = Event::find($id);
+
+        return $event ?? abort(404);
+    }
+
+    /**
+     * イベントエントリー完了画面の表示
+     *
+     * @param int $id
+     */
+    public function entryConfirm(int $id)
+    {
+        $event = Event::find($id);
+
+        return $event ?? abort(404);
+    }
+
+    /**
+     * キャンセル
+     *
+     * @param int $id
+     */
+    public function cancel(int $id)
+    {
+        $event = Event::find($id);
+
+        return $event ?? abort(404);
+    }
+
+    /**
+     * キャンセル確認用画面の表示
+     *
+     * @param int $id
+     */
+    public function cancelConfirm(int $id)
+    {
+        $event = Event::find($id);
+
+        return $event ?? abort(404);
+    }
+
+    /**
+     * キャンセル希望メールの送信
+     *
+     * @param int $id
+     */
+    public function cancelSendMail()
+    {
+        Mail::to()->send(new Canceled);
+//        $event = Event::find($id);
+//
+//        return $event ?? abort(404);
+    }
+
+
+    public function paymentPayPay(int $id)
+    {
+        $event = Event::find($id);
+
+        return $event ?? abort(404);
+    }
+
+    /**
+     * イベントにエントリー
+     *
+     * @param string $id
+     * @return array
+     */
     public function join(string $id)
     {
         $event = Event::where('id', $id)->with('users')->first();
 
-        if (! $event) {
+        if (!$event) {
             abort(404);
         }
 
+        // 既存の「エントリー」レコードを削除
         $event->users()->detach(Auth::user()->id);
-        $event->users()->attach(Auth::user()->id);
+
+        DB::table('entries')->insert([
+            'event_id' => $id,
+            'user_id' => Auth::user()->id,
+            'paid' => false,
+            'cancellation_request' => false,
+            'payment_method' => false,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         return ['user' => Auth::user()];
     }
@@ -56,7 +141,7 @@ class EventController extends Controller
     {
         $event = Event::where('id', $id)->with('users')->first();
 
-        if (! $event) {
+        if (!$event) {
             abort(404);
         }
 

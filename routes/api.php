@@ -1,7 +1,7 @@
 <?php
 
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,26 +16,28 @@
 
 
 // Event関連
-// Route::get('/events', 'EventController@index')->name('event.index');
-// Route::post('/events', 'EventController@store');
-// Route::get('/events/{id}', 'EventController@show')->name('event.show');
-// Route::put('/events/{event}', 'EventController@update');
-// Route::delete('/events/{event}', 'EventController@destroy');
-// Route::put('/events/{event}/join', 'EventController@join')->name('event.join');
-// Route::delete('/events/{event}/join', 'EventController@unjoin')->name('event.unjoin');
+Route::get('/events', 'User\EventController@index')->name('event.index');
+Route::post('/events', 'User\EventController@store');
+Route::get('/events/{id}', 'User\EventController@show')->name('event.show');
+Route::get('/events/{id}/entry', 'User\EventController@entry')->name('event.entry');
+Route::get('/events/{id}/entry/confirm', 'User\EventController@entryConfirm')->name('event.entry.confirm');
+Route::get('/events/{id}/cancel', 'User\EventController@cancel')->name('event.cancel');
+Route::get('/events/{id}/cancel/confirm', 'User\EventController@cancelConfirm')->name('event.cancel.confirm');
+Route::post('/events/{id}/cancel/sendmail', 'User\EventController@cancelSendMail')->name('event.cancel.sendmail');
+Route::get('/events/{id}/payment/paypay', 'User\EventController@paymentPaypay')->name('event.payment.paypay');
+Route::put('/events/{event}', 'User\EventController@update');
+Route::delete('/events/{event}', 'User\EventController@destroy');
+Route::put('/events/{event}/join', 'User\EventController@join')->name('event.join');
+Route::delete('/events/{event}/join', 'User\EventController@unjoin')->name('event.unjoin');
 
 // Auth関連
-// 会員登録
-// Route::post('/register', 'Auth\RegisterController@register')->name('register');
-// // ログイン
-// Route::post('/login', 'Auth\LoginController@login')->name('login');
-// // ログアウト
-// Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/register', 'User\Auth\RegisterController@register')->name('register');
+Route::post('/login', 'User\Auth\LoginController@login')->name('login');
+Route::post('/logout', 'User\Auth\LoginController@logout')->name('logout');
 
 // Route::get('/user', function () {
 //     return Auth::user();
 // })->name('user');
-
 // Route::namespace('Api')->name('api')->group(function() {
 
 // });

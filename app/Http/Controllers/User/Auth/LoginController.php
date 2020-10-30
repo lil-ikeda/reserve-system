@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -38,19 +39,30 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // /**
-    //  * 管理者ログイン
-    //  */
-    // public function adminLogin()
-    // {
-    //     return view('auth/login');
-    // }
+    /**
+     * ログイン後の処理をオーバーライド
+     * デフォルトの処理の場合、リダイレクトがreturnされてしまうのでユーザー情報のみreturnする
+     *
+     * @param Request $request
+     * @param $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        return $user;
+    }
 
     /**
-     * 管理者新規登録
+     * ログアウト後の処理をオーバーライド
+     * デフォルトの処理の場合、リダイレクトがreturnされてしまうのでユーザー情報のみreturnする
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    // public function adminRegister()
-    // {
-    //     return view('auth/register');
-    // }
+    protected function loggedOut(Request $request)
+    {
+        $request->session()->regenerate();
+
+        return response()->json();
+    }
 }

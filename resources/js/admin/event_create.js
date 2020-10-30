@@ -1,6 +1,6 @@
+// イベント作成時にサムネイル画像のプレビューをする
 function setImage(e) {
-  console.log('OK');
-  
+
   let file = e.target.files[0];
   let reader = new FileReader();
   let preview = document.getElementsByClassName('preview')[0]
@@ -9,7 +9,7 @@ function setImage(e) {
   // 既にプレビュー画像がある場合は一度リセット
   if (previewImage != null) {
     preview.removeChild(previewImage);
-  } 
+  }
 
   reader.onload = function(e) {
     let img = document.createElement('img');
@@ -19,5 +19,4 @@ function setImage(e) {
   }
 
   reader.readAsDataURL(file);
-
 }

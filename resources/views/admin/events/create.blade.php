@@ -3,7 +3,7 @@
 @section('title', 'イベント作成')
 
 @section('content_header')
-    
+
 @stop
 
 @section('content')
@@ -22,32 +22,72 @@
                     </div>
                     <div class="preview"></div>
                     <div class="form-group">
-                        <label for="name">イベント名</label>
-                        <input type="text" name="name" class="form-control">
+                        <label for="name">イベント名 <span class="badge badge-danger">必須</span></label>
+                        <input type="text" name="name"
+                               class="form-control @error('name') is-invalid @enderror"
+                               value="{{ old('name') }}">
+                        @error('name')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <label for="description">イベント詳細</label>
-                        <textarea name="description" id="" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
+                        <label for="description">イベント詳細 <span class="badge badge-danger">必須</span></label>
+                        <textarea name="description" id="" cols="30" rows="10"
+                                  class="form-control @error('description') is-invalid @enderror">
+                            {{ old('description') }}
+                        </textarea>
+                        @error('description')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('description') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <label for="date">日程</label>
-                        <input type="date" name="date" class="form-control">
+                        <label for="date">日程 <span class="badge badge-danger">必須</span></label>
+                        <input type="date" name="date" class="form-control @error('date') is-invalid @enderror">
+                        @error('date')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('date') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <label for="place">場所</label>
-                        <input type="text" name="place" class="form-control">
+                        <label for="place">場所 <span class="badge badge-danger">必須</span></label>
+                        <input type="text" name="place" class="form-control @error('place') is-invalid @enderror">
+                        @error('place')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('place') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <label for="price">料金</label>
-                        <input type="number" name="price" class="form-control">
+                        <label for="price">エントリー費 <span class="badge badge-danger">必須</span></label>
+                        <input type="number" name="price" class="form-control @error('price') is-invalid @enderror">
+                        @error('price')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('price') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <label for="open_time">開始時間</label>
-                        <input type="time" name="open_time" class="form-control">
+                        <label for="open_time">開始時間 <span class="badge badge-danger">必須</span></label>
+                        <input type="time" name="open_time" class="form-control @error('open_time') is-invalid @enderror">
+                        @error('open_time')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('open_time') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <label for="close_time">終了時間</label>
-                        <input type="time" name="close_time" class="form-control">
+                        <label for="close_time">終了時間 <span class="badge badge-danger">必須</span></label>
+                        <input type="time" name="close_time" class="form-control @error('close_time') is-invalid @enderror">
+                        @error('close_time')
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('close_time') }}</strong>
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="card-footer">
@@ -76,7 +116,7 @@
             // 既にプレビュー画像がある場合は一度リセット
             if (previewImage != null) {
                 preview.removeChild(previewImage);
-            } 
+            }
 
             reader.onload = function(e) {
                 let img = document.createElement('img');

@@ -7,8 +7,8 @@
                 >
                 ログイン
             </li>
-            <li class="tab__item tab__item--register" 
-                :class="{'tab__item--active' : tab === 2}" 
+            <li class="tab__item tab__item--register"
+                :class="{'tab__item--active' : tab === 2}"
                 @click="tab = 2"
                 >
                 新規登録
@@ -101,9 +101,9 @@ import { mapState, mapGetters } from 'vuex'
             registerErrors() {
                 return this.$store.state.auth.registerErrorMessages
             },
-            apiStatus() {
-                return this.$store.state.auth.apiStatus
-            },
+            // apiStatus() {
+            //     return this.$store.state.auth.apiStatus
+            // },
             ...mapGetters({
                 isLogin: 'auth/check'
             })
@@ -111,6 +111,7 @@ import { mapState, mapGetters } from 'vuex'
         methods: {
             async login() {
                 await this.$store.dispatch('auth/login', this.loginForm)
+
                 if(this.apiStatus) {
                     this.$router.push('/')
                 }
@@ -124,7 +125,7 @@ import { mapState, mapGetters } from 'vuex'
                 formData.append('email', this.registerForm.email)
                 formData.append('password', this.registerForm.password)
                 formData.append('password_confirmation', this.registerForm.password_confirmation)
-                
+
                 // const response = await axios.post('/api/register', formData)
                 // その他のユーザー情報
                 // await this.$store.dispatch('auth/register', this.registerForm)
@@ -159,7 +160,7 @@ import { mapState, mapGetters } from 'vuex'
                 reader.onload = e => {
                     this.preview = e.target.result
                 }
-                
+
                 reader.readAsDataURL(event.target.files[0])
                 this.image = event.target.files[0]
             },

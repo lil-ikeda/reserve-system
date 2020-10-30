@@ -25,12 +25,12 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     });
 });
 
-
-// Route::get('admin', function() {
-//     return view('adminlite');
-// });
-
 // 一般ユーザー
-// Route::get('/{any?}', function () {
-//     return view('index');
-// })->where('any', '.+');
+//Route::get('/', function () {
+//    return view('user.index');
+//});
+//Route::middleware('auth:web')->group(function () {
+    Route::get('/{any?}', function () {
+        return view('user.index');
+    })->where('any', '.+');
+//});

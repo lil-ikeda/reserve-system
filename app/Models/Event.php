@@ -3,30 +3,46 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use App\Models\User;
-use App\Models\Entry;
 use Illuminate\Support\Facades\Auth;
-
 
 class Event extends Model
 {
-
     protected $fillable = [
-        'name', 'description', 'date', 'open_time', 'close_time', 'place', 'price', 'image'
+        'name',
+        'description',
+        'date',
+        'open_time',
+        'close_time',
+        'place',
+        'price',
+        'image',
     ];
 
     // JSONに含める属性
     protected $visible = [
-        'id', 'name', 'description', 'date', 'open_time', 'close_time', 'place', 'price', 'joined_by_user', 'users'
+        'id',
+        'name',
+        'description',
+        'date',
+        'open_time',
+        'close_time',
+        'place',
+        'price',
+        'joined_by_user',
+        'users',
+        'image',
     ];
 
     // アソシエーション
     public function users()
     {
         return $this
-            ->belongsToMany('App\Models\User')
-            ->withTimestamps();
+            ->belongsToMany(User::class, 'entries', 'event_id', 'user_id');
+    }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
     }
 
     // カスタムキャスト
@@ -34,6 +50,7 @@ class Event extends Model
         'joined_by_user'
     ];
 
+    // ログイン中のユーザーがエントリー済かどうかチェック
     public function getJoinedByUserAttribute()
     {
         // 未ログインならfalseを返す

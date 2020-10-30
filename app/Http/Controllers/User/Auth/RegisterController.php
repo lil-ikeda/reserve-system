@@ -8,11 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 
 class RegisterController extends Controller
@@ -50,7 +46,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -59,22 +55,35 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            ]);
-        }
+        ]);
+    }
 
-        /**
-         * Create a new user instance after a valid registration.
-         *
-         * @param  array  $data
-         * @return \App\User
-         */
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param array $data
+     * @return \App\User
+     */
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            // 'avatar' => $data['image']
+            'avatar' => $data['image']
         ]);
+    }
+
+    /**
+     * 新規登録後の処理オーバーライド
+     * デフォルトの処理の場合、リダイレクトがreturnされてしまうのでユーザー情報のみreturnする
+     *
+     * @param Request $request
+     * @param $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        return $user;
     }
 }

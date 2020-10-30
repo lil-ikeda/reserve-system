@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class EventUser extends Model
+class Entry extends Model
 {
-    protected $table = 'event_user';
+    protected $table = 'entries';
 
     protected $fillable = [
         'event_id', 'user_id',
     ];
 
-    
+    // アソシエーション
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

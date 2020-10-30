@@ -12,6 +12,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        // mailgunテスト用
         DB::table('admins')->insert([
             'name' => 'イケダナオヒト',
             'email' => 'ikepo.japon@gmail.com',

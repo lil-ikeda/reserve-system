@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contracts\Repositories\Admin\EventRepositoryContract;
-use App\Models\Event;
 use App\ViewModels\Admin\Event\ShowViewModel;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Event\IndexViewModel;
-use Carbon\Carbon;
 use App\Http\Requests\StoreEvent;
-
+use App\Http\Requests\UpdateEvent;
 
 class EventController extends Controller
 {
@@ -89,7 +86,7 @@ class EventController extends Controller
         return $viewModel->render('admin.events.show');
     }
 
-    public function update(Request $request, int $id)
+    public function update(UpdateEvent $request, int $id)
     {
         $name = $request->name;
         $description = $request->description;
@@ -98,7 +95,7 @@ class EventController extends Controller
         $closeTime = $request->close_time;
         $place = $request->place;
         $price = $request->price;
-        $image = $request->image;
+        $image = $request->file('image');
 
         $this->eventRepository->update(
             $id,

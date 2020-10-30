@@ -1,12 +1,15 @@
 <template>
     <div class="event-container">
-        <div class="cards-box" v-for="event in events">
+        <div v-show="loading">
+            <Loader />
+        </div>
+        <div v-show="! loading" class="cards-box" v-for="event in events">
             <!-- イベントカード -->
             <router-link class="text-decoration-none font-black" v-bind:to="{ name: 'event.show', params: {id: event.id} }">
                 <div class="event-card">
                     <div class="event-card__left">
                         <div class="event-card__left--img">
-                            <img :src="`/storage/${event.image}`">
+                            <img :src="imgPath(event.image)">
                         </div>
                     </div>
                     <div class="event-card__right">
@@ -26,6 +29,8 @@
 </template>
 
 <script>
+    import Loader from '../components/Loader.vue'
+
     export default {
         // props: {
         //     item: {
@@ -33,9 +38,13 @@
         //         required: true
         //     }
         // },
+        components: {
+            Loader
+        },
         data: function() {
             return {
-                events: []
+                loading: true,
+                events: [],
             }
         },
         methods: {
@@ -44,10 +53,21 @@
                     .then((res) => {
                         this.events = res.data;
                     });
+                this.loading = false
+            },
+            imgPath(url) {
+                if (url == null) {
+                    url = '/img/noimage.png'
+                } else {
+                    url = 'https://sh-reserve.s3.ap-northeast-1.amazonaws.com' + url
+                }
+
+                return url;
             }
         },
         mounted() {
             this.getEvents();
+            this.loading = false;
         }
     }
 </script>

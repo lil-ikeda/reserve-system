@@ -72,6 +72,30 @@ interface EventRepositoryContract
     public function getEntriedUsers(int $id): Collection;
 
     /**
+     * 支払ステータスを取得
+     *
+     * @param object $entries
+     * @return array
+     */
+    public function getShippingStatus(object $entries): array;
+
+    /**
+     * キャンセル希望有無を取得
+     *
+     * @param $entries
+     * @return array
+     */
+    public function getCancellationRequest(object $entries): array;
+
+    /**
+     * 支払方法を取得
+     *
+     * @param object $entries
+     * @return array
+     */
+    public function getPaymentMethod(object $entries): array;
+
+    /**
      * イベントを削除
      */
     public function destroy(int $id): bool;

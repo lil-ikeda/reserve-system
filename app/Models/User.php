@@ -2,11 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Event;
-use App\Models\Entry;
 
 class User extends Authenticatable
 {
@@ -27,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     /**
@@ -42,7 +39,6 @@ class User extends Authenticatable
     // アソシエーション
     public function events()
     {
-        return $this->belongsToMany('App\Models\Event')
-        ->withTimestamps();
+        return $this->belongsToMany(Event::class);
     }
 }
