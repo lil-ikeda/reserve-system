@@ -6,10 +6,12 @@
 @import 'reset';
 @import 'common';
 @import 'header';
+@import 'footer';
 @import 'login';
 @import 'eventCreate';
 @import 'eventList';
-@import 'user/eventShow';
+@import 'user/events/show';
+@import 'user/events/entry';
 @import 'loader';
 @import './admin/events/index.scss';
 

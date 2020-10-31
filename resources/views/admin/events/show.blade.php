@@ -40,7 +40,7 @@
                                     <label for="exampleInputFile">イメージ画像</label>
                                     <div class="input-group">
                                         <input type="file" class="" id="exampleInputFile" name="image"
-{{--                                               value="{{ old('image', $event->image) }}" --}}
+{{--                                               value="{{ old('image', $event->image) }}"--}}
                                                onchange="setImage(event)">
                                     </div>
                                 </div>

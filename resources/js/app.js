@@ -6,6 +6,24 @@ import store from './store'
 // App.vueのルートコンポーネントをインポート
 import App from './App.vue'
 
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faInstagram)
+library.add(faFacebookSquare)
+library.add(faTwitter)
+library.add(faYoutube)
+library.add(faPaperPlane)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.config.productionTip = false
+
+
 const createApp = async() => {
     // リロード時にログイン✔チェック
     await store.dispatch('auth/currentUser')

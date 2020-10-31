@@ -3,6 +3,8 @@
         <div v-show="loading">
             <Loader />
         </div>
+        <div class="headline-en">Events</div>
+        <div class="headline-ja">すべてのイベント</div>
         <div v-show="! loading" class="cards-box" v-for="event in events">
             <!-- イベントカード -->
             <router-link class="text-decoration-none font-black" v-bind:to="{ name: 'event.show', params: {id: event.id} }">

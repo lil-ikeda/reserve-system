@@ -1,68 +1,45 @@
 <template>
     <div class="event-container">
         <div class="event-container__inner">
-<!--            <div v-if="event" class="event-img">-->
-<!--                <img class="event-img__file" :src="imgPath(event.image)">-->
-<!--            </div>-->
-            <div class="font-weight-bold">
-                エントリー内容確認
-            </div>
-            <div class="event-title">
-                {{ event.name }}
-            </div>
-<!--            <div class="event-description">{{ event.description }}</div>-->
-            <div class="event-info">
-                <ul>
-                    <li>日程：{{ event.date }}</li>
-                    <li>時間：{{ event.open_time }} 〜 {{ event.close_time }}</li>
-                    <li>場所：{{ event.place }}</li>
-                    <li class="event-sales font-weight-bold">エントリー：　{{ event.price }} 円</li>
-                </ul>
-            </div>
-
-            <div class="">
-                お支払い方法を選択してください。
-                <br>
-                （エントリーするだけでは支払完了しません。）
-            </div>
-
+            <div class="entry-headline">エントリー内容確認</div>
             <form @submit.prevent="entry">
-                <div class="">
-                    <input type="radio" name="payment_method" value="1" id="payment_method_bank" v-model="paymentMethod">
-                    <label for="payment_method_bank">口座振込</label>
-                    <input type="radio" name="payment_method" value="2" id="payment_method_paypay" v-model="paymentMethod">
-                    <label for="payment_method_paypay">PayPay</label>
+                <div class="event-info__entry">
+                    <div class="entry-title">{{ event.name }}</div>
+
+                    <ul class="entry-info">
+                        <li>日程：{{ event.date }}</li>
+                        <li>時間：{{ event.open_time }} 〜 {{ event.close_time }}</li>
+                        <li>場所：{{ event.place }}</li>
+                        <li class="event-price font-weight-bold">エントリー費：　{{ event.price }} 円</li>
+                    </ul>
+
+                    <div class="select-payment">
+                        <span>お支払い方法を選択してください。</span>
+                        <br>
+                        <span class="select-payment__desc">（エントリーするだけでは支払完了しません。）</span>
+                    </div>
+
+                    <div class="inline-radio">
+                        <div class="">
+                            <input type="radio" name="payment_method" value="1" id="payment_method_bank" v-model="paymentMethod">
+                            <label for="payment_method_bank">口座振込</label>
+                        </div>
+                        <div class="">
+                            <input type="radio" name="payment_method" value="2" id="payment_method_paypay" v-model="paymentMethod">
+                            <label for="payment_method_paypay">PayPay</label>
+                        </div>
+                    </div>
                 </div>
 
-                <button
-                    type="submit"
-                    class="button button__join"
-                    @click.prevent="onJoinClick">
-                    <span>エントリーする</span>
-                </button>
+                <div class="d-flex justify-content-center">
+                    <button
+                        type="submit"
+                        class="button button__join"
+                        @click.prevent="onJoinClick">
+                        <span>エントリー送信</span>
+                    </button>
+                </div>
             </form>
-<!--            <router-link-->
-<!--                v-bind:to="{name: 'event.entry'}"-->
-<!--                class="button button__join">-->
-                <!--              :class="{ 'button button__joined' : event.joined_by_user }"-->
-                <!--              @click.prevent="onJoinClick"-->
-                <!--            >-->
-<!--                <span v-if="event.joined_by_user"></span>-->
-<!--                <span v-else>Paypayで支払う</span>-->
-<!--            </router-link>-->
-            <!--            <div class="event-entry">-->
-            <!--                <p>エントリーユーザー一覧</p>-->
-            <!--                <div v-if="event.users.length > 0">-->
-            <!--                    <ul-->
-            <!--                    v-for="user in event.users"-->
-            <!--                    :key="user.name">-->
-            <!--                        <li>{{ user.name }}</li>-->
-            <!--                    </ul>-->
-            <!--                </div>-->
-            <!--                <div v-else>-->
-            <!--                    <p>エントリー中のユーザーがいません</p>-->
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
     </div>
 </template>
@@ -73,7 +50,7 @@
     export default {
         props: {
             id: {
-                type: String,
+                type: [String],
                 required: true
             }
         },

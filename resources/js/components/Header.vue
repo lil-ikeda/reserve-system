@@ -1,16 +1,20 @@
 <template>
     <div class="header">
         <div class="header__wrapper">
-            <router-link class="text-decoration-none font-white" v-bind:to="{name: 'event.list'}">
-                <span class="header__wrapper--title">予約システム</span>
-            </router-link>
-            <div class="header__link" v-if='isLogin'>
-                <span @click="logout">ログアウト</span>
-<!--                <img :src="`/storage/${useravatar}`" class="header__avatar">-->
-            </div>
-            <div class="header__link" v-else>
-                <span @click="login">ログイン</span>
-            </div>
+
+<!--            <div class="header__wrapper&#45;&#45;fix">-->
+                <router-link class="text-decoration-none font-white" v-bind:to="{name: 'event.list'}">
+                    <span class="header__wrapper--title">ロゴ</span>
+                </router-link>
+                <div class="header__link" v-if='isLogin'>
+                    <span @click="logout">ログアウト</span>
+<!--                    <img :src="`/storage/${useravatar}`" class="header__avatar">-->
+                </div>
+                <div class="header__link" v-else>
+                    <span @click="login">ログイン</span>
+                </div>
+<!--            </div>-->
+
         </div>
     </div>
 </template>

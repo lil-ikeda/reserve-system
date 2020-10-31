@@ -7,41 +7,46 @@
             <div v-if="event" class="event-img">
                 <img class="event-img__file" :src="imgPath(event.image)">
             </div>
-            <div class="event-title">
-                {{ event.name }}
-            </div>
-            <div class="event-description">{{ event.description }}</div>
-            <div class="event-sales">{{ event.price }} 円</div>
             <div class="event-info">
+                <div class="event-title">
+                    {{ event.name }}
+                </div>
+                <div class="event-description">{{ event.description }}</div>
                 <ul>
                     <li>日程：{{ event.date }}</li>
                     <li>時間：{{ event.open_time }} 〜 {{ event.close_time }}</li>
                     <li>場所：{{ event.place }}</li>
                 </ul>
+                <div class="event-price font-weight-bold">エントリー費：{{ event.price }} 円</div>
             </div>
-            <button
-                class="button button__join"
-                :class="{ 'button button__joined' : event.joined_by_user }"
-                @click="onJoinClick()"
-            >
-                <span v-if="event.joined_by_user">
+            <div class="d-flex justify-content-center">
+                <button class="button button__paypay" v-if="event.joined_by_user" @click="linkToPayment">
+                    PayPayで支払う
+                </button>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button
+                    class="button button__joined"
+                    @click="onJoinClick()"
+                    v-if="event.joined_by_user"
+                >
                     エントリーをやめる
-                </span>
-                <span v-else>
+                </button>
+                <button
+                    class="button button__join"
+                    @click="onJoinClick()"
+                    v-else
+                >
                     エントリーページへ
-                </span>
-            </button>
-
-            <button class="button button__paypay" v-if="event.joined_by_user" @click="linkToPayment">
-                PayPayで支払う
-            </button>
+                </button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import { OK } from '../util'
-import { Loader } from '../components/Loader.vue'
+import Loader from '../components/Loader.vue'
 
 export default {
     components: {
@@ -49,7 +54,7 @@ export default {
     },
     props: {
         id: {
-            type: String,
+            type: [String],
             required: true
         }
     },
@@ -87,28 +92,6 @@ export default {
         linkToPayment () {
             this.$router.push(`/events/${this.id}/payment/paypay`);
         },
-        // async join() {
-        //     const response = await axios.put(`/api/events/${this.id}/join`)
-        //     // エラー時はエラーメッセージ表示
-        //     if (response.status !== OK) {
-        //         this.$store.commit('error/setCode', response.status)
-        //         return false
-        //     }
-        //     // エントリー済みフラグをtrueに
-        //     this.event.joined_by_user = true
-        //     // エントリーページに繊維
-        //     this.$router.push(`/events/${this.id}/entry`)
-        // },
-        // async unjoin() {
-        //     const response = await axios.delete(`/api/events/${this.id}/join`)
-        //
-        //     if (response.status !== OK) {
-        //         this.$store.commit('error/setCode', response.status)
-        //         return false
-        //     }
-        //
-        //     this.event.joined_by_user = false
-        // },
         imgPath(url) {
             if (url == null) {
                 url = '/img/noimage.png'

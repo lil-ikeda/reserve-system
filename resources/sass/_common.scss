@@ -14,6 +14,7 @@
   }
 }
 
+// 共通パーツ
 .btn-submit {
   background-color: #2ecc87;
   color: #fff;
@@ -28,4 +29,146 @@
   padding: 5px 20px;
   margin: 10px 0;
   border-radius: 10px;
+}
+
+@keyframes bg_slide {
+    0% {
+        transform-origin: left top;
+        transform: scaleX(0.0);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: left top;
+        transform: scaleX(1.0);
+        opacity: 1;
+    }
+}
+
+.button__join {
+    color: #0e83cd;
+    border: 3px solid #0e83cd;
+    background-color: #fff;
+    padding: 13px 24px;
+    border-radius: 50px;
+    margin-top: 32px;
+    font-weight: bold;
+    z-index: 0;
+    &:hover {
+        color: #fff;
+        position: relative;
+    }
+    &:hover::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-color: #0e83cd;
+        animation: bg_slide 0.2s;
+        border-radius: 50px;
+    }
+}
+
+//.button__joined {
+//    color: #000;
+//    font-weight: bold;
+//    background-color: #f0f0ee;
+//    padding: 13px 16px;
+//    border-radius: 50px;
+//    border: 3px solid #ddd;
+//}
+
+
+.button__joined {
+    color: #575757;
+    border: 3px solid #575757;
+    background-color: #fff;
+    padding: 13px 24px;
+    border-radius: 50px;
+    margin-top: 32px;
+    font-weight: bold;
+    z-index: 0;
+    text-align: center;
+    max-width: 50%;
+    &:hover {
+        color: #fff;
+        position: relative;
+    }
+    &:hover::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-color: #575757;
+        animation: bg_slide 0.2s;
+        border-radius: 50px;
+    }
+}
+
+
+
+.button__paypay {
+    color: #ef3f3f;
+    border: 3px solid #ef3f3f;
+    background-color: #fff;
+    padding: 13px 24px;
+    border-radius: 50px;
+    margin-top: 32px;
+    font-weight: bold;
+    z-index: 0;
+    text-align: center;
+    max-width: 50%;
+    &:hover {
+        color: #fff;
+        position: relative;
+    }
+    &:hover::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-color: #ef3f3f;
+        animation: bg_slide 0.2s;
+        border-radius: 50px;
+    }
+}
+
+.headline-en {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+.headline-ja {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.confirm-mail-icon {
+    margin: 0 auto;
+    width: 120px;
+    img {
+        width: 100%;
+    }
+}
+
+// 共通背景
+.event-container {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    min-height: calc(100vh - 291px);
+    &__inner {
+        max-width: 425px;
+        margin: 24px auto;
+    }
 }

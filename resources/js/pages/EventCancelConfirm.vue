@@ -1,16 +1,21 @@
 <template>
     <div class="event-container">
         <div class="event-container__inner">
-            <div class="font-weight-bold">キャンセルメール送信完了</div>
-            <div>
-                登録メールアドレス宛に、キャンセル内容確認用のメールを送信しました。
-                内容に誤りがないかご確認くださいませ。
+            <div class="entry-headline">キャンセルメール送信完了</div>
+            <div class="event-info__entry">
+                <div>
+                    登録メールアドレス宛に、キャンセル内容確認用のメールを送信しました。
+                    内容に誤りがないかご確認くださいませ。
+                </div>
+                <div class="confirm-mail-icon">
+                    <img src="/img/paper-plane.png">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button @click="backToTop">トップページへ戻る</button>
             </div>
         </div>
 
-        <div class="">
-            <button @click="backToTop">トップページへ戻る</button>
-        </div>
     </div>
 </template>
 
@@ -20,7 +25,7 @@
     export default {
         props: {
             id: {
-                type: String,
+                type: [String],
                 required: true
             }
         },

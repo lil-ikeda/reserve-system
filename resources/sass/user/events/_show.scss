@@ -1,0 +1,42 @@
+.event-container {
+    // background-color: #f0f0ee;
+    .event-info {
+        background-color: #fff;
+        border-radius: 0 0 20px 20px;
+        padding: 32px 24px;
+
+        .event-title {
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid #bbb;
+            padding-bottom: 8px;
+        }
+
+        .event-description {
+            margin: 24px 0;
+            white-space: pre-wrap;
+        }
+    }
+
+    &__inner {
+        //margin-top: 16px;
+
+        .event-img {
+            max-width: 425px;
+            margin: 0 auto;
+
+            &__file {
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                // height: 200px;
+                // background-color: #d2d2d2;
+            }
+        }
+    }
+}
+
+
+// admin
+.break-spaces {
+    white-space: break-spaces;
+}

@@ -1,16 +1,21 @@
 <template>
     <div class="event-container">
         <div class="event-container__inner">
-            <div class="font-weight-bold">
+
+            <div class="entry-headline">
                 本当にキャンセルしますか？
             </div>
-
-            <div class="">
-                運営事務局にキャンセル希望メールを送信します。
+            <div class="event-info__entry">
+                <div class="">
+                    運営事務局にキャンセル希望メールを送信します。
+                </div>
             </div>
 
-            <button @click="cancel">送信する</button>
-
+            <div class="d-flex justify-content-center">
+                <span class="button__join">
+                    <button @click="cancel">送信する</button>
+                </span>
+            </div>
         </div>
     </div>
 </template>
@@ -21,7 +26,7 @@
     export default {
         props: {
             id: {
-                type: String,
+                type: [String],
                 required: true
             }
         },

@@ -1,0 +1,82 @@
+.entry-headline {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+.event-info {
+    &__entry {
+        border-radius: 20px;
+        background-color: #fff;
+        padding: 32px 24px;
+        margin: 32px 0;
+
+        .entry-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .entry-info {
+            margin-top: 24px;
+            font-weight: bold;
+            line-height: 30px;
+        }
+    }
+}
+
+.select-payment {
+    margin-top: 24px;
+    font-weight: bold;
+
+    &__desc {
+        font-weight: normal;
+        font-size: 14px;
+    }
+}
+
+.inline-radio {
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #b6b6b6;
+    margin-top: 32px;
+
+    div {
+        position: relative;
+        flex: 1;
+        cursor: pointer;
+    }
+
+    input {
+        width: 100%;
+        height: 42px;
+        opacity: 0;
+    }
+
+    label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #b6b6b6;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        border-right: 1px solid #b6b6b6;
+        font-weight: bold;
+    }
+
+    div:last-child label {
+        border-right: 0;
+    }
+
+    input:checked + label {
+        background: #d81b60;
+        font-weight: 500;
+        color: #fff;
+    }
+}

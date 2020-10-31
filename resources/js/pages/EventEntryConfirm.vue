@@ -1,17 +1,26 @@
 <template>
     <div class="event-container">
         <div class="event-container__inner">
-            <div class="font-weight-bold">エントリー完了！！</div>
-            <div>
-                登録メールアドレス宛に、エントリー内容確認用のメールを送信しました。
-                必ず期日までにエントリー費のお支払いを完了してください。
+            <div class="entry-headline">エントリー完了！！</div>
+            <div class="event-info__entry">
+                <div>
+                    登録メールアドレス宛に、エントリー内容確認用のメールを送信しました。
+                    必ず期日までにエントリー費のお支払いを完了してください。
+                </div>
+                <div class="confirm-mail-icon">
+                    <img src="/img/paper-plane.png">
+                </div>
             </div>
         </div>
-        <div class="">
-            <button @click="linkToPayment">PayPayで支払う</button>
+        <div class="d-flex justify-content-center">
+            <div class="button__paypay">
+                <button @click="linkToPayment">PayPayで支払う</button>
+            </div>
         </div>
-        <div class="">
-            <button @click="backToTop">トップページへ戻る</button>
+        <div class="d-flex justify-content-center mt-5">
+            <div class="">
+                <button @click="backToTop">トップページへ戻る</button>
+            </div>
         </div>
 
 
@@ -24,7 +33,7 @@
     export default {
         props: {
             id: {
-                type: String,
+                type: [String],
                 required: true
             }
         },
