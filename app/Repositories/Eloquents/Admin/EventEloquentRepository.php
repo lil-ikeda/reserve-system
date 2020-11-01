@@ -173,14 +173,15 @@ class EventEloquentRepository implements EventRepositoryContract
     {
         $cancellationRequests = [];
         foreach ($entries as $entry) {
-            switch ($entry->cancellation_request) {
-                case false:
-                    $cancellationRequests[$entry->user_id] = '-';
-                    break;
-                case true:
-                    $cancellationRequests[$entry->user_id] = 'キャンセル待ち';
-                    break;
-            }
+//            switch ($entry->cancellation_request) {
+//                case false:
+//                    $cancellationRequests[$entry->user_id] = '-';
+//                    break;
+//                case true:
+//                    $cancellationRequests[$entry->user_id] = 'キャンセル待ち';
+//                    break;
+//            }
+            $cancellationRequests[$entry->user_id] = $entry->cancellation_request;
         }
 
         return $cancellationRequests;

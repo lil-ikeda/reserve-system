@@ -1,7 +1,11 @@
 <template>
     <div class="event-container">
-        <div class="event-container__inner">
+        <div v-show="loading">
+            <SendLoader />
+        </div>
+        <div class="event-container__inner" v-show="! loading">
             <div class="entry-headline">エントリー内容確認</div>
+            <!--フォーム-->
             <form @submit.prevent="entry">
                 <div class="event-info__entry">
                     <div class="entry-title">{{ event.name }}</div>
@@ -21,11 +25,11 @@
 
                     <div class="inline-radio">
                         <div class="">
-                            <input type="radio" name="payment_method" value="1" id="payment_method_bank" v-model="paymentMethod">
+                            <input class="cursor-pointer" type="radio" name="payment_method" value="1" id="payment_method_bank" v-model="paymentMethod">
                             <label for="payment_method_bank">口座振込</label>
                         </div>
                         <div class="">
-                            <input type="radio" name="payment_method" value="2" id="payment_method_paypay" v-model="paymentMethod">
+                            <input class="cursor-pointer" type="radio" name="payment_method" value="2" id="payment_method_paypay" v-model="paymentMethod">
                             <label for="payment_method_paypay">PayPay</label>
                         </div>
                     </div>
@@ -46,8 +50,12 @@
 
 <script>
     import {CREATED, OK, UNPROCESSABLE_ENTITY} from '../util'
+    import SendLoader from '../components/SendLoader.vue'
 
     export default {
+        components: {
+            SendLoader
+        },
         props: {
             id: {
                 type: [String],
@@ -56,7 +64,8 @@
         },
         data() {
             return {
-                event: null
+                event: null,
+                loading: false
             }
         },
         methods: {
@@ -70,13 +79,13 @@
 
                 this.event = response.data
             },
-            async login() {
-                await this.$store.dispatch('auth/login', this.loginForm)
-
-                if(this.apiStatus) {
-                    this.$router.push('/')
-                }
-            },
+            // async login() {
+            //     await this.$store.dispatch('auth/login', this.loginForm)
+            //
+            //     if(this.apiStatus) {
+            //         this.$router.push('/')
+            //     }
+            // },
             onJoinClick () {
                 if (! this.$store.getters['auth/check']) {
                     alert('エントリー機能を使うにはログインしてください')
@@ -89,17 +98,17 @@
                     this.entry()
                 }
             },
-            async join() {
-                const response = await axios.put(`/api/events/${this.id}/join`)
-                // エラー時はエラーメッセージ表示
-                if (response.status !== OK) {
-                    this.$store.commit('error/setCode', response.status)
-                    return false
-                }
-                this.event.joined_by_user = true
-                // エントリーしたユーザーを非同期で画面に反映
-                // this.fetchEvent();
-            },
+            // async join() {
+            //     const response = await axios.put(`/api/events/${this.id}/join`)
+            //     // エラー時はエラーメッセージ表示
+            //     if (response.status !== OK) {
+            //         this.$store.commit('error/setCode', response.status)
+            //         return false
+            //     }
+            //     this.event.joined_by_user = true
+            //     // エントリーしたユーザーを非同期で画面に反映
+            //     // this.fetchEvent();
+            // },
             async unjoin() {
                 const response = await axios.delete(`/api/events/${this.id}/join`)
 
@@ -113,12 +122,12 @@
                 this.fetchEvent();
             },
             async entry() {
-                // formの入力内容をformDataに
-                const formData = new FormData()
-                formData.append('payment_method', this.paymentMethod)
+                this.loading = true
 
-                const response = await axios.put(`/api/events/${this.id}/join`, formData)
-                console.log(response);
+                // TODO 支払い方法を選択しないと送信できないようにする
+                const response = await axios.put(`/api/events/${this.id}/join`, {
+                    paymentMethod: this.paymentMethod
+                })
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

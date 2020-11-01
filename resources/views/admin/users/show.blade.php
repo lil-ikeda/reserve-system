@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>マイページ</h1>
+    <h1>ユーザー詳細</h1>
 @stop
 
 @section('content')
@@ -18,13 +18,6 @@
                 </div>
             </div>
         </div>
-        <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}" onSubmit="return deleteCheck()">
-            @method('DELETE')
-            @csrf
-            <button type="submit" class="btn btn-outline-danger" >
-                アカウントを削除する
-            </button>
-        </form>
     </div>
 @stop
 
@@ -33,5 +26,4 @@
 @stop
 
 @section('js')
-    <script></script>
 @stop

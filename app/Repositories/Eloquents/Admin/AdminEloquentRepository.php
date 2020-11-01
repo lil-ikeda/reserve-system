@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Eloquents;
+namespace App\Repositories\Eloquents\Admin;
 
 use App\Models\Admin;
-use App\Contracts\Repositories\AdminRepositoryContract;
+use App\Contracts\Repositories\Admin\AdminRepositoryContract;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 

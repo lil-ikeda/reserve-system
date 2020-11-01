@@ -13,4 +13,13 @@ interface EntryRepositoryContract
      * @return Collection
      */
     public function getByEventId(int $id): Collection;
+
+    /**
+     * エントリーの削除（キャンセル受諾）
+     *
+     * @param int $eventId
+     * @param int $userId
+     * @return bool
+     */
+    public function destroy(int $eventId, int $userId): bool;
 }

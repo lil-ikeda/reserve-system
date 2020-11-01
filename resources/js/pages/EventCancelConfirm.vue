@@ -3,15 +3,15 @@
         <div class="event-container__inner">
             <div class="entry-headline">キャンセルメール送信完了</div>
             <div class="event-info__entry">
-                <div>
-                    登録メールアドレス宛に、キャンセル内容確認用のメールを送信しました。
-                    内容に誤りがないかご確認くださいませ。
-                </div>
                 <div class="confirm-mail-icon">
                     <img src="/img/paper-plane.png">
                 </div>
+                <div>
+                    運営事務局宛にキャンセルリクエストのメールを送信しました。
+                    運営事務局よりキャンセル確定メールが届くのをお待ちください。
+                </div>
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center font-weight-bold">
                 <button @click="backToTop">トップページへ戻る</button>
             </div>
         </div>
@@ -93,7 +93,6 @@
                 formData.append('payment_method', this.paymentMethod)
 
                 const response = await axios.put(`/api/events/${this.id}/join`, formData)
-                console.log(response);
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

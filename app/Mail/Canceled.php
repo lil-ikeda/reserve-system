@@ -29,11 +29,11 @@ class Canceled extends Mailable
     public function build()
     {
         return $this
-            ->view('admin.mails.invite')
-            ->text('admin.mails.invite')
+            ->view('admin.mails.canceled')
+            ->text('admin.mails.canceled')
             ->subject('【イベント名】のキャンセル希望')
             ->with([
-                'text' => "【ユーザー名】がキャンセルの希望をしています。",
+                'text' => "【ユーザー名】がキャンセルの希望をしています。\n支払いステータスは【支払済/未払い】です。",
             ]);
     }
 }

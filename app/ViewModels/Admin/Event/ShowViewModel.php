@@ -41,7 +41,6 @@ class ShowViewModel extends ViewModel
 
         $entries = $this->entryRepository->getByEventId($id);
 
-
         return [
             'event' => $this->eventRepository->findById($id),
             'users' => $this->eventRepository->getEntriedUsers($id),

@@ -86,6 +86,7 @@ export default {
             if (this.event.joined_by_user) {
                 this.$router.push(`/events/${this.id}/cancel`);
             } else {
+                this.loading = true
                 this.$router.push(`/events/${this.id}/entry`);
             }
         },

@@ -4,12 +4,12 @@ namespace App\Providers;
 
 use App\Contracts\Repositories\Admin\EventRepositoryContract;
 use App\Repositories\Eloquents\Admin\EventEloquentRepository;
-use App\Contracts\Repositories\User\UserRepositoryContract;
-use App\Repositories\Eloquents\User\UserEloquentRepository;
-use App\Contracts\Repositories\AdminRepositoryContract;
-use App\Repositories\Eloquents\AdminEloquentRepository;
+use App\Contracts\Repositories\Admin\AdminRepositoryContract;
+use App\Repositories\Eloquents\Admin\AdminEloquentRepository;
 use App\Contracts\Repositories\Admin\EntryRepositoryContract;
 use App\Repositories\Eloquents\Admin\EntryEloquentRepository;
+use App\Contracts\Repositories\Admin\UserRepositoryContract;
+use App\Repositories\Eloquents\Admin\UserEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

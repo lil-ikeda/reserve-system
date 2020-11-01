@@ -141,12 +141,10 @@
                 <h3 class="card-title">エントリーユーザー一覧</h3>
 
                 <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>
+                    <p>エントリー数：　{{ count($users) }}人</p>
+{{--                    <button type="button" class="btn btn-tool" data-card-widget="collapse">--}}
+{{--                        <i class="fas fa-minus"></i>--}}
+{{--                    </button>--}}
                 </div>
             </div>
             <!-- /.card-header -->
@@ -166,15 +164,26 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td>アイコン</td>
-                                <td><a href="pages/examples/invoice.html">{{ $user->name }}</a></td>
+                                <td><a href="{{ route('admin.users.show', $user->id) }}">{{ $user->name }}</a></td>
                                 @if ($shippingStatus[$user->id] == config('const.shipping_status.unpaid.id'))
                                     <td><span class="badge badge-danger">未払い</span></td>
                                 @elseif ($shippingStatus[$user->id] == config('const.shipping_status.paid.id'))
                                     <td><span class="badge badge-success">支払済</span></td>
                                 @endif
-                                <td>{{ $cancellationRequests[$user->id] }}</td>
+                                @if ($cancellationRequests[$user->id] == true)
+                                    <td>
+                                        <form action="{{ route('admin.entry.destroy', $event->id) }}" class="font-weight-bold" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <input type="hidden" value="{{ $user->id }}" name="userId">
+                                            <input type="hidden" value="{{ $event->id }}" name="eventId">
+                                            <button type="submit" onClick="return cancelConfirm()" class="">キャンセル待ち</button>
+                                        </form>
+                                    </td>
+                                @elseif ($cancellationRequests[$user->id] == false)
+                                    <td>-</td>
+                                @endif
                                 <td>{{ $paymentMethods[$user->id] }}</td>
-
                             </tr>
                         @endforeach
                         </tbody>
@@ -231,6 +240,15 @@
 
         function deleteConfirm() {
             let checked = confirm('本当に削除しますか？')
+            if (checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function cancelConfirm() {
+            let checked = confirm('本当に削除しますか？返金処理は完了していますか？')
             if (checked == true) {
                 return true;
             } else {

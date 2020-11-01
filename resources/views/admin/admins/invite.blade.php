@@ -14,7 +14,7 @@
                     ユーザー招待
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.users.send') }}" method="POST" class="d-flex justify-content-between">
+                    <form action="{{ route('admin.admins.send.invitemail') }}" method="POST" class="d-flex justify-content-between">
                         @csrf
                         @method('POST')
                         <input type="email" name="email" placeholder="tanaka@example.com" style="width: 70%">

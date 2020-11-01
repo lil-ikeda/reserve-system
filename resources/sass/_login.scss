@@ -10,8 +10,8 @@
             font-weight: bold;
             cursor: pointer;
             &--active {
-                border-bottom: 2px solid #2ecc87;
-                color: #2ecc87;
+                border-bottom: 2px solid rgba(14,131,205,1);
+                color: rgba(14,131,205,1);
             }
             &--login {
               margin-right: 30px;
@@ -26,5 +26,6 @@
         border: 1px solid #d2d2d2;
         border-radius: 5px;
         padding: 3px;
+        background-color: #fff;
     }
 }

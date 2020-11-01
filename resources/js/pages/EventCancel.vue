@@ -1,7 +1,9 @@
 <template>
     <div class="event-container">
-        <div class="event-container__inner">
-
+        <div v-show="loading">
+            <SendLoader />
+        </div>
+        <div class="event-container__inner" v-show="! loading">
             <div class="entry-headline">
                 本当にキャンセルしますか？
             </div>
@@ -21,9 +23,13 @@
 </template>
 
 <script>
-    import {CREATED, OK, UNPROCESSABLE_ENTITY} from '../util'
+    import {CREATED, OK, UNPROCESSABLE_ENTITY} from '../util';
+    import SendLoader from "../components/SendLoader";
 
     export default {
+        components: {
+            SendLoader
+        },
         props: {
             id: {
                 type: [String],
@@ -32,6 +38,7 @@
         },
         data() {
             return {
+                loading: false,
                 event: null
             }
         },
@@ -46,7 +53,8 @@
             },
 
             async cancel() {
-                // const response = await axios.post(`/api/events/${this.id}/cancel/sendmail`)
+                this.loading = true
+                const response = await axios.post(`/api/events/${this.id}/cancel/sendmail`, {id: this.id})
 
                 // formの入力内容をformDataに
                 // const formData = new FormData()
@@ -57,14 +65,18 @@
                 //
 
 
-                // if (response.status !== OK) {
-                //     this.$store.commit('error/setCode', response.status)
-                //     return false
-                // }
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
 
-                this.unjoin();
-
+                this.loading = false
                 this.$router.push({name: 'event.cancel.confirm'});
+
+                // const result = this.unjoin();
+                // if (result === true) {
+                //     this.$router.push({name: 'event.cancel.confirm'});
+                // }
 
 
                 // this.loading = false
@@ -93,6 +105,7 @@
                     return false
                 }
 
+                return true
                 // this.event.joined_by_user = false
             },
         },

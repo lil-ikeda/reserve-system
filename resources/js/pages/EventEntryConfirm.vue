@@ -1,14 +1,17 @@
 <template>
     <div class="event-container">
+        <div v-show="loading">
+            <Loader />
+        </div>
         <div class="event-container__inner">
             <div class="entry-headline">エントリー完了！！</div>
             <div class="event-info__entry">
+                <div class="confirm-mail-icon">
+                    <img src="/img/paper-plane.png">
+                </div>
                 <div>
                     登録メールアドレス宛に、エントリー内容確認用のメールを送信しました。
                     必ず期日までにエントリー費のお支払いを完了してください。
-                </div>
-                <div class="confirm-mail-icon">
-                    <img src="/img/paper-plane.png">
                 </div>
             </div>
         </div>
@@ -17,7 +20,7 @@
                 <button @click="linkToPayment">PayPayで支払う</button>
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-5 font-weight-bold">
             <div class="">
                 <button @click="backToTop">トップページへ戻る</button>
             </div>
@@ -29,8 +32,12 @@
 
 <script>
     import {CREATED, OK, UNPROCESSABLE_ENTITY} from '../util'
+    import Loader from '../components/Loader.vue'
 
     export default {
+        components: {
+            Loader
+        },
         props: {
             id: {
                 type: [String],
@@ -39,6 +46,7 @@
         },
         data() {
             return {
+                loading: false,
                 event: null
             }
         },
@@ -101,7 +109,7 @@
                 formData.append('payment_method', this.paymentMethod)
 
                 const response = await axios.put(`/api/events/${this.id}/join`, formData)
-                console.log(response);
+                console.log(response.status !== OK);
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

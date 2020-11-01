@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Repositories;
+namespace App\Contracts\Repositories\Admin;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;

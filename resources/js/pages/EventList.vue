@@ -1,10 +1,10 @@
 <template>
     <div class="event-container">
+        <div class="headline-en">Events</div>
+        <div class="headline-ja">すべてのイベント</div>
         <div v-show="loading">
             <Loader />
         </div>
-        <div class="headline-en">Events</div>
-        <div class="headline-ja">すべてのイベント</div>
         <div v-show="! loading" class="cards-box" v-for="event in events">
             <!-- イベントカード -->
             <router-link class="text-decoration-none font-black" v-bind:to="{ name: 'event.show', params: {id: event.id} }">
@@ -18,9 +18,18 @@
                         <p class="event-card__right--title">{{ event.name }}</p>
                         <div class="event-card__right--info">
                             <ul>
-                                <li>日程：{{ event.date }}</li>
-                                <li>時間：{{ event.open_time }} - {{ event.close_time }}</li>
-                                <li>場所：{{ event.place }}</li>
+                                <li>
+                                    <font-awesome-icon style="min-width: 30px;" :icon="['fas', 'calendar-alt']" />
+                                    {{ event.date }}
+                                </li>
+                                <li>
+                                    <font-awesome-icon style="min-width: 30px;" :icon="['fas', 'clock']" />
+                                    {{ event.open_time }} - {{ event.close_time }}
+                                </li>
+                                <li>
+                                    <font-awesome-icon style="min-width: 30px;" :icon="['fas', 'map-marker-alt']" />
+                                    {{ event.place }}
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -41,7 +50,7 @@
         //     }
         // },
         components: {
-            Loader
+            Loader,
         },
         data: function() {
             return {
@@ -55,7 +64,6 @@
                     .then((res) => {
                         this.events = res.data;
                     });
-                this.loading = false
             },
             imgPath(url) {
                 if (url == null) {
@@ -63,7 +71,6 @@
                 } else {
                     url = 'https://sh-reserve.s3.ap-northeast-1.amazonaws.com' + url
                 }
-
                 return url;
             }
         },

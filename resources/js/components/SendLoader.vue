@@ -9,6 +9,6 @@
                 </div>
             </div>
         </div>
-        <div class="text-center">Loading...</div>
+        <div class="text-center">Sending...</div>
     </div>
 </template>

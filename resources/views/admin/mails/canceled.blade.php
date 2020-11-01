@@ -5,6 +5,5 @@
 </head>
 <body>
 <p>{{$text}}</p>
-<a href="{{ route('admin.events') }}">イベント一覧を見る</a>
 </body>
 </html>

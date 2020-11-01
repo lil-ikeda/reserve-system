@@ -1,9 +1,9 @@
 <?php
 
-namespace App\ViewModels\Admin\User;
+namespace App\ViewModels\Admin\Admin;
 
 use App\ViewModels\Base\ViewModel;
-use App\Contracts\Repositories\Admin\UserRepositoryContract;
+use App\Contracts\Repositories\Admin\AdminRepositoryContract;
 
 class ShowViewModel extends ViewModel
 {
@@ -12,7 +12,7 @@ class ShowViewModel extends ViewModel
      *
      * @var
      */
-    private $userRepository;
+    private $adminRepository;
 
     /**
      * 管理者ID
@@ -21,9 +21,9 @@ class ShowViewModel extends ViewModel
      */
     private $id;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    public function __construct(AdminRepositoryContract $adminRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->adminRepository = $adminRepository;
     }
 
     public function toMap(): array
@@ -31,7 +31,7 @@ class ShowViewModel extends ViewModel
         $id = $this->getId() ?? 0;
 
         return [
-            'user' => $this->userRepository->findById($id),
+            'admin' => $this->adminRepository->findById($id),
         ];
     }
 

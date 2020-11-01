@@ -19,9 +19,13 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::resource('events', 'EventController');
-        Route::get('users/invite', 'UserController@invite')->name('users.invite');
-        Route::post('users/invite', 'UserController@sendInviteMail')->name('users.send');
-        Route::resource('users', 'UserController')->only(['show', 'destroy']);
+        Route::delete('entry/{id}', 'EntryController@destroy')->name('entry.destroy');
+//        Route::get('users/{id}', 'UserController@show')->name('users.show');
+        Route::resource('users', 'UserController')->only(['index', 'show']);
+        Route::delete('admins', 'AdminController@destroy')->name('admins.destroy');
+        Route::get('admins/show', 'AdminController@show')->name('admins.show');
+        Route::get('admins/invite', 'AdminController@invite')->name('admins.invite');
+        Route::post('admins/invite', 'UserController@sendInviteMail')->name('admins.send.invitemail');
     });
 });
 

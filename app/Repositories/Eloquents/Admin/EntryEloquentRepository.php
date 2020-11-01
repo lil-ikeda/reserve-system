@@ -47,4 +47,21 @@ class EntryEloquentRepository implements EntryRepositoryContract
 
         return $entries;
     }
+
+    /**
+     * エントリーの削除（キャンセル受諾）
+     *
+     * @param int $eventId
+     * @param int $userId
+     * @return bool
+     */
+    public function destroy(int $eventId, int $userId): bool
+    {
+        $entry = $this->entry
+            ->where('event_id', $eventId)
+            ->where('user_id', $userId)
+            ->first();
+
+        return $entry->delete();
+    }
 }
