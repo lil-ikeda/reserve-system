@@ -80,7 +80,6 @@ export default {
             }
 
             this.event = response.data
-            this.loading = false
         },
         onJoinClick () {
             // ログインチェック
@@ -113,6 +112,7 @@ export default {
             return url;
         },
         async fetchPaid () {
+            this.loading = true
             const response = await axios.get(`/api/entry/${this.id}`);
             this.entry = response.data
 
@@ -121,6 +121,7 @@ export default {
             } else if (this.entry.paid == true) {
                 this.paid = true
             }
+            this.loading = false
         }
     },
     watch: {
