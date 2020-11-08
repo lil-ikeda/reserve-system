@@ -3,7 +3,7 @@
 namespace App\ViewModels\Admin\Admin;
 
 use App\ViewModels\Base\ViewModel;
-use App\Contracts\Repositories\Admin\AdminRepositoryContract;
+use App\Contracts\Repositories\AdminRepositoryContract;
 
 class ShowViewModel extends ViewModel
 {

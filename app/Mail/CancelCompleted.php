@@ -11,14 +11,19 @@ class CancelCompleted extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $eventName;
+
+    public $userName;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $eventName, string $userName)
     {
-        //
+        $this->eventName = $eventName;
+        $this->userName = $userName;
     }
 
     /**
@@ -31,17 +36,10 @@ class CancelCompleted extends Mailable
         return $this
             ->view('admin.mails.cancelcompleted')
             ->text('admin.mails.cancelcompleted')
-            ->subject('【イベント名】のキャンセルを完了しました')
+            ->subject('【' . $this->eventName . '】のキャンセルを完了しました')
             ->with([
-                'text' => "
-                【ユーザー名】様\n\n
-                【イベント名】のキャンセルを完了いたしました。\n
-                ご入金いただいていた場合はご返金処理も完了していますので、ご確認のほどお願いいたします。\n
-                万が一ご返金の確認ができない場合は以下のメールアドレスまでご連絡をお願いいたします。\n\n
-                //////////\n
-                【スキルハック運営事務局】n.ikeda@arsaga.jp
-                //////////\n
-                ",
+                "userName" => $this->userName,
+                "eventName" => $this->eventName,
             ]);
     }
 }

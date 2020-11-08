@@ -3,7 +3,7 @@
 namespace App\ViewModels\Admin\Event;
 
 use App\ViewModels\Base\ViewModel;
-use App\Contracts\Repositories\Admin\EventRepositoryContract;
+use App\Contracts\Repositories\EventRepositoryContract;
 
 class IndexViewModel extends ViewModel
 {

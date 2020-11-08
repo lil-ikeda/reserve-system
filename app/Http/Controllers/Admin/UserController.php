@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\Repositories\Admin\UserRepositoryContract;
+use App\Contracts\Repositories\UserRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\User\IndexViewModel;
 use App\ViewModels\Admin\User\ShowViewModel;

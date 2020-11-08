@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\Repositories\Admin\EventRepositoryContract;
+use App\Contracts\Repositories\EventRepositoryContract;
 use App\ViewModels\Admin\Event\ShowViewModel;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Event\IndexViewModel;

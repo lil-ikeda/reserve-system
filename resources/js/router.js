@@ -13,6 +13,7 @@ import Login from "./pages/Login.vue";
 
 import store from './store';
 import SystemError from './pages/errors/System.vue'
+import RegisterMail from "./pages/RegisterMail";
 
 // VueRouterプラグイン使用<RouterView />を利用可能にできる
 Vue.use(VueRouter)
@@ -30,6 +31,11 @@ const routes = [
                 next()
             }
         }
+    },
+    {
+        path: '/register/mail',
+        name: 'register.mail',
+        component: RegisterMail,
     },
     // イベント関連
     {

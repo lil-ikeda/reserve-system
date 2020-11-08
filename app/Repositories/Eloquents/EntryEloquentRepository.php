@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Repositories\Eloquents\Admin;
+namespace App\Repositories\Eloquents;
 
 use App\Models\Event;
 use App\Models\Entry;
-use App\Contracts\Repositories\Admin\EntryRepositoryContract;
+use App\Contracts\Repositories\EntryRepositoryContract;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class EntryEloquentRepository implements EntryRepositoryContract
 {
@@ -63,5 +65,41 @@ class EntryEloquentRepository implements EntryRepositoryContract
             ->first();
 
         return $entry->delete();
+    }
+
+    /**
+     * イベントIDとユーザーIDからエントリーレコードを取得
+     *
+     * @param int $eventId
+     * @param int $userId
+     * @return Collection
+     */
+    public function getByEventAndUserId(int $eventId, int $userId): Arrayable
+    {
+        $entry = $this->entry->where('event_id', $eventId)->where('user_id', $userId)->first();
+
+        dd($entry);
+        return $entry;
+    }
+
+    /**
+     * 1エントリーレコードに対し支払済にする
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function pay(int $id): bool
+    {
+        $entry = $this->getByEventAndUserId($id, Auth::id());
+
+        // PayPay以外の支払いの場合処理を中断
+        if ($entry->payment_method !== config('const.payment_method.paypay.id')) {
+            return false;
+        }
+
+        // 支払済とする
+        $entry->paid = true;
+
+        return $entry->save();
     }
 }

@@ -4,41 +4,46 @@
             <div v-show="loading">
                 <Loader />
             </div>
-            <div v-if="event" class="event-img">
-                <img class="event-img__file" :src="imgPath(event.image)">
-            </div>
-            <div class="event-info">
-                <div class="event-title">
-                    {{ event.name }}
+            <div v-show="! loading">
+                <div v-if="event" class="event-img">
+                    <img class="event-img__file" :src="imgPath(event.image)">
                 </div>
-                <div class="event-description">{{ event.description }}</div>
-                <ul>
-                    <li>日程：{{ event.date }}</li>
-                    <li>時間：{{ event.open_time }} 〜 {{ event.close_time }}</li>
-                    <li>場所：{{ event.place }}</li>
-                </ul>
-                <div class="event-price font-weight-bold">エントリー費：{{ event.price }} 円</div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button class="button button__paypay" v-if="event.joined_by_user" @click="linkToPayment">
-                    PayPayで支払う
-                </button>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button
-                    class="button button__joined"
-                    @click="onJoinClick()"
-                    v-if="event.joined_by_user"
-                >
-                    エントリーをやめる
-                </button>
-                <button
-                    class="button button__join"
-                    @click="onJoinClick()"
-                    v-else
-                >
-                    エントリーページへ
-                </button>
+                <div class="event-info">
+                    <div class="event-title">
+                        {{ event.name }}
+                    </div>
+                    <div class="event-description">{{ event.description }}</div>
+                    <ul>
+                        <li>日程：{{ event.date }}</li>
+                        <li>時間：{{ event.open_time }} 〜 {{ event.close_time }}</li>
+                        <li>場所：{{ event.place }}</li>
+                    </ul>
+                    <div class="event-price font-weight-bold">エントリー費：{{ event.price }} 円</div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button class="button button__paypay" v-if="event.joined_by_user" @click="payment" v-show="! paid">
+                        PayPayで支払う
+                    </button>
+                    <span class="button button__paid" v-if="event.joined_by_user" v-show="paid">
+                        PayPayで支払済
+                    </span>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button
+                        class="button button__joined"
+                        @click="onJoinClick()"
+                        v-if="event.joined_by_user"
+                    >
+                        エントリーをやめる
+                    </button>
+                    <button
+                        class="button button__join"
+                        @click="onJoinClick()"
+                        v-else
+                    >
+                        エントリーページへ
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -60,8 +65,9 @@ export default {
     },
     data() {
         return {
-            loading: true,
-            event: null
+            loading: false,
+            event: null,
+            paid: false,
         }
     },
     methods: {
@@ -90,8 +96,13 @@ export default {
                 this.$router.push(`/events/${this.id}/entry`);
             }
         },
-        linkToPayment () {
-            this.$router.push(`/events/${this.id}/payment/paypay`);
+        async payment () {
+            this.loading = true
+
+            const response = await axios.get(`/api/events/${this.id}/pay`);
+
+            // 決済ページにリダイレクト
+            location.href = response.data;
         },
         imgPath(url) {
             if (url == null) {
@@ -100,12 +111,23 @@ export default {
                 url = 'https://sh-reserve.s3.ap-northeast-1.amazonaws.com' + url
             }
             return url;
+        },
+        async fetchPaid () {
+            const response = await axios.get(`/api/entry/${this.id}`);
+            this.entry = response.data
+
+            if (this.entry.paid == false) {
+                this.paid = false
+            } else if (this.entry.paid == true) {
+                this.paid = true
+            }
         }
     },
     watch: {
         $route: {
             async handler() {
-                await this.fetchEvent()
+                await this.fetchEvent();
+                await this.fetchPaid();
             },
             immediate: true
         }

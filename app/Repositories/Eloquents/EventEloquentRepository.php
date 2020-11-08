@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Repositories\Eloquents\Admin;
+namespace App\Repositories\Eloquents;
 
 use App\Models\Event;
 use App\Models\Entry;
-use App\Contracts\Repositories\Admin\EventRepositoryContract;
+use App\Contracts\Repositories\EventRepositoryContract;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use PayPay\OpenPaymentAPI\Client;
+use PayPay\OpenPaymentAPI\Models\CreateQrCodePayload;
+use PayPay\OpenPaymentAPI\Models\OrderItem;
 
 class EventEloquentRepository implements EventRepositoryContract
 {
@@ -24,6 +27,7 @@ class EventEloquentRepository implements EventRepositoryContract
      * @var
      */
     private $entry;
+
 
     /**
      * construct
@@ -219,5 +223,71 @@ class EventEloquentRepository implements EventRepositoryContract
     public function destroy(int $id): bool
     {
         return $this->event->destroy($id);
+    }
+
+
+    /**
+     * PayPay決済
+     *
+     * @param string $eventName
+     * @param int $eventPrice
+     * @param int $eventId
+     * @throws \PayPay\OpenPaymentAPI\ClientException
+     * @throws \PayPay\OpenPaymentAPI\Controller\ClientControllerException
+     * @throws \PayPay\OpenPaymentAPI\Models\ModelException
+     */
+    public function pay(string $eventName, int $eventPrice, int $eventId): string
+    {
+        // クライアントのビルド
+        $this->paypayClient = new Client([
+            'API_KEY' => config('const.paypay.apikey'),
+            'API_SECRET'=> config('const.paypay.secret'),
+            'MERCHANT_ID'=> config('const.paypay.merchant'),
+        ], false);
+
+        // setup payment object
+        $CQCPayload = new CreateQrCodePayload();
+        // Set merchant pay identifier
+        $CQCPayload->setMerchantPaymentId("skillhack_transaction_" . \time());
+        // Log time of request
+        $CQCPayload->setRequestedAt();
+        // Indicate you want QR Code
+        $CQCPayload->setCodeType("ORDER_QR");
+
+        // イベントの名前と金額を登録
+        $orderItems = [];
+        $orderItems[] = (new OrderItem())
+            ->setName($eventName)
+            ->setQuantity(1)
+            ->setUnitPrice(['amount' => $eventPrice, 'currency' => 'JPY']);
+        $CQCPayload->setOrderItems($orderItems);
+
+        // Save Cart totals
+        $amount = [
+            "amount" => $eventPrice,
+            "currency" => "JPY"
+        ];
+        $CQCPayload->setAmount($amount);
+
+        // Configure redirects
+        $CQCPayload->setRedirectType('WEB_LINK');
+        $CQCPayload->setRedirectUrl(route('users.event.paid', $eventId));
+        $CQCPayload->setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1');
+
+        //=================================================================
+        // Calling the method to create a qr code
+        //=================================================================
+        $response = $this->paypayClient->code->createQRCode($CQCPayload);
+
+        // 処理がうまくいってなかったら抜ける
+        if ($response['resultInfo']['code'] !== 'SUCCESS') {
+            return false;
+        }
+
+        // Collectionに変換しておく
+        $QRCodeResponse = collect($response['data']);
+
+        // 決済ページのURLを返却
+        return $QRCodeResponse['url'];
     }
 }

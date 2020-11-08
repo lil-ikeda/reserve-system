@@ -148,8 +148,9 @@
             backToTop() {
                 this.$router.push('/');
             },
-            linkToPayment() {
-                this.$router.push(`/events/${this.id}/payment/paypay`)
+            async linkToPayment() {
+                // this.$router.push(`/events/${this.id}/payment/paypay`)
+                const response = await axios.put(`/api/events/${this.id}/join`)
             }
         },
         watch: {

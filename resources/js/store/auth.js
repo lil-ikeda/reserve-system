@@ -38,7 +38,7 @@ const actions = {
 
         if(response.status === CREATED) {
             context.commit('setApiStatus', true)
-            context.commit('setUser', response.data)
+            // context.commit('setUser', response.data)
             return false
         }
         context.commit('setApiStatus', false)
@@ -50,6 +50,7 @@ const actions = {
     },
     // ログイン
     async login(context, data) {
+
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/login', data)
 

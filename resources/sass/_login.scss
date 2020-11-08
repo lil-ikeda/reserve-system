@@ -1,6 +1,9 @@
 .login-wrapper {
-    width: 425px;
+    max-width: 425px;
     margin: 0 auto;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 32px 18px;
     .tab {
         display: flex;
         justify-content: center;
@@ -27,5 +30,23 @@
         border-radius: 5px;
         padding: 3px;
         background-color: #fff;
+    }
+    .register-select-form {
+        width: 100%;
+        border: 1px solid #d2d2d2;
+        border-radius: 5px;
+        padding: 3px;
+        background-color: #fff;
+    }
+    &__img-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    &__img-preview {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
     }
 }

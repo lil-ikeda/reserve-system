@@ -18,8 +18,10 @@ class UserSeeder extends Seeder
             'email' => 'tanaka@example.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'phone' => $faker->phoneNumber,
             'sex' => config('const.sex.male.id'),
             'birthday' => $faker->dateTime->format('Y-m-d'),
+            'home_circle' => 'Dig Up Treasure',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -31,8 +33,10 @@ class UserSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'phone' => $faker->phoneNumber,
                 'sex' => config('const.sex.male.id'),
                 'birthday' => $faker->dateTime->format('Y-m-d'),
+                'home_circle' => '乱縄',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -45,8 +49,10 @@ class UserSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'phone' => $faker->phoneNumber,
                 'sex' => config('const.sex.female.id'),
                 'birthday' => $faker->dateTime->format('Y-m-d'),
+                'home_circle' => 'D-act',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -59,8 +65,10 @@ class UserSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'phone' => $faker->phoneNumber,
                 'sex' => config('const.sex.do_not_answer.id'),
                 'birthday' => $faker->dateTime->format('Y-m-d'),
+                'home_circle' => 'Dig Up Treasure',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

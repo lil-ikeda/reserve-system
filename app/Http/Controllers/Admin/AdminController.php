@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\Repositories\Admin\AdminRepositoryContract;
+use App\Contracts\Repositories\AdminRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Admin\ShowViewModel;
 use Illuminate\Support\Facades\Auth;

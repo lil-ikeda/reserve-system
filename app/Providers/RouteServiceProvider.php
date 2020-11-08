@@ -31,6 +31,11 @@ class RouteServiceProvider extends ServiceProvider
     public const ADMIN_TOP = '/admin/events';
 
     /**
+     * ユーザーログイン画面
+     */
+    public const USER_LOGIN = '/login';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void

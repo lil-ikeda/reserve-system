@@ -147,6 +147,18 @@
     }
 }
 
+.button__paid {
+    color: #575757;
+    border: 3px solid #c5c5c5;
+    background-color: #c5c5c5;
+    padding: 13px 24px;
+    border-radius: 50px;
+    margin-top: 32px;
+    font-weight: bold;
+    z-index: 0;
+    text-align: center;
+}
+
 .headline-en {
     text-align: center;
     font-size: 32px;

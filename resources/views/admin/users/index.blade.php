@@ -21,8 +21,10 @@
                             <thead>
                                 <tr>
                                     <th>アイコン</th>
-                                    <th>ユーザー名</th>
+                                    <th>名前</th>
                                     <th>性別</th>
+                                    <th>出身サークル</th>
+                                    <th>電話番号</th>
                                     <th>メールアドレス</th>
                                     <th>生年月日</th>
                                 </tr>
@@ -33,6 +35,8 @@
                                     <td><img style="width: 37px; height: 37px;" src="{{ asset($avators[$user->id]) }}" alt=""></td>
                                     <td><a href="{{ route('admin.users.show', $user->id) }}">{{ $user->name }}</a></td>
                                     <td>{{ $sexes[$user->id] }}</td>
+                                    <td>{{ $homeCircles[$user->id] }}</td>
+                                    <td>{{ $phoneNumbers[$user->id] }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->birthday }}</td>
                                 </tr>
@@ -47,6 +51,5 @@
 @stop
 
 @section('css')
-{{--    <link rel="stylesheet" href="/css/admin_custom.css">--}}
 @stop
 

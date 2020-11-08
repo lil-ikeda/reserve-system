@@ -59,14 +59,27 @@
                             </ul>
                         </div>
                         <!-- 入力フォーム -->
-                        <input type="file" @change="onFileChange" name="fileinfo">
-                        <output v-if="preview">
-                            <img :src="preview" alt="" class="event-form-wrapper__img-preview">
+                        <output v-if="preview" class="login-wrapper__img-wrapper">
+                            <img :src="preview" alt="" class="login-wrapper__img-preview">
                         </output>
+                        <input type="file" @change="onFileChange" name="fileinfo">
                         <label for="name">名前</label>
                         <input type="text" id="name" v-model="registerForm.name">
                         <label for="email">メールアドレス</label>
                         <input type="text" id="email" v-model="registerForm.email">
+                        <label for="phone">電話番号</label>
+                        <input type="number" id="phone" v-model="registerForm.phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                        <label for="home_circle">出身サークル</label>
+                        <input type="text" id="home_circle" v-model="registerForm.home_circle">
+                        <label for="birthday">生年月日</label>
+                        <input type="date" id="birthday" v-model="registerForm.birthday">
+                        <label for="sex">性別</label>
+                        <select name="sex" id="sex" class="register-select-form" v-model="registerForm.sex">
+                            <option value="">選択してください</option>
+                            <option value="1">男性</option>
+                            <option value="2">女性</option>
+                            <option value="0">回答しない</option>
+                        </select>
                         <label for="password">パスワード</label>
                         <input type="password" id="password" v-model="registerForm.password">
                         <label for="password_confirmation">パスワード確認用</label>
@@ -99,6 +112,10 @@ import Loader from '../components/Loader.vue';
                 registerForm: {
                     name: '',
                     email: '',
+                    phone: '',
+                    sex: '',
+                    birthday: '',
+                    home_circle: '',
                     password: '',
                     password_confirmation: ''
                 },
@@ -137,11 +154,14 @@ import Loader from '../components/Loader.vue';
             async register() {
                 this.loading = true
                 // アイコンの送信処理
-                // console.log(this.registerForm.name)
                 const formData = new FormData()
                 formData.append('image', this.image)
                 formData.append('name', this.registerForm.name)
                 formData.append('email', this.registerForm.email)
+                formData.append('phone', this.registerForm.phone)
+                formData.append('sex', this.registerForm.sex)
+                formData.append('birthday', this.registerForm.birthday)
+                formData.append('home_circle', this.registerForm.home_circle)
                 formData.append('password', this.registerForm.password)
                 formData.append('password_confirmation', this.registerForm.password_confirmation)
 
@@ -151,8 +171,10 @@ import Loader from '../components/Loader.vue';
                 await this.$store.dispatch('auth/register', formData)
 
                 this.loading = false
+
+                // メール送信確認画面に遷移
                 if(this.apiStatus) {
-                    this.$router.push('/')
+                    this.$router.push('/register/mail')
                 }
             },
             async logout() {

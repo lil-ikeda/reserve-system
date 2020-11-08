@@ -19,7 +19,7 @@
             </ul>
         </div>
     @endif
-    <div class="col-7 offset-2">
+    <div class="col-md-7 offset-md-2 col-sm-12">
         <h3>イベント詳細</h3>
         <div class="card">
             <div class="card-header d-flex p-0">
@@ -209,7 +209,6 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')
@@ -259,5 +258,4 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop

@@ -3,7 +3,7 @@
 namespace App\ViewModels\Admin\User;
 
 use App\ViewModels\Base\ViewModel;
-use App\Contracts\Repositories\Admin\UserRepositoryContract;
+use App\Contracts\Repositories\UserRepositoryContract;
 
 class IndexViewModel extends ViewModel
 {
@@ -57,6 +57,26 @@ class IndexViewModel extends ViewModel
         return $avators;
     }
 
+    public function getPhoneNumbers($users)
+    {
+        $phoneNumbers = [];
+        foreach ($users as $user) {
+            $phoneNumbers[$user->id] = $user->phone;
+        }
+
+        return $phoneNumbers;
+    }
+
+    public function getHomeCircles($users)
+    {
+        $homeCircles = [];
+        foreach ($users as $user) {
+            $homeCircles[$user->id] = $user->home_circle;
+        }
+
+        return $homeCircles;
+    }
+
     public function toMap(): array
     {
         $users = $this->userRepository->getAll();
@@ -65,6 +85,8 @@ class IndexViewModel extends ViewModel
             'users' => $users,
             'sexes' => $this->getSex($users),
             'avators' => $this->getAvators($users),
+            'phoneNumbers' => $this->getPhoneNumbers($users),
+            'homeCircles' => $this->getHomeCircles($users),
         ];
     }
 }

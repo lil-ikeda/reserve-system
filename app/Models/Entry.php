@@ -10,7 +10,7 @@ class Entry extends Model
     protected $table = 'entries';
 
     protected $fillable = [
-        'event_id', 'user_id',
+        'event_id', 'user_id', 'payment_method', 'paid', 'cancellation_request'
     ];
 
     // アソシエーション

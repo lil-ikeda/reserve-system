@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "nesbot/carbon": "^2.40"
+        "nesbot/carbon": "^2.40",
+        "paypayopa/php-sdk": "^0.8.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

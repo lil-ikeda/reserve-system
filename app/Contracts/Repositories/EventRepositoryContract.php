@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Repositories\Admin;
+namespace App\Contracts\Repositories;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -99,4 +99,16 @@ interface EventRepositoryContract
      * イベントを削除
      */
     public function destroy(int $id): bool;
+
+    /**
+     * PayPay決済
+     *
+     * @param string $eventName
+     * @param int $eventPrice
+     * @param int $eventId
+     * @throws \PayPay\OpenPaymentAPI\ClientException
+     * @throws \PayPay\OpenPaymentAPI\Controller\ClientControllerException
+     * @throws \PayPay\OpenPaymentAPI\Models\ModelException
+     */
+    public function pay(string $eventName, int $eventPrice, int $eventId): string;
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Eloquents\Admin;
+namespace App\Repositories\Eloquents;
 
 use App\Models\User;
-use App\Contracts\Repositories\Admin\UserRepositoryContract;
+use App\Contracts\Repositories\UserRepositoryContract;
 use Illuminate\Contracts\Support\Arrayable;
 use Ramsey\Collection\Collection;
 

@@ -25,14 +25,24 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::delete('admins', 'AdminController@destroy')->name('admins.destroy');
         Route::get('admins/show', 'AdminController@show')->name('admins.show');
         Route::get('admins/invite', 'AdminController@invite')->name('admins.invite');
-        Route::post('admins/invite', 'UserController@sendInviteMail')->name('admins.send.invitemail');
+        Route::post('admins/invite', 'AdminController@sendInviteMail')->name('admins.send.invitemail');
+        Route::get('admins/pay', 'PayPayController@paypay')->name('admins.paypay');
     });
 });
 
 // 一般ユーザー
-//Route::get('/', function () {
-//    return view('user.index');
-//});
+Route::prefix('users')->namespace('User')->name('users.')->group(function () {
+    Route::get('events/{id}/paid', 'EventController@paid')->name('event.paid');
+//    Auth::routes(
+//        [
+//        'verify' => true,
+//        'login' => false,
+//        'logout' => false,
+//        'register' => false,
+//        ]
+//    );
+});
+
 //Route::middleware('auth:web')->group(function () {
     Route::get('/{any?}', function () {
         return view('user.index');
