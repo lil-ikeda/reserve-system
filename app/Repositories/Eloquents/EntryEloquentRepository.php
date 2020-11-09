@@ -78,7 +78,6 @@ class EntryEloquentRepository implements EntryRepositoryContract
     {
         $entry = $this->entry->where('event_id', $eventId)->where('user_id', $userId)->first();
 
-        dd($entry);
         return $entry;
     }
 

@@ -1,6 +1,8 @@
 <template>
     <div class="footer">
-        <div class="footer__title">ロゴ</div>
+        <div class="footer__title">
+            <img :src="'/img/footer-logo.png'" style="width: 150px">
+        </div>
         <ul class="d-flex justify-content-center mb-3">
             <li class="footer__icon">
                <font-awesome-icon :icon="['fab', 'instagram']" />

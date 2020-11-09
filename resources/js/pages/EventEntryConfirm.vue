@@ -17,7 +17,7 @@
         </div>
         <div class="d-flex justify-content-center">
             <div class="button__paypay">
-                <button @click="linkToPayment">PayPayで支払う</button>
+                <button @click="payment">PayPayで支払う</button>
             </div>
         </div>
         <div class="d-flex justify-content-center mt-5 font-weight-bold">
@@ -148,10 +148,18 @@
             backToTop() {
                 this.$router.push('/');
             },
-            async linkToPayment() {
-                // this.$router.push(`/events/${this.id}/payment/paypay`)
-                const response = await axios.put(`/api/events/${this.id}/join`)
-            }
+            // async linkToPayment() {
+            //     // this.$router.push(`/events/${this.id}/payment/paypay`)
+            //     const response = await axios.put(`/api/events/${this.id}/join`)
+            // },
+            async payment () {
+                this.loading = true
+
+                const response = await axios.get(`/api/events/${this.id}/pay`);
+
+                // 決済ページにリダイレクト
+                location.href = response.data;
+            },
         },
         watch: {
             $route: {
