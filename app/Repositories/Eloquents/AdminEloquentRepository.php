@@ -28,6 +28,16 @@ class AdminEloquentRepository implements AdminRepositoryContract
     }
 
     /**
+     * すべての管理者を取得
+     *
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return $this->admin->all();
+    }
+
+    /**
      * IDから管理者を取得
      *
      * @param int $id

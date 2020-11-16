@@ -16,6 +16,16 @@
             margin: 24px 0;
             white-space: pre-wrap;
         }
+        .entry-count {
+            display: flex;
+            justify-content: flex-end;
+            .number {
+                max-width: 50%;
+                border-radius: 5px;
+                padding: 7px 15px;
+                //background: rgba(0, 0, 0, 0.05);
+            }
+        }
     }
 
     &__inner {

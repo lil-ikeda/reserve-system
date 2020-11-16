@@ -208,6 +208,9 @@ class EventEloquentRepository implements EventRepositoryContract
                 case config('const.payment_method.bank.id'):
                     $paymentMethods[$entry->user_id] = '口座振込';
                     break;
+                case config('const.payment_method.free.id'):
+                    $paymentMethods[$entry->user_id] = '支払なし';
+                    break;
             }
         }
 

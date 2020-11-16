@@ -24,8 +24,19 @@ class EntryEvent extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'paymentMethod' => 'required', Rule::in(1, 2),
         ];
+
+        return $this->updateRules($rules);
+    }
+
+    public function updateRules($rules)
+    {
+        if ($this->input('price') === 0) {
+            unset($rules['paymentMethod']);
+        }
+
+        return $rules;
     }
 }

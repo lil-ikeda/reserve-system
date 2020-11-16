@@ -1,5 +1,5 @@
 <template>
-    <div class="event-container">
+    <div>
         <div class="event-container__inner">
             <div v-show="loading">
                 <Loader />

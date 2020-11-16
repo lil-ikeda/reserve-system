@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Contracts\Repositories\AdminRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Admin\ShowViewModel;
+use App\ViewModels\Admin\Admin\IndexViewModel;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SendInviteMail;
 use Mail;
@@ -17,6 +18,17 @@ class AdminController extends Controller
     public function __construct(AdminRepositoryContract $adminRepository)
     {
         $this->adminRepository  = $adminRepository;
+    }
+
+    /**
+     * 管理者一覧
+     *
+     * @param IndexViewModel $viewModel
+     * @return \Illuminate\View\View
+     */
+    public function index(IndexViewModel $viewModel)
+    {
+        return $viewModel->render('admin.admins.index');
     }
 
     public function show(ShowViewModel $viewModel)

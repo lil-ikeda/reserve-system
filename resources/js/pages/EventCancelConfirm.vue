@@ -1,5 +1,5 @@
 <template>
-    <div class="event-container">
+    <div>
         <div class="event-container__inner">
             <div class="entry-headline">キャンセルメール送信完了</div>
             <div class="event-info__entry">
@@ -15,7 +15,6 @@
                 <button @click="backToTop">トップページへ戻る</button>
             </div>
         </div>
-
     </div>
 </template>
 

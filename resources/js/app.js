@@ -13,7 +13,7 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import {faCalendarAlt, faClock, faPaperPlane, faMapMarkerAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarAlt, faClock, faPaperPlane, faMapMarkerAlt, faUsers} from "@fortawesome/free-solid-svg-icons";
 
 library.add(faInstagram)
 library.add(faFacebookSquare)
@@ -23,6 +23,7 @@ library.add(faPaperPlane)
 library.add(faCalendarAlt)
 library.add(faClock)
 library.add(faMapMarkerAlt)
+library.add(faUsers)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false

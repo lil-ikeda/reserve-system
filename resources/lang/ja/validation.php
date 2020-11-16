@@ -155,6 +155,8 @@ return [
         'close_time' => '終了時間',
         'place' => '場所',
         'price' => 'エントリー費',
+        'subject' => '件名',
+        'text' => '本文',
     ],
 
 ];

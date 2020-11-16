@@ -7,18 +7,9 @@
 @stop
 
 @section('content')
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     {{-- イベント情報 --}}
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 
-    @if ($errors->any())
-        <div class="errors">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="col-md-7 offset-md-2 col-sm-12">
         <h3>イベント詳細</h3>
         <div class="card">
@@ -33,96 +24,100 @@
                 <div class="tab-content">
                     <div class="tab-pane" id="tab_1">
                         <form action="{{ route('admin.events.update', $event->id) }}" method="POST" name="form" enctype="multipart/form-data">
-                            <div class="card-body">
-                                @csrf
-                                @method('PUT')
-                                <div class="form-group">
-                                    <label for="exampleInputFile">イメージ画像</label>
-                                    <div class="input-group">
-                                        <input type="file" class="" id="exampleInputFile" name="image"
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group">
+                                <label for="exampleInputFile">イメージ画像</label>
+                                <div class="input-group">
+                                    <input type="file" class="" id="exampleInputFile" name="image"
 {{--                                               value="{{ old('image', $event->image) }}"--}}
-                                               onchange="setImage(event)">
-                                    </div>
+                                           onchange="setImage(event)">
                                 </div>
-                                <div class="preview"></div>
-                                <div class="form-group">
-                                    <label for="name">イベント名</label>
-                                    <input type="text" name="name" class="form-control"
-                                           value="{{ old('name', $event->name) }}">
-                                    @error('name')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </div>
-                                    @enderror
+                            </div>
+                            <div class="preview"></div>
+                            <div class="form-group">
+                                <label for="name">イベント名</label>
+                                <input type="text" name="name" class="form-control"
+                                       value="{{ old('name', $event->name) }}">
+                                @error('name')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('name') }}</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="description">イベント詳細</label>
-                                    <textarea name="description" id="" cols="30" rows="10"
-                                              class="form-control">{{ $event->description }}</textarea>
-                                    @error('description')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="description">イベント詳細</label>
+                                <textarea name="description" id="" cols="30" rows="10"
+                                          class="form-control">{{ $event->description }}</textarea>
+                                @error('description')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('description') }}</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="date">日程</label>
-                                    <input type="date" name="date" class="form-control"
-                                           value="{{ old('date', $event->date) }}">
-                                    @error('date')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('date') }}</strong>
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="date">日程</label>
+                                <input type="date" name="date" class="form-control"
+                                       value="{{ old('date', $event->date) }}">
+                                @error('date')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('date') }}</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="place">場所</label>
-                                    <input type="text" name="place" class="form-control"
-                                           value="{{ old('place', $event->place) }}">
-                                    @error('place')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('place') }}</strong>
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="place">場所</label>
+                                <input type="text" name="place" class="form-control"
+                                       value="{{ old('place', $event->place) }}">
+                                @error('place')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('place') }}</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="price">料金</label>
-                                    <input type="number" name="price" class="form-control"
-                                           value="{{ old('price', $event->price) }}">
-                                    @error('price')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('price') }}</strong>
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="price">料金</label>
+                                <input type="number" name="price" class="form-control"
+                                       value="{{ old('price', $event->price) }}">
+                                @error('price')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('price') }}</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="open_time">開始時間</label>
-                                    <input type="time" name="open_time" class="form-control"
-                                           value="{{ old('open_time', $event->open_time) }}">
-                                    @error('open_time')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('open_time') }}</strong>
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="open_time">開始時間</label>
+                                <input type="time" name="open_time" class="form-control"
+                                       value="{{ old('open_time', $event->open_time) }}">
+                                @error('open_time')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('open_time') }}</strong>
                                 </div>
-                                <div class="form-group">
-                                    <label for="close_time">終了時間</label>
-                                    <input type="time" name="close_time" class="form-control"
-                                           value="{{ old('close_time', $event->close_time) }}">
-                                    @error('close_time')
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('close_time') }}</strong>
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="close_time">終了時間</label>
+                                <input type="time" name="close_time" class="form-control"
+                                       value="{{ old('close_time', $event->close_time) }}">
+                                @error('close_time')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('close_time') }}</strong>
                                 </div>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-info">更新</button>
                         </form>
                     </div>
                     <!-- イベント詳細 -->
                     <div class="tab-pane active" id="tab_2">
-                        <img src="{{ $event->image }}" alt="">
-                        <ul>
+                        <div class="">
+                            @if (isset($event->image))
+                                <img class="event-thumbnail-show" src="{{ config('const.s3') . $event->image }}">
+                            @else
+                                <img class="event-thumbnail-show" src="{{ asset('img/noimage.png') }}">
+                            @endif
+                        </div>
+                        <ul class="mt-3">
                             <li>日程：{{ $event->date }}</li>
                             <li>時間：{{ $event->open_time }} - {{ $event->close_time }}</li>
                             <li>場所：{{ $event->place }}</li>
@@ -163,7 +158,7 @@
                         <tbody>
                         @foreach ($users as $user)
                             <tr>
-                                <td>アイコン</td>
+                                <td><img style="width: 37px; height: 37px;" src="{{ asset($avators[$user->id]) }}"></td>
                                 <td><a href="{{ route('admin.users.show', $user->id) }}">{{ $user->name }}</a></td>
                                 @if ($shippingStatus[$user->id] == config('const.shipping_status.unpaid.id'))
                                     <td><span class="badge badge-danger">未払い</span></td>
@@ -193,8 +188,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-{{--                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>--}}
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">エントリーユーザーに一斉メール</a>
+                <a href="{{ route('admin.events.send.mail', $event->id) }}" class="btn btn-sm btn-secondary float-right">エントリーユーザーに一斉メール</a>
             </div>
             <!-- /.card-footer -->
         </div>

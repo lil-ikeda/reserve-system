@@ -8,6 +8,13 @@ use Illuminate\Support\Collection;
 interface AdminRepositoryContract
 {
     /**
+     * すべての管理者を取得
+     *
+     * @return Collection
+     */
+    public function getAll(): Collection;
+
+    /**
      * IDから管理者を取得
      *
      * @param int $id

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contracts\Repositories\EventRepositoryContract;
+use App\Mail\ToAllEntryUsers;
 use App\ViewModels\Admin\Event\ShowViewModel;
 use App\Http\Controllers\Controller;
 use App\ViewModels\Admin\Event\IndexViewModel;
 use App\Http\Requests\StoreEvent;
 use App\Http\Requests\UpdateEvent;
+use App\Http\Requests\Admin\SendMailToEntries;
+use App\ViewModels\Admin\Event\CreateMailViewModel;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -117,5 +121,37 @@ class EventController extends Controller
         $this->eventRepository->destroy($id);
 
         return redirect(route('admin.events.index'));
+    }
+
+    /**
+     * エントリー者への一斉メール作成画面
+     *
+     * @param CreateMailViewModel $viewModel
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
+    public function mail(CreateMailViewModel $viewModel, int $id)
+    {
+        $viewModel->setId($id);
+
+        return $viewModel->render('admin.events.mail');
+    }
+
+    public function sendMail(SendMailToEntries $request, int $id)
+    {
+        $userNames = $request->input('user_names');
+        $userMails = $request->input('user_mails');
+        $numberOfUsers = count($userNames);
+
+        for ($i = 0; $i < $numberOfUsers; $i++) {
+            Mail::to($userMails[$i])
+                ->send(new ToAllEntryUsers(
+                    $userNames[$i],
+                    $request->input('subject'),
+                    $request->input('text')
+                ));
+        }
+
+        return redirect(route('admin.events.show', $id));
     }
 }

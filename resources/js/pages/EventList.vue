@@ -1,5 +1,5 @@
 <template>
-    <div class="event-container">
+    <div>
         <div class="headline-en">Events</div>
         <div class="headline-ja">すべてのイベント</div>
         <div v-show="loading">

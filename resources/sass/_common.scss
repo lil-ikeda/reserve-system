@@ -1,5 +1,4 @@
 // 自作デフォルト
-
 .font-black {
   color: #2e2e2e;
   &:hover {
@@ -22,7 +21,17 @@
     cursor: pointer;
 }
 
+.errors {
+    font-weight: bold;
+    color: #dc143c;
+    margin-top: 10px;
+}
+
 // 共通パーツ
+.common-container {
+
+}
+
 .btn-submit {
   background-color: rgba(14,131,205,1);
   color: #fff;

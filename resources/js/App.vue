@@ -2,8 +2,10 @@
     <div class="">
         <main>
             <Header />
-            <Message />
-            <RouterView />
+            <div class="event-container">
+                <Message />
+                <RouterView />
+            </div>
             <Footer />
         </main>
     </div>

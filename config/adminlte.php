@@ -234,11 +234,6 @@ return [
     'menu' => [
         ['header' => 'イベント管理'],
         [
-            'text' => 'search',
-            'search' => true,
-            'topnav' => true,
-        ],
-        [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
@@ -264,6 +259,11 @@ return [
             'text' => 'マイページ',
             'url'  => 'admin/admins/show',
             'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => '管理者一覧',
+            'url'  => 'admin/admins/index',
+            'icon' => 'fas fa-fw fa-users',
         ],
         [
             'text' => '管理者招待',

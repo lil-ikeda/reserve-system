@@ -37,8 +37,8 @@ class EventController extends Controller
     public function __construct(EventRepositoryContract $eventRepository, EntryRepositoryContract $entryRepository)
     {
         $this->middleware('verified')->except(['index', 'show']);
-        $this->eventRepository  = $eventRepository;
-        $this->entryRepository  = $entryRepository;
+        $this->eventRepository = $eventRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     /**
@@ -152,12 +152,17 @@ class EventController extends Controller
         // 既存の「エントリー」レコードを削除
         $event->users()->detach($user->id);
 
+        // 「支払方法」がnullなら「支払なし」とする
+        $paymentMethod = (is_null($request->input('paymentMethod')))
+            ? $request->input('paymentMethod')
+            : config('const.payment_method.free.id');
+
         $entry = DB::table('entries')->insert([
             'event_id' => $id,
             'user_id' => $user->id,
             'paid' => false,
             'cancellation_request' => false,
-            'payment_method' => $request->input('paymentMethod'),
+            'payment_method' => $paymentMethod,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -171,7 +176,7 @@ class EventController extends Controller
                 $event->open_time,
                 $event->close_time,
                 $event->price,
-                $request->input('paymentMethod')
+                $paymentMethod
             ));
 
         return response($entry, 200);

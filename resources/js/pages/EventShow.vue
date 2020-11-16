@@ -1,5 +1,5 @@
 <template>
-    <div class="event-container">
+    <div>
         <div class="event-container__inner">
             <div v-show="loading">
                 <Loader />
@@ -19,7 +19,15 @@
                         <li>場所：{{ event.place }}</li>
                     </ul>
                     <div class="event-price font-weight-bold">エントリー費：{{ event.price }} 円</div>
+                    <div class="entry-count">
+                        <div class="number">
+                            <font-awesome-icon style="min-width: 30px;" :icon="['fas', 'users']" />
+                            {{ event.users.length }}
+                        </div>
+                    </div>
                 </div>
+
+                <!--エントリーボタン-->
                 <div class="d-flex justify-content-center">
                     <button class="button button__paypay" v-if="event.joined_by_user" @click="payment" v-show="! paid">
                         PayPayで支払う
@@ -44,7 +52,12 @@
                         エントリーページへ
                     </button>
                 </div>
+                <div class="d-flex justify-content-center mt-5 font-weight-bold">
+                    <button @click="backToTop">トップページへ戻る</button>
+                </div>
             </div>
+
+            <!--トップページへ戻る-->
         </div>
     </div>
 </template>
@@ -99,6 +112,7 @@ export default {
             this.loading = true
 
             const response = await axios.get(`/api/events/${this.id}/pay`);
+            console.log(response.data);
 
             // 決済ページにリダイレクト
             location.href = response.data;
@@ -122,7 +136,10 @@ export default {
                 this.paid = true
             }
             this.loading = false
-        }
+        },
+        backToTop() {
+            this.$router.push('/');
+        },
     },
     watch: {
         $route: {

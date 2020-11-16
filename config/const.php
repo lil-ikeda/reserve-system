@@ -8,19 +8,22 @@ return [
 
     // 性別
     'sex' => [
+        'do_not_answer' => [
+            'id' => 0
+        ],
         'male' => [
             'id' => 1
         ],
         'female' => [
             'id' => 2
         ],
-        'do_not_answer' => [
-            'id' => 0
-        ],
     ],
 
     // 支払方法
     'payment_method' => [
+        'free' => [
+            'id' => 0,
+        ],
         'bank' => [
             'id' => 1
         ],

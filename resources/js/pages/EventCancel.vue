@@ -1,5 +1,5 @@
 <template>
-    <div class="event-container">
+    <div>
         <div v-show="loading">
             <SendLoader />
         </div>
