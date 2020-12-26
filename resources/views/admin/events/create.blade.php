@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-md-6 offset-2">
+    <div class="col-md-6 offset-md-2">
         <div class="card">
             <p class="card-header" style="background-color: rgba(0,0,0,.03);">イベント作成</p>
             <div class="card-body">
@@ -35,9 +35,7 @@
                     <div class="form-group">
                         <label for="description">イベント詳細 <span class="badge badge-danger">必須</span></label>
                         <textarea name="description" id="" cols="30" rows="10"
-                                  class="form-control @error('description') is-invalid @enderror">
-                            {{ old('description') }}
-                        </textarea>
+                                  class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
                         @error('description')
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('description') }}</strong>

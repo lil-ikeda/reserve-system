@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use PayPay\OpenPaymentAPI\Client;
 use PayPay\OpenPaymentAPI\Models\CreateQrCodePayload;
 use PayPay\OpenPaymentAPI\Models\OrderItem;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventEloquentRepository implements EventRepositoryContract
 {
@@ -46,9 +47,9 @@ class EventEloquentRepository implements EventRepositoryContract
      *
      * @return array
      */
-    public function getAll(): Collection
+    public function getAll(): LengthAwarePaginator
     {
-        $events = $this->event->all();
+        $events = $this->event->orderBy('date', 'desc')->paginate(15);
         return $events;
     }
 

@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface EventRepositoryContract
 {
@@ -12,7 +13,7 @@ interface EventRepositoryContract
      *
      * @return array
      */
-    public function getAll(): Collection;
+    public function getAll(): LengthAwarePaginator;
 
     /**
      * IDからイベントを取得

@@ -28,7 +28,7 @@
 {{--            @method('POST')--}}
 {{--            <button type="submit">paypay</button>--}}
 {{--        </form>--}}
-        <a href="{{ route('admin.admins.paypay') }}">paypay</a>
+        {{-- <a href="{{ route('admin.admins.paypay') }}">paypay</a> --}}
     </div>
 @stop
 

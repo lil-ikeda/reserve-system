@@ -46,11 +46,22 @@ class EventController extends Controller
     }
 
 
+    /**
+     * イベント作成画面へ遷移
+     *
+     * @return void
+     */
     public function create()
     {
         return view('admin.events.create');
     }
 
+    /**
+     * イベントの保存
+     *
+     * @param StoreEvent $request
+     * @return void
+     */
     public function store(StoreEvent $request)
     {
         $name = $request->name;
@@ -77,7 +88,7 @@ class EventController extends Controller
     }
 
     /**
-     * イベント詳細
+     * イベント詳細画面へ遷移
      *
      * @param ShowViewModel $viewModel
      * @param int $id
@@ -90,6 +101,13 @@ class EventController extends Controller
         return $viewModel->render('admin.events.show');
     }
 
+    /**
+     * イベント更新
+     *
+     * @param UpdateEvent $request
+     * @param integer $id
+     * @return void
+     */
     public function update(UpdateEvent $request, int $id)
     {
         $name = $request->name;
@@ -116,6 +134,12 @@ class EventController extends Controller
         return redirect()->route('admin.events.index');
     }
 
+    /**
+     * イベントの削除
+     *
+     * @param integer $id
+     * @return void
+     */
     public function destroy(int $id)
     {
         $this->eventRepository->destroy($id);
@@ -137,6 +161,13 @@ class EventController extends Controller
         return $viewModel->render('admin.events.mail');
     }
 
+    /**
+     * イベントの参加者全員にメールを送信する
+     *
+     * @param SendMailToEntries $request
+     * @param integer $id
+     * @return void
+     */
     public function sendMail(SendMailToEntries $request, int $id)
     {
         $userNames = $request->input('user_names');
