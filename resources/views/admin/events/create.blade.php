@@ -17,7 +17,12 @@
                     <div class="form-group">
                       <label for="exampleInputFile">イメージ画像</label>
                       <div class="input-group">
-                          <input type="file" class="" id="exampleInputFile" name="image" onchange="setImage(event)">
+                          <input type="file" class="form-control @error('image') is-invalid @enderror" id="exampleInputFile" name="image" onchange="setImage(event)">
+                          @error('image')
+                          <div class="invalid-feedback">
+                              <strong>{{ $errors->first('image') }}</strong>
+                          </div>
+                          @enderror
                       </div>
                     </div>
                     <div class="preview"></div>
@@ -44,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label for="date">日程 <span class="badge badge-danger">必須</span></label>
-                        <input type="date" name="date" class="form-control @error('date') is-invalid @enderror">
+                        <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date') }}">
                         @error('date')
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('date') }}</strong>
@@ -53,7 +58,7 @@
                     </div>
                     <div class="form-group">
                         <label for="place">場所 <span class="badge badge-danger">必須</span></label>
-                        <input type="text" name="place" class="form-control @error('place') is-invalid @enderror">
+                        <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ old('place') }}">
                         @error('place')
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('place') }}</strong>
@@ -62,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label for="price">エントリー費 <span class="badge badge-danger">必須</span></label>
-                        <input type="number" name="price" class="form-control @error('price') is-invalid @enderror">
+                        <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" min="0">
                         @error('price')
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('price') }}</strong>
@@ -71,7 +76,7 @@
                     </div>
                     <div class="form-group">
                         <label for="open_time">開始時間 <span class="badge badge-danger">必須</span></label>
-                        <input type="time" name="open_time" class="form-control @error('open_time') is-invalid @enderror">
+                        <input type="time" name="open_time" class="form-control @error('open_time') is-invalid @enderror" value="{{ old('open_time') }}">
                         @error('open_time')
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('open_time') }}</strong>
@@ -80,7 +85,7 @@
                     </div>
                     <div class="form-group">
                         <label for="close_time">終了時間 <span class="badge badge-danger">必須</span></label>
-                        <input type="time" name="close_time" class="form-control @error('close_time') is-invalid @enderror">
+                        <input type="time" name="close_time" class="form-control @error('close_time') is-invalid @enderror" value="{{ old('close_time') }}">
                         @error('close_time')
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('close_time') }}</strong>

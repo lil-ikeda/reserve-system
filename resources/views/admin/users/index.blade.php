@@ -7,44 +7,35 @@
 @stop
 
 @section('content')
-    <!-- Style -->
-{{--    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">--}}
     <div class="container">
-        <div class="">
-            <div class="card">
-                <div class="card-header">
-                    <p>ユーザー一覧</p>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table m-0">
-                            <thead>
-                                <tr>
-                                    <th>アイコン</th>
-                                    <th>名前</th>
-                                    <th>性別</th>
-                                    <th>出身サークル</th>
-                                    <th>電話番号</th>
-                                    <th>メールアドレス</th>
-                                    <th>生年月日</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($users as $user)
-                                <tr>
-                                    <td><img style="width: 37px; height: 37px;" src="{{ asset($avators[$user->id]) }}" alt=""></td>
-                                    <td><a href="{{ route('admin.users.show', $user->id) }}">{{ $user->name }}</a></td>
-                                    <td>{{ $sexes[$user->id] }}</td>
-                                    <td>{{ $homeCircles[$user->id] }}</td>
-                                    <td>{{ $phoneNumbers[$user->id] }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->birthday }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+        <div class="card">
+            <div class="card-header">
+                <p>ユーザー一覧</p>
+            </div>
+            <div class="card-body">
+                @foreach ($users as $user)
+                    <div class="d-flex border-bottom mb-3">
+                        <div class="">
+                            <img class="event-thumbnail-index" src="{{ asset($avators[$user->id]) }}" style="width: 50px; height: 50px;">
+                        </div>
+                        <ul class="list-group-flush">
+                            <li class="list-group-item p-1 text-break">{{ $user->name }}</li>
+                            <li class="list-group-item p-1 text-break">
+                                @if($user->sex === config('const.sex.male.id'))
+                                男性
+                                @elseif($user->sex === config('const.sex.female.id'))
+                                女性
+                                @elseif($user->sex === config('const.sex.do_not_answer.id'))
+                                回答しない
+                                @endif
+                            </li>
+                            <li class="list-group-item p-1 text-break">{{ $user->home_circle }}</li>
+                            <li class="list-group-item p-1 text-break">{{ $user->phone }}</li>
+                            <li class="list-group-item p-1 text-break">{{ $user->email }}</li>
+                            <li class="list-group-item p-1 text-break">{{ $user->birthday }}</li>
+                        </ul>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

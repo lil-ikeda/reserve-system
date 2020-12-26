@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <p>管理者一覧</p>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body">
                     @foreach($admins as $admin)
                         <div class="">
                             {{ $admin->name }}

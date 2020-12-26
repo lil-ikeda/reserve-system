@@ -11,16 +11,13 @@ class Invite extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $request;
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
     }
 
     /**
@@ -35,7 +32,7 @@ class Invite extends Mailable
         ->from('noreply@skillhack.com')
         ->subject('Welcome to Skill Hack！！')
         ->with([
-            'text' => "以下のリンクよりアカウント登録を行ってください。",
+            'text' => "スキルハックへようこそ！\n以下のリンクよりアカウント登録を行ってください。",
         ]);
     }
 }

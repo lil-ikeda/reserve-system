@@ -84,7 +84,7 @@ class EventEloquentRepository implements EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        object $image
+        object $image = null
     ): void {
         $this->event->name = $name;
         $this->event->description = $description;
@@ -94,9 +94,11 @@ class EventEloquentRepository implements EventRepositoryContract
         $this->event->place = $place;
         $this->event->price = $price;
 
-        $path = Storage::disk('s3')->putfile('/', $image, 'public');
-        $url = Storage::disk('s3')->url($path);
-        $this->event->image = '/' . basename(parse_url($url, PHP_URL_PATH));
+        if(!is_null($image)) {
+            $path = Storage::disk('s3')->putfile('/', $image, 'public');
+            $url = Storage::disk('s3')->url($path);
+            $this->event->image = '/' . basename(parse_url($url, PHP_URL_PATH));
+        }
 
         $this->event->save();
     }
@@ -122,7 +124,7 @@ class EventEloquentRepository implements EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        object $image
+        object $image = null
     ): void {
         $event = $this->findById($id);
 
@@ -134,9 +136,11 @@ class EventEloquentRepository implements EventRepositoryContract
         $event->place = $place;
         $event->price = $price;
 
-        $path = Storage::disk('s3')->putfile('/', $image, 'public');
-        $url = Storage::disk('s3')->url($path);
-        $event->image = '/' . basename(parse_url($url, PHP_URL_PATH));
+        if (!is_null($image)) {
+            $path = Storage::disk('s3')->putfile('/', $image, 'public');
+            $url = Storage::disk('s3')->url($path);
+            $event->image = '/' . basename(parse_url($url, PHP_URL_PATH));
+        }
 
         $event->save();
     }

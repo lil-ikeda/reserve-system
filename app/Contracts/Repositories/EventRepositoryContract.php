@@ -43,7 +43,7 @@ interface EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        object $image
+        object $image = null
     ): void;
 
     /**
@@ -67,7 +67,7 @@ interface EventRepositoryContract
         string $closeTime,
         string $place,
         int $price,
-        object $image
+        object $image = null
     ): void;
 
     public function getEntriedUsers(int $id): Collection;
