@@ -7,6 +7,7 @@ use App\Contracts\Repositories\UserRepositoryContract;
 use App\Contracts\Repositories\EventRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DestroyEntry;
+use App\Http\Requests\Admin\PaidEntry;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CancelCompleted;
 
@@ -38,6 +39,16 @@ class EntryController extends Controller
 
         // キャンセル完了メール
         Mail::to($user->email)->send(new CancelCompleted($eventName, $user->name));
+
+        return redirect(route('admin.events.show', $eventId));
+    }
+
+    public function paid(PaidEntry $request)
+    {
+        $userId = $request->input('userId');
+        $eventId = $request->input('eventId');
+
+        $this->entryRepository->paid($userId, $eventId);
 
         return redirect(route('admin.events.show', $eventId));
     }

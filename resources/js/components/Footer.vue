@@ -1,7 +1,8 @@
 <template>
     <div class="footer">
         <div class="footer__title">
-            <img :src="'/img/footer-logo.png'" style="width: 150px">
+            <!-- <img :src="'/img/footer-logo.png'" style="width: 150px"> -->
+            <span>ロゴ</span>
         </div>
         <ul class="d-flex justify-content-center mb-3">
             <li class="footer__icon">

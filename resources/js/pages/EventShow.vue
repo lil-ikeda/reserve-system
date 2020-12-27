@@ -111,7 +111,8 @@ export default {
                 return false
             }
 
-            if (this.event.joined_by_user) {
+            // エントリー済の場合と未エントリーの場合で条件分岐
+            if (this.event.joined_by_user && this.evnet.date ) {
                 this.$router.push(`/events/${this.id}/cancel`);
             } else {
                 this.loading = true
@@ -124,7 +125,7 @@ export default {
             const response = await axios.get(`/api/events/${this.id}/pay`);
             location.href = response.data;
         },
-        // ユーザーアイコンのURLを設定
+        // イベントサムネイルのURLを設定
         imgPath(url) {
             if (url == null) {
                 url = '/img/noimage.png'

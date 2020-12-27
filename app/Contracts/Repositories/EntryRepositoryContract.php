@@ -40,4 +40,13 @@ interface EntryRepositoryContract
      * @return bool
      */
     public function pay(int $id): bool;
+
+    /**
+     * 特定のエントリーレコードを支払済にする（口座振替の場合）
+     *
+     * @param integer $userId
+     * @param integer $eventId
+     * @return boolean
+     */
+    public function paid(int $userId, int $eventId): bool;
 }

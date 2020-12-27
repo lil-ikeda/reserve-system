@@ -101,4 +101,26 @@ class EntryEloquentRepository implements EntryRepositoryContract
 
         return $entry->save();
     }
+
+    /**
+     * 特定のエントリーレコードを支払済にする（口座振替の場合）
+     *
+     * @param integer $userId
+     * @param integer $eventId
+     * @return boolean
+     */
+    public function paid(int $userId, int $eventId): bool
+    {
+        $entry = $this->getByEventAndUserId($eventId, $userId);
+
+        // PayPay以外の支払いの場合処理を中断
+        if ($entry->payment_method !== config('const.payment_method.bank.id')) {
+            return false;
+        }
+
+        // 支払済とする
+        $entry->paid = true;
+
+        return $entry->save();
+    }
 }

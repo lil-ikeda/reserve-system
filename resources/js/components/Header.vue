@@ -5,7 +5,8 @@
 <!--            <div class="header__wrapper&#45;&#45;fix">-->
                 <router-link class="text-decoration-none font-white" v-bind:to="{name: 'event.list'}">
                     <span class="header__wrapper--title">
-                        <img :src="'/img/header-logo.png'" style="width: 120px">
+                        <!-- <img :src="'/img/header-logo.png'" style="width: 120px"> -->
+                        <span>ロゴ</span>
                     </span>
                 </router-link>
                 <div class="header__link" v-if='isLogin'>

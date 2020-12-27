@@ -130,10 +130,20 @@
                         <ul class="list-group-flush">
                             <li class="list-group-item p-1 text-break">{{ $user->name }}</li>
                             <li class="list-group-item p-1 text-break">
+                                {{ $paymentMethods[$user->id] }}
+                            </li>
+                            <li class="list-group-item p-1 text-break">
                                 @if ($shippingStatus[$user->id] == config('const.shipping_status.unpaid.id'))
-                                <span class="badge badge-danger">未払い</span>
+                                <form action="{{ route('admin.entry.paid', $event->id) }}" method="POST">
+                                    @csrf
+                                    @method('post')
+                                    <input type="hidden" value="{{ $user->id }}" name="userId">
+                                    <input type="hidden" value="{{ $event->id }}" name="eventId">
+                                    <button type="submit" onClick="return paidConfirm()" class="p-2 badge badge-danger">未払い</span>
+                                </form>
+                                
                                 @elseif($shippingStatus[$user->id] == config('const.shipping_status.paid.id'))
-                                <span class="badge badge-success">支払済</span>
+                                <span class="badge badge-success p-2">支払済</span>
                                 @endif
                             </li>
                             <li class="list-group-item p-1 text-break">
@@ -149,10 +159,6 @@
                                 -
                                 @endif
                             </li>
-                            <li class="list-group-item p-1 text-break">
-                                {{ $paymentMethods[$user->id] }}
-                            </li>
-                            
                         </ul>
                     </div>
                 @endforeach
@@ -213,6 +219,15 @@
 
         function cancelConfirm() {
             let checked = confirm('本当に削除しますか？返金処理は完了していますか？')
+            if (checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function paidConfirm() {
+            let checked = confirm('本当に「支払済」にしますか？支払いは完了していますか？')
             if (checked == true) {
                 return true;
             } else {

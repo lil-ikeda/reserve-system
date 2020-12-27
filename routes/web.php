@@ -22,6 +22,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('events/{id}/mail', 'EventController@mail')->name('events.create.mail');
         Route::post('events/{id}/mail', 'EventController@sendMail')->name('events.send.mail');
         Route::delete('entry/{id}', 'EntryController@destroy')->name('entry.destroy');
+        Route::post('entry/{id}', 'EntryController@paid')->name('entry.paid');
 //        Route::get('users/{id}', 'UserController@show')->name('users.show');
         Route::resource('users', 'UserController')->only(['index', 'show']);
         Route::delete('admins', 'AdminController@destroy')->name('admins.destroy');
