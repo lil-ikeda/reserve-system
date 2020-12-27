@@ -28,14 +28,18 @@
                 </div>
 
                 <!--エントリーボタン-->
-                <div class="d-flex justify-content-center">
-                    <button class="button button__paypay" v-if="event.joined_by_user" @click="payment" v-show="! paid">
+                <div class="d-flex justify-content-center" v-if="event.joined_by_user">
+                    <button class="button button__paypay" @click="payment" v-show="!paid && !freeEvent">
                         PayPayで支払う
                     </button>
-                    <span class="button button__paid" v-if="event.joined_by_user" v-show="paid">
-                        PayPayで支払済
+                    <span class="button button__paid" v-show="paid && !freeEvent">
+                        支払済
+                    </span>
+                    <span class="button button__paid" v-show="!paid && freeEvent">
+                        無料イベントにつき支払不要
                     </span>
                 </div>
+                
                 <div class="d-flex justify-content-center">
                     <button
                         class="button button__joined"
@@ -81,21 +85,27 @@ export default {
             loading: false,
             event: null,
             paid: false,
+            freeEvent: false,
         }
     },
     methods: {
+        // イベントの情報を取得
         async fetchEvent() {
             const response = await axios.get(`/api/events/${this.id}`);
 
             if(response.status !== OK) {
-                this.$store.commit('error/setCode', response.status)
-                return false
-            }
+                this.$store.commit('error/setCode', response.status);
+                return false;
+            };
 
-            this.event = response.data
+            this.event = response.data;
+
+            if (this.event.price === 0) {
+                this.freeEvent = true
+            };
         },
+        // ログインチェック
         onJoinClick () {
-            // ログインチェック
             if (! this.$store.getters['auth/check']) {
                 alert('エントリー機能を使うにはログインしてください')
                 return false
@@ -108,15 +118,13 @@ export default {
                 this.$router.push(`/events/${this.id}/entry`);
             }
         },
+        // Paypay決済ページへ遷移
         async payment () {
             this.loading = true
-
             const response = await axios.get(`/api/events/${this.id}/pay`);
-            console.log(response.data);
-
-            // 決済ページにリダイレクト
             location.href = response.data;
         },
+        // ユーザーアイコンのURLを設定
         imgPath(url) {
             if (url == null) {
                 url = '/img/noimage.png'
@@ -125,9 +133,11 @@ export default {
             }
             return url;
         },
+        // 支払い完了後の処理
         async fetchPaid () {
             this.loading = true
             const response = await axios.get(`/api/entry/${this.id}`);
+            
             this.entry = response.data
 
             if (this.entry.paid == false) {

@@ -26,12 +26,12 @@
                         </div>
                         <div class="inline-radio">
                             <div class="">
-                                <input class="cursor-pointer" type="radio" name="payment_method" value="1" id="payment_method_bank" v-model="paymentMethod">
-                                <label for="payment_method_bank">口座振込</label>
+                                <input class="cursor-pointer" type="radio" name="payment_method" value="1" id="payment_method_paypay" v-model="paymentMethod">
+                                <label for="payment_method_paypay">PayPay</label>
                             </div>
                             <div class="">
-                                <input class="cursor-pointer" type="radio" name="payment_method" value="2" id="payment_method_paypay" v-model="paymentMethod">
-                                <label for="payment_method_paypay">PayPay</label>
+                                <input class="cursor-pointer" type="radio" name="payment_method" value="2" id="payment_method_bank" v-model="paymentMethod">
+                                <label for="payment_method_bank">口座振込</label>
                             </div>
                         </div>
                         <div v-show="entryErrors" class="errors">

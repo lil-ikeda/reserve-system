@@ -82,7 +82,7 @@ class EntryEloquentRepository implements EntryRepositoryContract
     }
 
     /**
-     * 1エントリーレコードに対し支払済にする
+     * 特定のエントリーレコードに対し支払済にする
      *
      * @param int $id
      * @return bool

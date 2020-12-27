@@ -109,7 +109,6 @@
                 formData.append('payment_method', this.paymentMethod)
 
                 const response = await axios.put(`/api/events/${this.id}/join`, formData)
-                console.log(response.status !== OK);
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

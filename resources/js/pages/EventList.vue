@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="headline-en">Events</div>
-        <div class="headline-ja">すべてのイベント</div>
+        <div class="headline-ja">開催予定のイベント</div>
         <div v-show="loading">
             <Loader />
         </div>

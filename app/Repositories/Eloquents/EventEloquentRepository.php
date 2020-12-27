@@ -214,7 +214,7 @@ class EventEloquentRepository implements EventRepositoryContract
                     $paymentMethods[$entry->user_id] = '口座振込';
                     break;
                 case config('const.payment_method.free.id'):
-                    $paymentMethods[$entry->user_id] = '支払なし';
+                    $paymentMethods[$entry->user_id] = '支払情報なし';
                     break;
             }
         }
@@ -251,7 +251,7 @@ class EventEloquentRepository implements EventRepositoryContract
             'API_KEY' => config('const.paypay.apikey'),
             'API_SECRET'=> config('const.paypay.secret'),
             'MERCHANT_ID'=> config('const.paypay.merchant'),
-        ], false);
+        ]);
 
         // setup payment object
         $CQCPayload = new CreateQrCodePayload();

@@ -2,19 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Requests\EntryEvent;
-use App\Mail\CancelCompletRequest;
-use App\Mail\EntryConfirm;
-use App\Models\Event;
 use App\Models\Entry;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Mail\CancelRequest;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use App\Http\Requests\SendEntryConfirmMail;
-use App\Http\Requests\SendCancelRequestMail;
 use App\Contracts\Repositories\EventRepositoryContract;
 use App\Contracts\Repositories\EntryRepositoryContract;
 

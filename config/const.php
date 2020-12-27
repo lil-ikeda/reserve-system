@@ -21,9 +21,9 @@ return [
 
     // 支払方法
     'payment_method' => [
-        'free' => [
-            'id' => 0,
-        ],
+        // 'free' => [
+        //     'id' => 0,
+        // ],
         'bank' => [
             'id' => 1
         ],
@@ -42,6 +42,7 @@ return [
         ],
     ],
 
+    // PaypayAPIキー
     'paypay' => [
         'apikey' => env('PAYPAY_APIKEY'),
         'secret' => env('PAYPAY_SECRET'),
