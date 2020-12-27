@@ -9,7 +9,6 @@
 @section('content')
     {{-- イベント情報 --}}
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-
     <div class="col-md-7 offset-md-2 col-sm-12 pb-3">
         <h3>イベント編集</h3>
         <div class="card">
