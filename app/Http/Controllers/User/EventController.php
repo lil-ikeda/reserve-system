@@ -17,6 +17,7 @@ use App\Http\Requests\SendEntryConfirmMail;
 use App\Http\Requests\SendCancelRequestMail;
 use App\Contracts\Repositories\EventRepositoryContract;
 use App\Contracts\Repositories\EntryRepositoryContract;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -42,11 +43,16 @@ class EventController extends Controller
     }
 
     /**
-     * イベント一覧
+     * イベント一覧（開催前のイベントのみ取得）
      */
     public function index()
     {
-        $events = DB::table('events')->orderBy('created_at', 'desc')->get();
+        $yesterday = Carbon::yesterday();
+        
+        $events = DB::table('events')
+        ->where('date', ">=", $yesterday)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return $events;
     }
@@ -62,54 +68,6 @@ class EventController extends Controller
 
         return $event ?? abort(404);
     }
-
-//    /**
-//     * イベントエントリー画面の表示
-//     *
-//     * @param int $id
-//     */
-//    public function entry(int $id)
-//    {
-//        $event = Event::find($id);
-//
-//        return $event ?? abort(404);
-//    }
-//
-//    /**
-//     * イベントエントリー完了画面の表示
-//     *
-//     * @param int $id
-//     */
-//    public function entryConfirm(int $id)
-//    {
-//        $event = Event::find($id);
-//
-//        return $event ?? abort(404);
-//    }
-//
-//    /**
-//     * キャンセル
-//     *
-//     * @param int $id
-//     */
-//    public function cancel(int $id)
-//    {
-//        $event = Event::find($id);
-//
-//        return $event ?? abort(404);
-//    }
-//
-//    /**
-//     * キャンセル確認用画面の表示
-//     *
-//     * @param int $id
-//     */
-//    public function cancelConfirm(int $id)
-//    {
-//        $event = Event::find($id);
-//
-//        return $event ?? abort(404);
-//    }
 
     /**
      * キャンセル希望メールの送信
@@ -213,53 +171,4 @@ class EventController extends Controller
             return redirect('/');
         }
     }
-
-    // /**
-    //  * イベント保存
-    //  */
-    // public function store(Request $request)
-    // {
-    //     // 写真の拡張子を取得
-    //     // $extension = $request->image->extension();
-    //     $event = new Event();
-    //     $event->name  = $request->name;
-    //     $event->description  = $request->description;
-    //     $event->date  = $request->date;
-    //     $event->open_time  = $request->open_time;
-    //     $event->close_time  = $request->close_time;
-    //     $event->place  = $request->place;
-    //     $event->price  = $request->price;
-    //     if ($request->file('image') !== null) {
-    //         $event->image = $request->file('image')->store('events');
-    //     }
-
-    //     DB::beginTransaction();
-    //     try {
-    //         $event->save();
-    //         DB::commit();
-    //     } catch (\Exception $exception) {
-    //         DB::rollback();
-    //         Storage::disk('local')->delete($event->image);
-    //         throw $exception;
-    //     }
-    //     return response($event, 201);
-    // }
-
-    // /**
-    //  * イベント更新
-    //  */
-    // public function update(Request $request, Event $event)
-    // {
-    //     $event->update($request->all());
-    //     return $event;
-    // }
-
-    // /**
-    //  * イベント削除
-    //  */
-    // public function destroy(Event $event)
-    // {
-    //     $event->delete();
-    //     return $event;
-    // }
 }
