@@ -8,9 +8,7 @@ import EventEntryConfirm from "./pages/EventEntryConfirm.vue";
 import EventCancel from "./pages/EventCancel.vue";
 import EventCancelConfirm from "./pages/EventCancelConfirm.vue";
 import EventPaymentPaypay from "./pages/EventPaymentPaypay.vue";
-
-import Login from "./pages/Login.vue";
-
+import Login from './pages/Login.vue';
 import store from './store';
 import SystemError from './pages/errors/System.vue'
 import RegisterMail from "./pages/RegisterMail";
