@@ -42,6 +42,6 @@
 @stop
 
 @section('css')
-    <link type="text/css" href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 @stop
 
