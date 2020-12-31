@@ -8,7 +8,7 @@
 
 @section('content')
     <!-- Style -->
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         <div class="col-md-7 offset-md-2 col-sm-12">
             <h3>イベント一覧</h3>
