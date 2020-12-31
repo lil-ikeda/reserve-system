@@ -1,12 +1,12 @@
-<IfModule mime_module>
-    # Read stylesheet
-    AddType text/css .css 
-    AddType text/javascript .js 
-</IfModule>
-
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
+    </IfModule>
+
+    <IfModule mime_module>
+        # Read stylesheet
+        AddType text/css .css 
+        AddType text/javascript .js 
     </IfModule>
 
     RewriteEngine On
