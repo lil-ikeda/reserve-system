@@ -8,7 +8,6 @@
 
 @section('content')
     <!-- Style -->
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         <div class="col-md-7 offset-md-2 col-sm-12">
             <h3>イベント一覧</h3>
@@ -43,5 +42,6 @@
 @stop
 
 @section('css')
+    <link type="text/css" href="{{ asset('/css/app.css') }}" rel="stylesheet">
 @stop
 

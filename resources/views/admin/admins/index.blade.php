@@ -8,7 +8,7 @@
 
 @section('content')
     <!-- Style -->
-    {{--    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">--}}
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         <div class="">
             <div class="card">
