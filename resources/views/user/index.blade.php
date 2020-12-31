@@ -6,7 +6,7 @@
   <title>{{ config('app.name', 'Reserve.System') }}</title>
   
   <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="{{ asset('/js/app.js') }}" defer></script>
   <!-- Style -->
   <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 </head>
