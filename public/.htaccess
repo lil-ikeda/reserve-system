@@ -3,6 +3,12 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mime_module>
+        # Read stylesheet
+        AddType text/css .css 
+        AddType text/javascript .js 
+    </IfModule>
+
     RewriteEngine On
 
     # Handle Authorization Header
@@ -18,10 +24,4 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-    
-    <IfModule mime_module>
-        # Read stylesheet
-        AddType text/css .css 
-        AddType text/javascript .js 
-    </IfModule>
 </IfModule>
