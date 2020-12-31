@@ -18,7 +18,10 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-
-    # Read stylesheet
-    AddType text/css .css 
+    
+    <IfModule mime_module>
+        # Read stylesheet
+        AddType text/css .css 
+        AddType text/javascript .js 
+    </IfModule>
 </IfModule>
