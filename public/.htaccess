@@ -5,7 +5,7 @@
 
     <IfModule mime_module>
         # Read stylesheet
-        AddType text/css .css 
+        AaddType text/css .css 
         AddType text/javascript .js 
     </IfModule>
 
