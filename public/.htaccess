@@ -5,7 +5,7 @@
 
     <IfModule mime_module>
         # Read stylesheet
-        AaddType text/css .css 
+        AddType text/css .css 
         AddType text/javascript .js 
     </IfModule>
 
@@ -24,4 +24,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    AddType text/css .css 
+    AddType text/javascript .js 
 </IfModule>
