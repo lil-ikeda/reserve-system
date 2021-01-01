@@ -5,8 +5,8 @@
 
     <IfModule mime_module>
         # Read stylesheet
-        AddType text/css .css 
-        AddType text/javascript .js 
+        AddType 'text/css; charset=UTF-8' .css
+        AddType text/javascript .js
     </IfModule>
 
     RewriteEngine On
