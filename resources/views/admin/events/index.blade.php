@@ -43,5 +43,13 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <style type="text/css">
+        .event-thumbnail-index {
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid #eee;
+            max-width: 350px;
+        }
+    </style>
 @stop
 

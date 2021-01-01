@@ -180,6 +180,13 @@
 
 @section('css')
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <style type="text/css">
+        .event-thumbnail-show {
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -221,7 +228,7 @@
             return false;
         }
     }
-    
+
     function paidConfirm() {
         let checked = confirm('本当に「支払済」にしますか？支払いは完了していますか？')
         if (checked == true) {
