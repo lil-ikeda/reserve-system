@@ -9,14 +9,6 @@
         AddType text/javascript .js 
     </IfModule>
 
-    <Files *.css>
-        Header set Content-type "text/css"
-    </Files>
-    # removing this shows the MIME type errors from before
-    <Files *.js>
-        Header set Content-type "text/javascript"
-    </Files>
-
     RewriteEngine On
 
     # Handle Authorization Header
@@ -33,6 +25,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    AddType text/css .css 
+    AddType 'text/css; charset=UTF-8' .css
     AddType text/javascript .js 
 </IfModule>
