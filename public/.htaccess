@@ -3,12 +3,6 @@
         Options -MultiViews -Indexes
     </IfModule>
 
-    <IfModule mime_module>
-        # Read stylesheet
-        AddType 'text/css; charset=UTF-8' .css
-        AddType text/javascript .js
-    </IfModule>
-
     RewriteEngine On
 
     # Handle Authorization Header
@@ -24,16 +18,4 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-
-    AddType 'text/css; charset=UTF-8' .css
-    AddType text/javascript .js 
-
-    # removing this shows the MIME type errors from before
-    <Files *.css>
-        Header set Content-type "text/css"
-    </Files>
-    # removing this shows the MIME type errors from before
-    <Files *.js>
-        Header set Content-type "text/javascript"
-    </Files>
 </IfModule>

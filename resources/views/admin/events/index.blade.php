@@ -42,7 +42,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}" defer>
     <style type="text/css">
         .event-thumbnail-index {
             width: 100%;

@@ -179,7 +179,7 @@
 @stop
 
 @section('css')
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet" defer>
     <style type="text/css">
         .event-thumbnail-show {
             width: 100%;
