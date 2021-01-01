@@ -27,4 +27,13 @@
 
     AddType 'text/css; charset=UTF-8' .css
     AddType text/javascript .js 
+
+    # removing this shows the MIME type errors from before
+    <Files *.css>
+        Header set Content-type "text/css"
+    </Files>
+    # removing this shows the MIME type errors from before
+    <Files *.js>
+        Header set Content-type "text/javascript"
+    </Files>
 </IfModule>
