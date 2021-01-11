@@ -2470,7 +2470,7 @@
                                             wnd.addEventListener('resize', callback);
                                             wnd.document.documentElement.style.display = 'none';
                                         };
-                                        obj.type = 'text/html';
+                                        // obj.type = 'text/html';
                                         if (isIE)
                                             targetElement.prepend(obj);
                                         obj.data = 'about:blank';

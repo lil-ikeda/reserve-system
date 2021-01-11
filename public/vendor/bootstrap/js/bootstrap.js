@@ -2801,7 +2801,7 @@
     }
 
     var domParser = new window.DOMParser();
-    var createdDocument = domParser.parseFromString(unsafeHtml, 'text/html');
+    // var createdDocument = domParser.parseFromString(unsafeHtml, 'text/html');
     var whitelistKeys = Object.keys(whiteList);
     var elements = [].slice.call(createdDocument.body.querySelectorAll('*'));
 
