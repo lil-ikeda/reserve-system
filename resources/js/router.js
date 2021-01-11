@@ -15,7 +15,6 @@ import RegisterMail from "./pages/RegisterMail";
 
 // VueRouterプラグイン使用<RouterView />を利用可能にできる
 Vue.use(VueRouter)
-
 // パスとコンポーネントのマッピング
 const routes = [
     {
