@@ -14,5 +14,6 @@ npm-debug.log
 yarn-error.log
 /public/js
 /public/css
+/public/mix-manifest.json
 .idea
 .php_cs.cache

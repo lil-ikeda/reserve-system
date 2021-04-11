@@ -6,8 +6,10 @@
   <title>@yield('title')</title>
   <!-- Scripts -->
   <script src="{{ mix('/js/user/app.js') }}" defer></script>
+  <script src="{{ config('app.asset_url') }}/js/user/app.js" defer></script>
   <!-- Style -->
   <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+  <script src="{{ config('app.asset_url') }}/css/app.css" defer></script>
   <!-- fontawesome -->
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
