@@ -1,10 +1,10 @@
 <?php
 
+use App\Helpers\Helper;
 use Illuminate\Database\Seeder;
-use Faker\Generator as Faker;
 use App\Models\User;
 use App\Models\Event;
-use App\Models\Entry;
+use Carbon\CarbonImmutable;
 
 class EntrySeeder extends Seeder
 {
@@ -15,28 +15,27 @@ class EntrySeeder extends Seeder
      */
     public function run()
     {
-        // 全イベントIDを配列にいれる
-        $events = [];
-        foreach (Event::all() as $event) {
-            $events[] = $event->id;
+        $eventIds = Event::get()->pluck('id');
+        $userIds = User::get()->pluck('id');
+        $now = CarbonImmutable::now();
+
+        $data = [];
+        foreach ($eventIds as $eventId) {
+            foreach ($userIds as $userId) {
+                if (Helper::setPercentage(50)) {
+                    $data[] = [
+                        'event_id' => $eventId,
+                        'user_id' => $userId,
+                        'paid' => rand(0, 1),
+                        'cancellation_request' => rand(0, 1),
+                        'payment_method' => rand(1, 2),
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];    
+                }
+            }
         }
 
-        // 全ユーザーIDを配列にいれる
-        $users = [];
-        foreach (User::all() as $user) {
-            $users[] = $user->id;
-        }
-
-        for ($i = 1; $i <= 65; $i++) {
-            DB::table('entries')->insert([
-                'event_id' => $events[array_rand($events, 1)],
-                'user_id' => $users[array_rand($users, 1)],
-                'paid' => rand(0, 1),
-                'cancellation_request' => rand(0, 1),
-                'payment_method' => rand(1, 2),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        DB::table('entries')->insert($data);
     }
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Event;
+use Carbon\CarbonImmutable;
+use Faker\Factory;
 
 class EventSeeder extends Seeder
 {
@@ -12,16 +14,26 @@ class EventSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 10; $i++) {
-            Event::create([
-                'name' => 'イベント'.$i,
-                'description' => 'イベントの詳細'.$i,
-                'date' => '2020-0'.$i.'-01',
-                'open_time' => '10:00',
-                'close_time' => '22:00',
-                'place' => '開催場所'.$i,
-                'price' => $i,
-            ]);
+        $faker = Factory::create(config('app.faker_locale'));
+        $now = CarbonImmutable::now();
+        $data = [];
+
+        for ($i = 1; $i < 100; $i++) {
+            $date = $faker->dateTimeBetween('now', '+60days')->format('Y-m-d');
+
+            $data[] = [
+                'name' => $faker->sentence,
+                'description' => $faker->text,
+                'date' => $date,
+                'open_time' => rand(10, 13).':00',
+                'close_time' => rand(17, 21).':00',
+                'place' => $faker->address,
+                'price' => rand(0, 200),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
         }
+
+        DB::table('events')->insert($data);
     }
 }
