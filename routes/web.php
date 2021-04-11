@@ -35,20 +35,18 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 });
 
 // 一般ユーザー
-Route::prefix('users')->namespace('User')->name('users.')->group(function () {
-    Route::get('events/{id}/paid', 'EventController@paid')->name('event.paid');
-//    Auth::routes(
-//        [
-//        'verify' => true,
-//        'login' => false,
-//        'logout' => false,
-//        'register' => false,
-//        ]
-//    );
+Route::namespace('User')->name('users.')->group(function () {
+    Auth::routes();
+
+    Route::prefix('events')->name('events.')->group(function () { 
+        Route::get('/', 'EventController@index')->name('index');
+        Route::get('/{id}', 'EventController@show')->name('show');
+        Route::get('/{id}/paid', 'EventController@paid')->name('paid');
+    });
 });
 
 //Route::middleware('auth:web')->group(function () {
-    Route::get('/{any?}', function () {
-        return view('user.index');
-    })->where('any', '.+');
+    // Route::get('/{any?}', function () {
+    //     return view('user.index');
+    // })->where('any', '.+');
 //});

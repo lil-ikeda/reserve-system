@@ -19,7 +19,7 @@ class EventSeeder extends Seeder
         $data = [];
 
         for ($i = 1; $i < 100; $i++) {
-            $date = $faker->dateTimeBetween('now', '+60days')->format('Y-m-d');
+            $date = $faker->dateTimeBetween('now', '+60days');
 
             $data[] = [
                 'name' => $faker->sentence,

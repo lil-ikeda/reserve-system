@@ -11,9 +11,16 @@ interface EventRepositoryContract
     /**
      * 全てのイベントを取得
      *
-     * @return array
+     * @return LengthAwarePaginator
      */
     public function getAll(): LengthAwarePaginator;
+
+    /**
+     * ユーザー画面用にイベントを全て取得
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getAllForUser(): LengthAwarePaginator;
 
     /**
      * IDからイベントを取得
@@ -22,6 +29,14 @@ interface EventRepositoryContract
      * @return Arrayable
      */
     public function findById(int $id): Arrayable;
+
+    /**
+     * IDから特定のイベントと紐づくユーザー情報を取得
+     *
+     * @param integer $id
+     * @return Arrayable
+     */
+    public function findWithUserCounts(int $id): Arrayable;
 
     /**
      * イベントの保存
