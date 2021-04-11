@@ -1,5 +1,5 @@
 // イベント作成時にサムネイル画像のプレビューをする
-function setImage(e) {
+export function setImage(e) {
 
   let file = e.target.files[0];
   let reader = new FileReader();
@@ -19,4 +19,31 @@ function setImage(e) {
   }
 
   reader.readAsDataURL(file);
+}
+
+export function deleteConfirm() {
+  let checked = confirm('本当に削除しますか？')
+  if (checked == true) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
+export function cancelConfirm() {
+  let checked = confirm("本当に削除しますか？\n返金処理は完了していますか？")
+  if (checked == true) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
+export function paidConfirm() {
+  let checked = confirm("本当に「支払済」にしますか？\n支払いは完了していますか？")
+  if (checked == true) {
+      return true;
+  } else {
+      return false;
+  }
 }

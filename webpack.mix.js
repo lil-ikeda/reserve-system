@@ -13,5 +13,6 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/admin/event_create.js', 'public/js/admin')
+    .js('resources/js/user/app.js', 'public/js/user')
     .sass('resources/sass/app.scss', 'public/css')
     .version();

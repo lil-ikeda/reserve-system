@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquents;
 use App\Models\Event;
 use App\Models\Entry;
 use App\Contracts\Repositories\EventRepositoryContract;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -54,6 +55,21 @@ class EventEloquentRepository implements EventRepositoryContract
     }
 
     /**
+     * ユーザー画面用にイベントを全て取得
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getAllForUser(): LengthAwarePaginator
+    {
+        $yesterday = CarbonImmutable::yesterday();
+        
+        return $this->event
+            ->where('date', ">=", $yesterday)
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+    }
+
+    /**
      * IDからイベントを取得
      *
      * @param int $id
@@ -62,6 +78,17 @@ class EventEloquentRepository implements EventRepositoryContract
     public function findById(int $id): Arrayable
     {
         return $this->event->find($id);
+    }
+
+    /**
+     * IDから特定のイベントと紐づくユーザー情報を取得
+     *
+     * @param integer $id
+     * @return Arrayable
+     */
+    public function findWithUserCounts(int $id): Arrayable
+    {
+        return $this->event->withCount('users')->findOrFail($id);
     }
 
     /**

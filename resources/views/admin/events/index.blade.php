@@ -8,7 +8,6 @@
 
 @section('content')
     <!-- Style -->
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <div class="container">
         <div class="col-md-7 offset-md-2 col-sm-12">
             <h3>イベント一覧</h3>
@@ -43,5 +42,14 @@
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <style type="text/css">
+        .event-thumbnail-index {
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid #eee;
+            max-width: 350px;
+        }
+    </style>
 @stop
 

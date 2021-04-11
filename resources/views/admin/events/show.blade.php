@@ -8,7 +8,7 @@
 
 @section('content')
     {{-- イベント情報 --}}
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <div class="col-md-7 offset-md-2 col-sm-12 pb-3">
         <h3>イベント編集</h3>
         <div class="card">
@@ -179,62 +179,63 @@
 @stop
 
 @section('css')
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <style type="text/css">
+        .event-thumbnail-show {
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+    </style>
 @stop
 
 @section('js')
-    <script type="text/javascript">
-        function setImage(e) {
-            let file = e.target.files[0];
-            let reader = new FileReader();
-            let preview = document.getElementsByClassName('preview')[0]
-            let previewImage = document.getElementsByClassName('event-preview-image')[0]
-
-            // 既にプレビュー画像がある場合は一度リセット
-            if (previewImage != null) {
-                preview.removeChild(previewImage);
-            }
-
-            reader.onload = function (e) {
-                let img = document.createElement('img');
-                img.setAttribute('src', reader.result);
-                img.setAttribute('class', 'event-preview-image');
-                img.setAttribute('style', 'width: 100%;');
-                preview.setAttribute('style', 'margin-bottom: 40px;');
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(file);
-
+<script type="text/javascript">
+    function setImage(e) {
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        let preview = document.getElementsByClassName('preview')[0]
+        let previewImage = document.getElementsByClassName('event-preview-image')[0]
+        // 既にプレビュー画像がある場合は一度リセット
+        if (previewImage != null) {
+            preview.removeChild(previewImage);
         }
-
-        function deleteConfirm() {
-            let checked = confirm('本当に削除しますか？')
-            if (checked == true) {
-                return true;
-            } else {
-                return false;
-            }
+        reader.onload = function (e) {
+            let img = document.createElement('img');
+            img.setAttribute('src', reader.result);
+            img.setAttribute('class', 'event-preview-image');
+            img.setAttribute('style', 'width: 100%;');
+            preview.setAttribute('style', 'margin-bottom: 40px;');
+            preview.appendChild(img);
         }
+        reader.readAsDataURL(file);
+    }
 
-        function cancelConfirm() {
-            let checked = confirm('本当に削除しますか？返金処理は完了していますか？')
-            if (checked == true) {
-                return true;
-            } else {
-                return false;
-            }
+    function deleteConfirm() {
+        let checked = confirm('本当に削除しますか？')
+        if (checked == true) {
+            return true;
+        } else {
+            return false;
         }
+    }
 
-        function paidConfirm() {
-            let checked = confirm('本当に「支払済」にしますか？支払いは完了していますか？')
-            if (checked == true) {
-                return true;
-            } else {
-                return false;
-            }
+    function cancelConfirm() {
+        let checked = confirm('本当に削除しますか？返金処理は完了していますか？')
+        if (checked == true) {
+            return true;
+        } else {
+            return false;
         }
-    </script>
-@stop
+    }
 
-@section('css')
+    function paidConfirm() {
+        let checked = confirm('本当に「支払済」にしますか？支払いは完了していますか？')
+        if (checked == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 @stop

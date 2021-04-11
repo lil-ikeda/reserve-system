@@ -17,7 +17,7 @@ use App\Http\Requests\SendEntryConfirmMail;
 use App\Http\Requests\SendCancelRequestMail;
 use App\Contracts\Repositories\EventRepositoryContract;
 use App\Contracts\Repositories\EntryRepositoryContract;
-use Carbon\Carbon;
+use App\ViewModels\User\EventViewModel;
 
 class EventController extends Controller
 {
@@ -47,14 +47,12 @@ class EventController extends Controller
      */
     public function index()
     {
-        $yesterday = Carbon::yesterday();
-        
-        $events = DB::table('events')
-        ->where('date', ">=", $yesterday)
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $events = $this->eventRepository->getAllForUser();
 
-        return $events;
+        return view('user.events.index')->with([
+            'events' => EventViewModel::collect($events)->toArray(),
+            'pagination' => $events
+        ]);
     }
 
     /**
@@ -64,9 +62,11 @@ class EventController extends Controller
      */
     public function show(int $id)
     {
-        $event = Event::where('id', $id)->with('users')->first();
+        $event = $this->eventRepository->findWithUserCounts($id);
 
-        return $event ?? abort(404);
+        return view('user.events.show')->with([
+            'event' => (new EventViewModel($event))->toArray()
+        ]);
     }
 
     /**

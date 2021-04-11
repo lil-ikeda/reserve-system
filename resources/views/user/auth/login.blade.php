@@ -2,6 +2,6 @@
 @section('title')ログイン@endsection
 @section('content')
 <div id='app'>
-  <login></login>
+  <user-login-component></user-login-component>
 </div>
 @endsection

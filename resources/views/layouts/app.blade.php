@@ -10,7 +10,8 @@
     <title>{{ config('app.name', 'Resereve System') }}</title>
 
     <!-- Scripts -->
-    <!-- <script src="{{ mix('js/app.js') }}" defer></script> -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix("/js/admin/event_create.js") }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
