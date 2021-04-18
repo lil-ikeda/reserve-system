@@ -189,9 +189,9 @@
 }
 
 // 共通背景
-.event-container {
+.main-container {
     background-color: rgba(0, 0, 0, 0.05);
-    padding: 72px 10px;
+    padding: 72px 20px;
     min-height: calc(100vh - 291px);
     &__inner {
         max-width: 425px;

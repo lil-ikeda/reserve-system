@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -31,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::USER_TOP;
 
     /**
      * Create a new controller instance.
@@ -40,7 +41,17 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:user');
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('user');
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('user.auth.register');
     }
 
     /**
@@ -79,18 +90,5 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'avatar' => $data['image']
         ]);
-    }
-
-    /**
-     * 新規登録後の処理オーバーライド
-     * デフォルトの処理の場合、リダイレクトがreturnされてしまうのでユーザー情報のみreturnする
-     *
-     * @param Request $request
-     * @param $user
-     * @return mixed
-     */
-    protected function registered(Request $request, $user)
-    {
-        return $user;
     }
 }

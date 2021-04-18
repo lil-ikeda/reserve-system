@@ -5,7 +5,7 @@
   <div class="event-container">
     <event-show
       :prop-event='@json($event)'
-      prop-href-to-top='{{ route('users.events.index') }}'
+      prop-href-to-top='{{ route('user.events.index') }}'
     ></event-show>
   </div>
 </div>

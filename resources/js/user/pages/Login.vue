@@ -2,7 +2,7 @@
     <div>
         <div class="event-container__inner">
             <div v-show="loading">
-                <!-- <Loader /> -->
+                <Loader />
             </div>
             <div class="login-wrapper" v-if="! loading">
                 <ul class="tab">
@@ -22,7 +22,10 @@
 
                 <!-- ログイン -->
                 <div class="panel" v-show="tab === 1">
-                    <form @submit.prevent="login">
+                    <!-- <form :action="propLoginRoute" method="post"> -->
+                    <form action="">
+                        <input type="hidden" name="_token" :value="csrfToken">
+                        <input type="hidden" name="_method" value="post">
                         <!-- エラーメッセージ -->
                         <div v-if="loginErrors" class="errors">
                             <ul v-if="loginErrors.email">
@@ -101,6 +104,14 @@ import Loader from '../../components/Loader.vue';
     export default {
         components: {
             Loader
+        },
+        props: {
+            propLoginRoute: {
+                type: String
+            },
+            csrfToken: {
+                type: String
+            }
         },
         data() {
             return {
