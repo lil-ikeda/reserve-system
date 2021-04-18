@@ -48,7 +48,6 @@
             width: 100%;
             object-fit: cover;
             border: 1px solid #eee;
-            max-width: 350px;
         }
     </style>
 @stop

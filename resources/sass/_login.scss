@@ -1,9 +1,9 @@
 .login-wrapper {
     max-width: 425px;
-    margin: 0 auto;
+    margin: 48px auto;
     background-color: #fff;
     border-radius: 20px;
-    padding: 32px 18px;
+    padding: 32px 28px;
     .tab {
         display: flex;
         justify-content: center;
@@ -30,6 +30,7 @@
         border-radius: 5px;
         padding: 7px;
         background-color: #fff;
+        font-size: 16px;
     }
     .register-select-form {
         width: 100%;
@@ -37,6 +38,7 @@
         border-radius: 5px;
         padding: 7px;
         background-color: #fff;
+        font-size: 16px;
     }
     &__img-wrapper {
         display: flex;

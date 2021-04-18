@@ -4,7 +4,7 @@
 
 
 <div id='app'>
-  <div class="event-container">
+  <div class="main-container">
     <event-index
       :prop-events='@json($events)'
     ></event-index>

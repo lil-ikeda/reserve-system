@@ -17,23 +17,16 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'App\Http\Controllers';
 
     /**
-     * The path to the "home" route for your application.
-     *
-     * @var string
-     */
-    public const HOME = '/home';
-
-    /**
-     * 管理トップ
+     * 管理トップ画面
      *
      * @var string
      */
     public const ADMIN_TOP = '/admin/events';
 
     /**
-     * ユーザーログイン画面
+     * ユーザートップ画面
      */
-    public const USER_LOGIN = '/login';
+    public const USER_TOP = '/events';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -58,7 +51,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAdminRoutes();
+        
+        $this->mapUserRoutes();
     }
 
     /**
@@ -88,5 +83,21 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapAdminRoutes()
+    {
+        Route::prefix(null)
+            ->middleware('admin')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/Admin/web.php'));
+    }
+
+    protected function mapUserRoutes()
+    {
+        Route::prefix(null)
+            ->middleware('user')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/User/web.php'));
     }
 }

@@ -10,3 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::namespace('User')->name('user.')->group(function () {
+    Auth::routes();
+
+    Route::prefix('events')->name('events.')->group(function () { 
+        Route::get('/', 'EventController@index')->name('index');
+        Route::get('/{id}', 'EventController@show')->name('show');
+        Route::get('/{id}/paid', 'EventController@paid')->name('paid');
+    });
+});

@@ -31,14 +31,14 @@ Route::put('/events/{event}/join', 'User\EventController@join')->name('event.joi
 Route::delete('/events/{event}/join', 'User\EventController@unjoin')->name('event.unjoin');
 
 // Auth関連
-Route::post('/register', 'User\Auth\RegisterController@register')->name('register');
-Route::post('/login', 'User\Auth\LoginController@login')->name('login');
-Route::post('/logout', 'User\Auth\LoginController@logout')->name('logout');
+// Route::post('/register', 'User\Auth\RegisterController@register')->name('register');
+// Route::post('/login', 'User\Auth\LoginController@login')->name('login');
+// Route::post('/logout', 'User\Auth\LoginController@logout')->name('logout');
 
 Route::get('/entry/{id}', 'User\EntryController@get')->name('entry.get');
 
-Route::middleware('verified')->group(function () {
-});
+// Route::middleware('verified')->group(function () {
+// });
 
 //Route::namespace('User')->name('')->group(function () {
 //    Auth::routes(['verify' => true]);
@@ -47,8 +47,8 @@ Route::middleware('verified')->group(function () {
 //});
 
 // ログイン中なのかどうか判別するため
-Route::namespace('Api')->name('api')->group(function () {
-    Route::get('/user', function () {
-        return Auth::user();
-    })->name('user');
-});
+// Route::namespace('Api')->name('api')->group(function () {
+//     Route::get('/user', function () {
+//         return Auth::user();
+//     })->name('user');
+// });

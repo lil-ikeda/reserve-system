@@ -59,14 +59,4 @@ class LoginController extends Controller
     {
         return redirect(route('admin.login'));
     }
-
-    /**
-     * ログイン後の処理オーバーライド
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        // ログイン後のリダイレクト
-        // 追記しないとJsonがレスポンスされてしまっていたため追記
-        return redirect(RouteServiceProvider::ADMIN_TOP);
-    }
 }
