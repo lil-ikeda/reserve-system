@@ -23,7 +23,8 @@ class CreateEventsTable extends Migration
             $table->string('place')->comment('場所');
             $table->integer('price')->comment('料金');
             $table->string('image')->nullable()->comment('サムネイル画像');
-            $table->timestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
         });
     }
 

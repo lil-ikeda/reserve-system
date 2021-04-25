@@ -6,6 +6,7 @@ import FooterComponent from './components/FooterComponent.vue'
 import Login from './pages/Login'
 import EventIndex from './pages/EventIndex'
 import EventShow from './pages/EventShow'
+import Register from './pages/Register'
 
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -38,7 +39,8 @@ const app = new Vue({
     Message,
     FooterComponent,
     Login,
+    Register,
     EventIndex,
-    EventShow
+    EventShow,
   }
 });

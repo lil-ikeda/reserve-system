@@ -7,16 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Event extends Model
 {
-    protected $fillable = [
-        'name',
-        'description',
-        'date',
-        'open_time',
-        'close_time',
-        'place',
-        'price',
-        'image',
-    ];
+    protected $guarded = [];
 
     // JSONに含める属性
     protected $visible = [

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="event-container__inner">
+    <div class="main-container">
+        <div class="main-container__inner">
             <div v-show="loading">
                 <Loader />
             </div>
@@ -59,9 +59,8 @@
                 <div class="d-flex justify-content-center mt-5 font-weight-bold">
                     <a :href="hrefToTop">トップページへ戻る</a>
                 </div>
+                <!--トップページへ戻る-->
             </div>
-
-            <!--トップページへ戻る-->
         </div>
     </div>
 </template>

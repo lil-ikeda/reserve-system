@@ -20,7 +20,8 @@ class CreateEntriesTable extends Migration
             $table->boolean('paid')->default(false)->comment('支払済');
             $table->boolean('cancellation_request')->default(false)->comment('キャンセル希望');
             $table->unsignedInteger('payment_method')->comment('支払方法');
-            $table->timestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
         });
     }
 

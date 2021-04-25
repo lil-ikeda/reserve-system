@@ -13,7 +13,11 @@
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     // Auth関連
-    Auth::routes();
+    Auth::routes([
+        'verify' => false,
+        'register' => true,
+        'reset' => true
+    ]);
 
     Route::middleware('auth:admin')->group(function () {
         Route::resource('events', 'EventController');

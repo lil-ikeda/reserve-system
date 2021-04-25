@@ -18,7 +18,8 @@ class CreateAdminsTable extends Migration
             $table->string('name', 100)->comment('名前');
             $table->string('email')->unique()->comment('メールアドレス');
             $table->string('password')->comment('パスワード');
-            $table->timestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
         });
     }
 

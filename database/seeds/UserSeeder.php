@@ -12,6 +12,8 @@ class UserSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        $circleIds = DB::table('circles')->get()->pluck('id');
+
         // 管理者マスター
         DB::table('users')->insert([
             'name' => '田中ユウキ',
@@ -21,7 +23,7 @@ class UserSeeder extends Seeder
             'phone' => $faker->phoneNumber,
             'sex' => config('const.sex.male.id'),
             'birthday' => $faker->dateTime->format('Y-m-d'),
-            'home_circle' => 'Dig Up Treasure',
+            'circle_id' => $circleIds->random(1)->first(),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -36,7 +38,7 @@ class UserSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'sex' => config('const.sex.male.id'),
                 'birthday' => $faker->dateTime->format('Y-m-d'),
-                'home_circle' => '乱縄',
+                'circle_id' => $circleIds->random(1)->first(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -52,7 +54,7 @@ class UserSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'sex' => config('const.sex.female.id'),
                 'birthday' => $faker->dateTime->format('Y-m-d'),
-                'home_circle' => 'D-act',
+                'circle_id' => $circleIds->random(1)->first(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -68,7 +70,7 @@ class UserSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'sex' => config('const.sex.do_not_answer.id'),
                 'birthday' => $faker->dateTime->format('Y-m-d'),
-                'home_circle' => 'Dig Up Treasure',
+                'circle_id' => $circleIds->random(1)->first(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

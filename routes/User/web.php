@@ -12,11 +12,19 @@
 */
 
 Route::namespace('User')->name('user.')->group(function () {
-    Auth::routes();
+    Auth::routes([
+        'register' => true,
+        'reset' => true,
+        'verify' => true,
+    ]);
+    Route::get('/email/verify/complete', 'Auth\VerificationController@complete')->name('verification.complete');
+    Route::get('/', 'EventController@index')->name('events.index');
 
-    Route::prefix('events')->name('events.')->group(function () { 
-        Route::get('/', 'EventController@index')->name('index');
-        Route::get('/{id}', 'EventController@show')->name('show');
-        Route::get('/{id}/paid', 'EventController@paid')->name('paid');
+    Route::middleware('verified', 'auth:user')->group(function() {
+        Route::prefix('events')->name('events.')->group(function () { 
+            // Route::get('/', 'EventController@index')->name('index');
+            Route::get('/{id}', 'EventController@show')->name('show');
+            Route::get('/{id}/paid', 'EventController@paid')->name('paid');
+        });
     });
 });

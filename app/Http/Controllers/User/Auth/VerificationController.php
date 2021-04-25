@@ -5,6 +5,14 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\Request;
+use App\Contracts\Repositories\UserRepositoryContract;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use Egulias\EmailValidator\Exception\UnclosedComment;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -26,7 +34,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::USER_LOGIN;
+    protected $redirectTo = RouteServiceProvider::USER_TOP;
 
     /**
      * Create a new controller instance.
@@ -35,8 +43,104 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:user');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    /**
+     * Show the email verification notice.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function show(Request $request)
+    {
+        return $request->user()->hasVerifiedEmail()
+                        ? redirect($this->redirectPath())
+                        : view('user.auth.verify');
+    }
+
+    /**
+     * Mark the authenticated user's email address as verified.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function verify(Request $request, UserRepositoryContract $userRepository)
+    {
+        // $user = $userRepository->findById($request->route('id'));
+        
+        // if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+        //     throw new AuthorizationException;
+        // }
+
+        // if ($user->hasVerifiedEmail()) {
+        //     return redirect($this->redirectPath());
+        // }
+
+        // if ($user->markEmailAsVerified()) {
+        //     event(new Verified($user));
+        // }
+
+        // return redirect($this->redirectPath())->with('verified', true);
+        if ($request->route('id') != $request->user()->getKey()) {
+            throw new AuthorizationException;
+        }
+         
+        if ($request->user()->markEmailAsVerified()) {
+            event(new Verified($request->user()));
+        }
+         
+        return redirect($this->redirectPath())->with('user.verified', true);
+    }
+
+    /**
+     * メール認証完了後
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function verified(Request $request)
+    {
+        return redirect(route('user.verification.complete'));
+    }
+
+    /**
+     * 認証確認メールの再送
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function resend(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect($this->redirectPath());
+        }
+
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('user.resent', true);
+    }
+
+    /**
+     * 新規登録時のメールアドレス認証完了画面
+     *
+     * @return View
+     */
+    public function complete(): View
+    {
+        return view('user.auth.verify_complete');
+    }
+
+    /**
+     * メールアドレス認証後の遷移先
+     *
+     * @return string
+     */
+    public function redirectTo(): string
+    {
+        return route('user.verification.complete');
     }
 }
