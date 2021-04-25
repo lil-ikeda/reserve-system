@@ -3,16 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
-class Entry extends Model
+class Circle extends Model
 {
-    protected $table = 'entries';
-
     protected $guarded = [];
 
     // アソシエーション
-    public function users()
+    public function users(): HasMany
     {
         return $this->hasMany(User::class);
     }

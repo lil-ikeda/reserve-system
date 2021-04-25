@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Contracts\Repositories\CircleRepositoryContract;
 
 class RegisterController extends Controller
 {
@@ -35,13 +36,21 @@ class RegisterController extends Controller
     protected $redirectTo = RouteServiceProvider::USER_TOP;
 
     /**
+     * サークルリポジトリ
+     *
+     * @var CircleRepositoryContract
+     */
+    private $circleRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CircleRepositoryContract $circleRepository)
     {
         $this->middleware('guest:user');
+        $this->circleRepository = $circleRepository;
     }
 
     protected function guard()
@@ -51,7 +60,9 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('user.auth.register');
+        $circles = $this->circleRepository->getAll()->toArray();
+
+        return view('user.auth.register')->with('circles', $circles);
     }
 
     /**
@@ -66,9 +77,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'sex' => ['required', Rule::in([config('const.sex.male.id'), config('const.sex.female.id'), config('const.sex.do_not_answer.id')])],
-            'home_circle' => ['required', 'string', 'max:100'],
+            'circle_id' => ['required', 'integer', 'exists:circles,id'],
             'birthday' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'file' => ['nullable', 'file', 'mimes:jpg,jpeg,png'],
         ]);
     }
 
@@ -85,10 +97,11 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'sex' => $data['sex'],
-            'home_circle' => $data['home_circle'],
+            'circle_id' => $data['circle_id'],
             'birthday' => $data['birthday'],
             'password' => Hash::make($data['password']),
-            'avatar' => $data['image']
+            // TODO: S3へのファイルアップロード実装後に追加
+            // 'avatar' => $data['image']
         ]);
     }
 }

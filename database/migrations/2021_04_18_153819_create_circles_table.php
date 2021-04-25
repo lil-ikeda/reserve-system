@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminPasswordResets extends Migration
+class CreateCirclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateAdminPasswordResets extends Migration
      */
     public function up()
     {
-        Schema::create('admin_password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token');
+        Schema::create('circles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100)->comment('名前');
             $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
         });
     }
 
@@ -27,6 +28,6 @@ class CreateAdminPasswordResets extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_password_resets');
+        Schema::dropIfExists('circles');
     }
 }

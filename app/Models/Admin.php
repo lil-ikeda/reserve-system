@@ -13,9 +13,9 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = [
-        'name', 'email', 'password'
-    ];
+    public const ADMIN_ROLE = 'admin';
+
+    protected $guarded = [];
 
     protected $hidden = [
         'password',
