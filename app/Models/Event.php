@@ -24,6 +24,8 @@ class Event extends Model
         'image',
     ];
 
+    public const FREE = 0;
+
     // アソシエーション
     public function users()
     {

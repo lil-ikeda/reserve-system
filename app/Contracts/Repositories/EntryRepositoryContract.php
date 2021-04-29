@@ -31,7 +31,7 @@ interface EntryRepositoryContract
      * @param int $userId
      * @return Collection
      */
-    public function getByEventAndUserId(int $eventId, int $userId): Arrayable;
+    public function getByEventAndUserId(int $eventId, int $userId): ?Arrayable;
 
     /**
      * 1エントリーレコードに対し支払済にする
@@ -49,4 +49,14 @@ interface EntryRepositoryContract
      * @return boolean
      */
     public function paid(int $userId, int $eventId): bool;
+
+    /**
+     * エントリーステータスを更新（イベントID・ユーザーIDの組み合わせが既にあれば消す、なければ登録する）
+     *
+     * @param integer $eventId
+     * @param integer $userId
+     * @param integer $paymentMethod
+     * @return void
+     */
+    public function sync(int $eventId, int $userId, int $paymentMethod): void;
 }

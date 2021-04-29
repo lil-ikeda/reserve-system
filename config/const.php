@@ -21,25 +21,16 @@ return [
 
     // 支払方法
     'payment_method' => [
-        // 'free' => [
-        //     'id' => 0,
-        // ],
-        'bank' => [
-            'id' => 1
-        ],
-        'paypay' => [
-            'id' => 2,
-        ],
+        'no_payment' => 0,
+        'bank' => 1,
+        'paypay' => 2,
     ],
 
     // 支払ステータス
     'shipping_status' => [
-        'unpaid' => [
-            'id' => 0,
-        ],
-        'paid' => [
-            'id' => 1,
-        ],
+        'no_payment' => 0,
+        'unpaid' => 1,
+        'paid' => 2,
     ],
 
     // PaypayAPIキー

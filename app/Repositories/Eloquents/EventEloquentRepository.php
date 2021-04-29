@@ -13,6 +13,7 @@ use PayPay\OpenPaymentAPI\Client;
 use PayPay\OpenPaymentAPI\Models\CreateQrCodePayload;
 use PayPay\OpenPaymentAPI\Models\OrderItem;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class EventEloquentRepository implements EventRepositoryContract
 {
@@ -81,6 +82,17 @@ class EventEloquentRepository implements EventRepositoryContract
     }
 
     /**
+     * IDからユーザー情報とともに特定のイベントを取得
+     *
+     * @param integer $id
+     * @return Collection|null
+     */
+    public function findWithUsers(int $id): ?Event
+    {
+        return $this->event->with('users')->find($id);
+    }
+
+    /**
      * IDから特定のイベントと紐づくユーザー情報を取得
      *
      * @param integer $id
@@ -88,7 +100,14 @@ class EventEloquentRepository implements EventRepositoryContract
      */
     public function findWithUserCounts(int $id): Arrayable
     {
-        return $this->event->withCount('users')->findOrFail($id);
+        return $this->event
+            ->withCount('users')
+            ->with(['entries' => function($query) use ($id) {
+                $query->where('user_id', Auth::id())
+                    ->where('event_id', $id)
+                    ->first();
+            }])
+            ->findOrFail($id);
     }
 
     /**

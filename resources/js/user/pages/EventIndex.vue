@@ -42,7 +42,11 @@
     export default {
         props: {
             propEvents: {
-                type: Object,
+                type: Array,
+                default: () => {}
+            },
+            s3Path: {
+                type: String,
                 required: true
             }
         },
@@ -67,7 +71,7 @@
                 if (url == null) {
                     url = '/img/noimage.png'
                 } else {
-                    url = 'https://sh-reserve.s3.ap-northeast-1.amazonaws.com' + url
+                    url = s3Path + url
                 }
                 return url;
             }

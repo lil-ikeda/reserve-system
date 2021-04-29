@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquents;
 use App\Models\Event;
 use App\Models\Entry;
 use App\Contracts\Repositories\EntryRepositoryContract;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class EntryEloquentRepository implements EntryRepositoryContract
     /**
      * エントリーモデル
      *
-     * @var
+     * @var Entry
      */
     private $entry;
 
@@ -62,7 +63,7 @@ class EntryEloquentRepository implements EntryRepositoryContract
         $entry = $this->entry
             ->where('event_id', $eventId)
             ->where('user_id', $userId)
-            ->first();
+            ->firstOrFail();
 
         return $entry->delete();
     }
@@ -74,9 +75,12 @@ class EntryEloquentRepository implements EntryRepositoryContract
      * @param int $userId
      * @return Collection
      */
-    public function getByEventAndUserId(int $eventId, int $userId): Arrayable
+    public function getByEventAndUserId(int $eventId, int $userId): ?Arrayable
     {
-        $entry = $this->entry->where('event_id', $eventId)->where('user_id', $userId)->first();
+        $entry = $this->entry
+            ->where('event_id', $eventId)
+            ->where('user_id', $userId)
+            ->first();
 
         return $entry;
     }
@@ -90,12 +94,10 @@ class EntryEloquentRepository implements EntryRepositoryContract
     public function pay(int $id): bool
     {
         $entry = $this->getByEventAndUserId($id, Auth::id());
-
         // PayPay以外の支払いの場合処理を中断
         if ($entry->payment_method !== config('const.payment_method.paypay.id')) {
             return false;
         }
-
         // 支払済とする
         $entry->paid = true;
 
@@ -122,5 +124,30 @@ class EntryEloquentRepository implements EntryRepositoryContract
         $entry->paid = true;
 
         return $entry->save();
+    }
+
+    /**
+     * エントリーステータスを更新（イベントID・ユーザーIDの組み合わせが既にあれば消す、なければ登録する）
+     *
+     * @param integer $eventId
+     * @param integer $userId
+     * @param integer $paymentMethod
+     * @return void
+     */
+    public function sync(int $eventId, int $userId, int $paymentMethod): void
+    {
+        $entry = $this->getByEventAndUserId($eventId, $userId);
+
+        if ($entry) {
+            $entry->user()->detach($userId);
+        } else {
+            $this->entry->create([
+                'event_id' => $eventId,
+                'user_id' => $userId,
+                'paid' => false,
+                'cancellation_request' => false,
+                'payment_method' => $paymentMethod,
+            ]);
+        }
     }
 }

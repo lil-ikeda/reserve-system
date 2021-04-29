@@ -25,7 +25,7 @@ class EntryEvent extends FormRequest
     public function rules()
     {
         $rules = [
-            'paymentMethod' => 'required', Rule::in(1, 2),
+            'payment_method' => 'required', Rule::in(config('const.payment_method')),
         ];
 
         return $this->updateRules($rules);

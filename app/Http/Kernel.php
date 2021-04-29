@@ -2,11 +2,18 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Middleware\EnsureEmailIsVerified;
+use Illuminate\Auth\Middleware\Authorize;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class Kernel extends HttpKernel
 {
@@ -89,7 +96,25 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        // 'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequestsWithRedis::class,
         'verified' => EnsureEmailIsVerified::class,
+    ];
+
+    /**
+     * The priority-sorted list of middleware.
+     * 
+     * This forces non-grobal middleware to always be in the given order.
+     *
+     * @var array
+     */
+    protected $middlewarePriority = [
+        StartSession::class,
+        ShareErrorsFromSession::class,
+        Authenticate::class,
+        ThrottleRequests::class,
+        AuthenticateSession::class,
+        SubstituteBindings::class,
+        Authorize::class,
     ];
 }

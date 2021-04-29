@@ -18,7 +18,7 @@
             </div>
             <div class="d-flex justify-content-center">
                 <div class="button__paypay">
-                    <button @click="payment">PayPayで支払う</button>
+                    <button @click="payment">今すぐPayPayで支払う</button>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-5 font-weight-bold">

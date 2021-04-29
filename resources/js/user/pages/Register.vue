@@ -3,8 +3,11 @@
         <div class="headline-en">Register</div>
         <div class="headline-ja">新規登録</div>
         <div class="login-wrapper">
+            <div v-show="loading">
+                <Loader />
+            </div>
             <div class="panel">
-                <form :action="registerRoute" method="POST" enctype="multipart/form-data">
+                <form :action="registerRoute" method="POST" enctype="multipart/form-data" v-show="!loading">
                     <input type="hidden" name="_token" :value="csrfToken">
                     <input type="hidden" name="_method" value="POST">
                     <!-- 入力フォーム -->
@@ -36,7 +39,7 @@
                     <input type="password" id="password" name="password">
                     <label for="password_confirmation">パスワード確認用</label>
                     <input type="password" id="password_confirmation" name="password_confirmation">
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center" @click="submit">
                         <button type="submit" class="button__join">新規登録</button>
                     </div>
                 </form>
@@ -113,6 +116,9 @@ import Loader from '../../components/Loader.vue';
                 this.image = null
                 this.$el.querySelector('input[type="file"]').value = null
             },
+            submit() {
+                this.loading = true;
+            }
         },
         created() {
             this.clearError()

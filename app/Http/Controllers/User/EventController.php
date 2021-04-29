@@ -8,7 +8,6 @@ use App\Mail\EntryConfirm;
 use App\Models\Event;
 use App\Models\Entry;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Mail\CancelRequest;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +16,9 @@ use App\Http\Requests\SendEntryConfirmMail;
 use App\Http\Requests\SendCancelRequestMail;
 use App\Contracts\Repositories\EventRepositoryContract;
 use App\Contracts\Repositories\EntryRepositoryContract;
+use App\ViewModels\User\EntryStatusViewModel;
 use App\ViewModels\User\EventViewModel;
+use App\ViewModels\User\EventShowViewModel;
 
 class EventController extends Controller
 {
@@ -63,9 +64,22 @@ class EventController extends Controller
     public function show(int $id)
     {
         $event = $this->eventRepository->findWithUserCounts($id);
-
         return view('user.events.show')->with([
-            'event' => (new EventViewModel($event))->toArray()
+            'event' => (new EventShowViewModel($event))->toArray(),
+        ]);
+    }
+
+    public function entryPage(int $id)
+    {
+        $event = $this->eventRepository->findById($id);
+
+        $entered = $event->entries->filter(function($entry) use ($event) {
+            return $entry->user_id === Auth::id();
+        });
+        // dd($entered->isNotEmpty());
+        return view('user.events.entry')->with([
+            'event' => (new EventViewModel($event))->toArray(),
+            'entered' => $entered->isNotEmpty()
         ]);
     }
 
@@ -90,54 +104,6 @@ class EventController extends Controller
         $entry->save();
 
         return 200;
-    }
-
-    /**
-     * イベントにエントリー
-     *
-     * @param string $id
-     * @return array
-     */
-    public function join(string $id, EntryEvent $request)
-    {
-        $event = Event::where('id', $id)->with('users')->first();
-        $user = Auth::user();
-
-        if (!$event) {
-            abort(404);
-        }
-
-        // 既存の「エントリー」レコードを削除
-        $event->users()->detach($user->id);
-
-        // 「支払方法」がnullなら「支払なし」とする
-        $paymentMethod = (is_null($request->input('paymentMethod')))
-            ? $request->input('paymentMethod')
-            : config('const.payment_method.free.id');
-
-        $entry = DB::table('entries')->insert([
-            'event_id' => $id,
-            'user_id' => $user->id,
-            'paid' => false,
-            'cancellation_request' => false,
-            'payment_method' => $paymentMethod,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        // エントリー内容確認メール送信
-        Mail::to($user)
-            ->send(new EntryConfirm(
-                $user->name,
-                $event->name,
-                $event->date,
-                $event->open_time,
-                $event->close_time,
-                $event->price,
-                $paymentMethod
-            ));
-
-        return response($entry, 200);
     }
 
     public function unjoin(string $id)

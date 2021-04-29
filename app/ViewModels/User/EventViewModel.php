@@ -38,7 +38,8 @@ class EventViewModel extends ViewModel
             'price' => $this->event->price,
             'image' => $this->event->image,
             'usersCount' => $this->event->users_count,
-            'url' => route('user.events.show', $this->event->id)
+            'url' => route('user.events.show', $this->event->id),
+            'isFree' => $this->event->price === $this->event::FREE
         ];
     }
 }

@@ -18,7 +18,10 @@
                         <li>時間：{{ event.openTime }} 〜 {{ event.closeTime }}</li>
                         <li>場所：{{ event.place }}</li>
                     </ul>
-                    <div class="event-price font-weight-bold">エントリー費：{{ event.price }} 円</div>
+                    <div class="event-price font-weight-bold">
+                        <i class="fas fa-yen-sign"></i>
+                        エントリー費：{{ event.price }} 円
+                    </div>
                     <div class="entry-count">
                         <div class="number">
                             <font-awesome-icon style="min-width: 30px;" :icon="['fas', 'users']" />
@@ -27,8 +30,39 @@
                     </div>
                 </div>
 
+                <!-- 支払いボタン -->
+                <div class="d-flex justify-content-center">
+                    <button v-if="event.paymentButtonStatus === 1" class="button button__paypay" @click="payment">
+                        PayPayで支払う
+                    </button>
+                    <button v-if="event.paymentButtonStatus === 2" class="button button__paypay">
+                        振込先情報を表示
+                    </button>
+                    <button v-if="event.paymentButtonStatus === 3" class="button button__paid">
+                        支払済
+                    </button>
+                    <button v-if="event.paymentButtonStatus === 4" class="mt-5 font-weight-bold">
+                        無料イベントです🙆‍♂️
+                    </button>
+                    <button v-if="event.paymentButtonStatus === 5" class="button button__paid">
+                        返金待ち
+                    </button>
+                </div>
+
                 <!--エントリーボタン-->
-                <div class="d-flex justify-content-center" v-if="event.joined_by_user">
+                <div class="d-flex justify-content-center">
+                    <a :href="routeToEntry" v-if="event.entryButtonStatus === 0" class="button button__join">
+                        エントリーページへ
+                    </a>
+                    <button v-else-if="event.entryButtonStatus === 1" class="button button__joined">
+                        エントリーをキャンセルする
+                    </button>
+                    <button v-else-if="event.entryButtonStatus === 2" class="button button__paid">
+                        キャンセル待ち
+                    </button>
+                </div>
+
+                <!-- <div class="d-flex justify-content-center" v-if="event.joined_by_user">
                     <button class="button button__paypay" @click="payment" v-show="!paid && !freeEvent">
                         PayPayで支払う
                     </button>
@@ -55,11 +89,12 @@
                     >
                         エントリーページへ
                     </button>
-                </div>
+                </div> -->
+
+                <!-- トップページへ戻る -->
                 <div class="d-flex justify-content-center mt-5 font-weight-bold">
-                    <a :href="hrefToTop">トップページへ戻る</a>
+                    <a :href="routeToTop">トップページへ戻る</a>
                 </div>
-                <!--トップページへ戻る-->
             </div>
         </div>
     </div>
@@ -74,18 +109,22 @@ export default {
         Loader
     },
     props: {
-        // id: {
-        //     type: [String],
-        //     required: true
-        // },
         propEvent: {
-            type: Array,
-            required: true
+            type: Object,
+            default: () => {}
         },
-        propHrefToTop: {
+        routeToTop: {
             type: String,
             required: true
         },
+        routeToEntry: {
+            type: String,
+            required: true
+        },
+        s3Path: {
+            type: String,
+            required: true
+        }
     },
     data() {
         return {
@@ -93,45 +132,28 @@ export default {
             event: this.propEvent,
             paid: false,
             freeEvent: false,
-            hrefToTop: this.propHrefToTop,
         }
     },
     methods: {
-        // イベントの情報を取得
-        async fetchEvent() {
-            const response = await axios.get(`/api/events/${this.id}`);
-
-            if(response.status !== OK) {
-                this.$store.commit('error/setCode', response.status);
-                return false;
-            };
-
-            this.event = response.data;
-            console.log(this.event);
-
-            if (this.event.price === 0) {
-                this.freeEvent = true
-            };
-        },
         // ログインチェック
-        onJoinClick () {
-            if (! this.$store.getters['auth/check']) {
-                alert('エントリー機能を使うにはログインしてください')
-                return false
-            }
+        // onJoinClick () {
+        //     if (! this.$store.getters['auth/check']) {
+        //         alert('エントリー機能を使うにはログインしてください')
+        //         return false
+        //     }
 
-            // エントリー済の場合と未エントリーの場合で条件分岐
-            if (this.event.joined_by_user && this.evnet.date ) {
-                this.$router.push(`/events/${this.id}/cancel`);
-            } else {
-                this.loading = true
-                this.$router.push(`/events/${this.id}/entry`);
-            }
-        },
+        //     // エントリー済の場合と未エントリーの場合で条件分岐
+        //     if (this.event.joined_by_user && this.evnet.date ) {
+        //         this.$router.push(`/events/${this.id}/cancel`);
+        //     } else {
+        //         this.loading = true
+        //         this.$router.push(`/events/${this.id}/entry`);
+        //     }
+        // },
         // Paypay決済ページへ遷移
         async payment () {
             this.loading = true
-            const response = await axios.get(`/api/events/${this.id}/pay`);
+            const response = await axios.get(`/api/events/${this.event.id}/pay`);
             location.href = response.data;
         },
         // イベントサムネイルのURLを設定
@@ -139,7 +161,7 @@ export default {
             if (url == null) {
                 url = '/img/noimage.png'
             } else {
-                url = 'https://sh-reserve.s3.ap-northeast-1.amazonaws.com' + url
+                url = s3Path + url
             }
             return url;
         },
@@ -158,18 +180,6 @@ export default {
             }
             this.loading = false
         },
-        backToTop() {
-            this.$router.push('/');
-        },
-    },
-    watch: {
-        $route: {
-            async handler() {
-                // await this.fetchEvent();
-                await this.fetchPaid();
-            },
-            immediate: true
-        }
     },
 }
 </script>

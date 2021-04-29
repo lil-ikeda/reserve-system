@@ -5,6 +5,7 @@ namespace App\Contracts\Repositories;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Event;
 
 interface EventRepositoryContract
 {
@@ -29,6 +30,14 @@ interface EventRepositoryContract
      * @return Arrayable
      */
     public function findById(int $id): Arrayable;
+
+    /**
+     * IDからユーザー情報とともに特定のイベントを取得
+     *
+     * @param integer $id
+     * @return Collection|null
+     */
+    public function findWithUsers(int $id): ?Event;
 
     /**
      * IDから特定のイベントと紐づくユーザー情報を取得
