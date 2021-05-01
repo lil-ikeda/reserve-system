@@ -1,15 +1,12 @@
 @extends('adminlte::page')
-
 @section('title', 'Dashboard')
-
 @section('content_header')
-
 @stop
 
 @section('content')
     <!-- Style -->
-    <div class="container">
-        <div class="col-md-7 offset-md-2 col-sm-12">
+    <div class="container p-0">
+        <div class="col-md-5 offset-md-2 col-sm-12 p-0">
             <h3>イベント一覧</h3>
             @foreach ($events as $event)
                 <a href="{{ route('admin.events.show', $event->id) }}" class="text-decoration-none">
@@ -34,9 +31,9 @@
                     </div>
                 </a>
             @endforeach
-        </div>
-        <div class="d-flex justify-content-center">
-            {{ $events->links() }}
+            <div class="d-flex justify-content-center">
+                {{ $events->links('pagination::default') }}
+            </div>
         </div>
     </div>
 @stop

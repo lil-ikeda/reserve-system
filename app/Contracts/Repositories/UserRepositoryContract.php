@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Repositories;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Ramsey\Collection\Collection;
 
@@ -9,11 +10,11 @@ interface UserRepositoryContract
 {
 
     /**
-     * すべてのユーザーを取得
+     * 全ユーザーをペジネーションで取得
      *
-     * @return Collection
+     * @return Paginator
      */
-    public function getAll(): Arrayable;
+    public function getAll(): Paginator;
 
     /**
      * IDからユーザーを取得

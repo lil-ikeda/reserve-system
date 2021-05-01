@@ -3,12 +3,15 @@ import Vue from 'vue'
 import HeaderComponent from './components/HeaderComponent.vue'
 import Message from '../components/Message.vue'
 import FooterComponent from './components/FooterComponent.vue'
+import Modal from './components/Modal.vue'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import EventIndex from './pages/EventIndex'
 import EventShow from './pages/EventShow'
 import EventEntry from './pages/EventEntry'
 import EventEntryConfirm from './pages/EventEntryConfirm'
-import Register from './pages/Register'
+import EventCancel from './pages/EventCancel'
+import EventCancelConfirm from './pages/EventCancelConfirm'
 
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -30,9 +33,16 @@ library.add(faUsers)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
+// ヘッダー・フッター
 Vue.component('header-component', require('./components/HeaderComponent.vue'));
 Vue.component('footer-component', require('./components/FooterComponent.vue'));
 
+// フラッシュ非表示用のjQuery
+window.jquery = require('jquery');
+window.$ = require('jquery');
+$('.close-flash').on('click', function() {
+  $('.flash-container').addClass('-close');
+});
 
 const app = new Vue({
   el: '#app',
@@ -40,11 +50,14 @@ const app = new Vue({
     HeaderComponent,
     Message,
     FooterComponent,
+    Modal,
     Login,
     Register,
     EventIndex,
     EventShow,
     EventEntry,
     EventEntryConfirm,
+    EventCancel,
+    EventCancelConfirm
   }
 });

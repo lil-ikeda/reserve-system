@@ -9,6 +9,7 @@
         route-to-top='{{ route('user.events.index') }}'
         route-to-back='{{ route('user.events.show', $event['id']) }}'
         route-to-entry='{{ route('api.events.entry', $event['id']) }}'
+        route-to-paypay='{{ route('api.events.pay', $event['id']) }}'
         payment-method-paypay={{ config('const.payment_method.paypay') }}
         payment-method-bank={{ config('const.payment_method.bank') }}
     ></event-entry>

@@ -6,7 +6,9 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -58,5 +60,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class);
+    }
+
+    public function circle(): BelongsTo
+    {
+        return $this->belongsTo(Circle::class);
     }
 }

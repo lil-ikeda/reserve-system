@@ -126,7 +126,7 @@ interface EventRepositoryContract
     public function destroy(int $id): bool;
 
     /**
-     * PayPay決済
+     * PayPay決済用のURLを取得
      *
      * @param string $eventName
      * @param int $eventPrice
@@ -135,5 +135,5 @@ interface EventRepositoryContract
      * @throws \PayPay\OpenPaymentAPI\Controller\ClientControllerException
      * @throws \PayPay\OpenPaymentAPI\Models\ModelException
      */
-    public function pay(string $eventName, int $eventPrice, int $eventId): string;
+    public function getPayPayUrl(string $eventName, int $eventPrice, int $eventId): string;
 }

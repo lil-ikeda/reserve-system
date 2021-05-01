@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Requests\EntryEvent;
-use App\Mail\CancelCompletRequest;
-use App\Mail\EntryConfirm;
-use App\Models\Event;
-use App\Models\Entry;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\CancelRequest;
@@ -69,14 +64,20 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * エントリーページを表示
+     *
+     * @param integer $id
+     * @return void
+     */
     public function entryPage(int $id)
     {
         $event = $this->eventRepository->findById($id);
 
-        $entered = $event->entries->filter(function($entry) use ($event) {
+        $entered = $event->entries->filter(function($entry) {
             return $entry->user_id === Auth::id();
         });
-        // dd($entered->isNotEmpty());
+
         return view('user.events.entry')->with([
             'event' => (new EventViewModel($event))->toArray(),
             'entered' => $entered->isNotEmpty()
@@ -84,57 +85,44 @@ class EventController extends Controller
     }
 
     /**
-     * キャンセル希望メールの送信
+     * エントリーキャンセルページを表示
      *
-     * @param int $id
+     * @param integer $id
+     * @return void
      */
-    public function cancelSendMail(SendCancelRequestMail $request)
-    {
-        $user = Auth::user();
-        $event = $this->eventRepository->findById($request->input('id'));
-
-        // 「エントリー」レコードのキャンセルリクエストをtrueにする
-        $entry = Entry::where('event_id', $event->id)
-            ->where('user_id', $user->id)->first();
-
-        Mail::to(config('const.skillhack_mail'))
-            ->send(new CancelRequest($user->name, $event->id, $event->name, $entry->paid));
-
-        $entry->cancellation_request = true;
-        $entry->save();
-
-        return 200;
-    }
-
-    public function unjoin(string $id)
-    {
-        $event = Event::where('id', $id)->with('users')->first();
-
-        if (!$event) {
-            abort(404);
-        }
-
-        $event->users()->detach(Auth::user()->id);
-
-        return ['event_id' => $id];
-    }
-
-    public function pay(int $id)
+    public function cancelPage(int $id)
     {
         $event = $this->eventRepository->findById($id);
 
-        // PayPayQRコード生成と決済ページのURL生成
-        $redirectUrl = $this->eventRepository->pay($event->name, $event->price, $event->id);
+        $cancelRequested = $event->entries->filter(function($entry) {
+            return $entry->user_id === Auth::id() && (bool)$entry->cancellation_request === true;
+        });
 
-        return $redirectUrl;
+        return view('user.events.cancel')->with([
+            'event' => (new EventViewModel($event))->toArray(),
+            'cancelRequested' => $cancelRequested->isNotEmpty()
+        ]);
     }
 
+    /**
+     * PayPay決済後DBの支払いステータスを更新する
+     *
+     * @param integer $id
+     * @return void
+     */
     public function paid(int $id)
     {
         $response = $this->entryRepository->pay($id);
 
-        if ($response === true) {
-            return redirect('/');
+        if ($response) {
+            // TODO: 決済完了確認のメールを送信する
+            // Mail::to(Auth::user()->email)
+            //     ->send()
+
+            return redirect(route('user.events.show', $id))
+                ->with('flash_message', trans('message.success.pay'));
+        } else {
+            abort(404);
         }
     }
 }

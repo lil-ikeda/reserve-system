@@ -71,7 +71,7 @@ class IndexViewModel extends ViewModel
     {
         $homeCircles = [];
         foreach ($users as $user) {
-            $homeCircles[$user->id] = $user->home_circle;
+            $homeCircles[$user->id] = $user->circle->name;
         }
 
         return $homeCircles;

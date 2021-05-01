@@ -58,8 +58,10 @@
         <!-- エントリー後 -->
         <event-entry-confirm
             v-show="!loading && entered"
+            :route-to-paypay="routeToPaypay"
             :route-to-top="routeToTop"
             :event-id="event.id"
+            :paymentMethod="paymentMethod"
         />
     </div>
 </template>
@@ -91,6 +93,10 @@
                 required: true
             },
             routeToEntry: {
+                type: String,
+                required: true
+            },
+            routeToPaypay: {
                 type: String,
                 required: true
             },
@@ -180,7 +186,7 @@
             },
             async payment () {
                 this.loading = true
-                const response = await axios.get(`/api/events/${this.id}/pay`);
+                const response = await axios.get(this.routeToPaypay);
 
                 // 決済ページにリダイレクト
                 location.href = response.data;

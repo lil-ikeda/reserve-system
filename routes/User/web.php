@@ -29,6 +29,7 @@ Route::namespace('User')->name('user.')->group(function () {
             Route::get('/', 'EventController@index')->name('index');
             Route::get('/{id}', 'EventController@show')->name('show');
             Route::get('/{id}/entry', 'EventController@entryPage')->name('entry_page');
+            Route::get('/{id}/cancel', 'EventController@cancelPage')->name('cancel_page');
             Route::post('/{id}/entry', 'EventController@entry')->name('entry');
             Route::get('/{id}/paid', 'EventController@paid')->name('paid');
         });
