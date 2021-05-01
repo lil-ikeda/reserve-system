@@ -29,7 +29,7 @@
                                 回答しない
                                 @endif
                             </li>
-                            <li class="list-group-item p-1 text-break">{{ $user->home_circle }}</li>
+                            <li class="list-group-item p-1 text-break">{{ $homeCircles[$user->id] }}</li>
                             <li class="list-group-item p-1 text-break">{{ $user->phone }}</li>
                             <li class="list-group-item p-1 text-break">{{ $user->email }}</li>
                             <li class="list-group-item p-1 text-break">{{ $user->birthday }}</li>
@@ -38,9 +38,13 @@
                 @endforeach
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            {{ $users->links('pagination::default') }}
+        </div>
     </div>
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 @stop
 

@@ -10,7 +10,7 @@
         
         {{-- ページネーション --}}
         <div class="d-flex justify-content-center">
-        {{ $pagination->links() }}
+        {{ $pagination->links('pagination::default') }}
         </div>
     </div>
 </div>

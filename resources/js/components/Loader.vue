@@ -9,6 +9,16 @@
                 </div>
             </div>
         </div>
-        <div class="text-center">Loading...</div>
+        <div class="text-center">{{ title }}</div>
     </div>
 </template>
+
+<script>
+export default {
+    props: {
+        title: {
+            type: String
+        }
+    },
+}
+</script>

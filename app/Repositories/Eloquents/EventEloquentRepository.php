@@ -253,13 +253,13 @@ class EventEloquentRepository implements EventRepositoryContract
         $paymentMethods = [];
         foreach ($entries as $entry) {
             switch ($entry->payment_method) {
-                case config('const.payment_method.paypay.id'):
+                case config('const.payment_method.paypay'):
                     $paymentMethods[$entry->user_id] = 'PayPay';
                     break;
-                case config('const.payment_method.bank.id'):
+                case config('const.payment_method.bank'):
                     $paymentMethods[$entry->user_id] = '口座振込';
                     break;
-                case config('const.payment_method.free.id'):
+                case config('const.payment_method.free'):
                     $paymentMethods[$entry->user_id] = '支払情報なし';
                     break;
             }
@@ -281,7 +281,7 @@ class EventEloquentRepository implements EventRepositoryContract
 
 
     /**
-     * PayPay決済
+     * PayPay決済用のURLを取得
      *
      * @param string $eventName
      * @param int $eventPrice
@@ -290,7 +290,7 @@ class EventEloquentRepository implements EventRepositoryContract
      * @throws \PayPay\OpenPaymentAPI\Controller\ClientControllerException
      * @throws \PayPay\OpenPaymentAPI\Models\ModelException
      */
-    public function pay(string $eventName, int $eventPrice, int $eventId): string
+    public function getPayPayUrl(string $eventName, int $eventPrice, int $eventId): string
     {
         // クライアントのビルド
         $this->paypayClient = new Client([
@@ -325,7 +325,7 @@ class EventEloquentRepository implements EventRepositoryContract
 
         // Configure redirects
         $CQCPayload->setRedirectType('WEB_LINK');
-        $CQCPayload->setRedirectUrl(route('user.event.paid', $eventId));
+        $CQCPayload->setRedirectUrl(route('user.events.paid', $eventId));
         $CQCPayload->setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1');
 
         //=================================================================

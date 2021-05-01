@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquents;
 
 use App\Models\User;
 use App\Contracts\Repositories\UserRepositoryContract;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Ramsey\Collection\Collection;
 
@@ -26,13 +27,13 @@ class UserEloquentRepository implements UserRepositoryContract
     }
 
     /**
-     * すべてのユーザーを取得
+     * 全ユーザーをペジネーションで取得
      *
-     * @return Collection
+     * @return Paginator
      */
-    public function getAll(): Arrayable
+    public function getAll(): Paginator
     {
-        $users = $this->user->all();
+        $users = $this->user->with('circle')->paginate(15);
 
         return $users;
     }

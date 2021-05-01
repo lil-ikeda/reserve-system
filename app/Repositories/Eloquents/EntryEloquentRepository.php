@@ -75,13 +75,28 @@ class EntryEloquentRepository implements EntryRepositoryContract
      * @param int $userId
      * @return Collection
      */
-    public function getByEventAndUserId(int $eventId, int $userId): ?Arrayable
+    public function getByEventAndUserId(int $eventId, int $userId): ?Entry
     {
         $entry = $this->entry
             ->where('event_id', $eventId)
             ->where('user_id', $userId)
             ->first();
 
+        return $entry;
+    }
+
+    /**
+     * キャンセルリクエストの送信
+     *
+     * @param integer $eventId
+     * @param integer $userId
+     * @return Entry
+     */
+    public function cancelRequest(int $eventId, int $userId): Entry
+    {
+        $entry = $this->getByEventAndUserId($eventId, $userId);
+        $entry->cancellation_request = true;
+        $entry->save();
         return $entry;
     }
 
@@ -94,13 +109,14 @@ class EntryEloquentRepository implements EntryRepositoryContract
     public function pay(int $id): bool
     {
         $entry = $this->getByEventAndUserId($id, Auth::id());
+        
         // PayPay以外の支払いの場合処理を中断
-        if ($entry->payment_method !== config('const.payment_method.paypay.id')) {
+        if ($entry->payment_method !== config('const.payment_method.paypay')) {
             return false;
         }
+
         // 支払済とする
         $entry->paid = true;
-
         return $entry->save();
     }
 
@@ -134,7 +150,7 @@ class EntryEloquentRepository implements EntryRepositoryContract
      * @param integer $paymentMethod
      * @return void
      */
-    public function sync(int $eventId, int $userId, int $paymentMethod): void
+    public function sync(int $eventId, int $userId, ?int $paymentMethod): void
     {
         $entry = $this->getByEventAndUserId($eventId, $userId);
 

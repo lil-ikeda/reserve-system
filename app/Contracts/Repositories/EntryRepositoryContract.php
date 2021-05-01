@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use App\Models\Entry;
 
 interface EntryRepositoryContract
 {
@@ -31,8 +32,17 @@ interface EntryRepositoryContract
      * @param int $userId
      * @return Collection
      */
-    public function getByEventAndUserId(int $eventId, int $userId): ?Arrayable;
+    public function getByEventAndUserId(int $eventId, int $userId): ?Entry;
 
+    /**
+     * キャンセルリクエストの送信
+     *
+     * @param integer $eventId
+     * @param integer $userId
+     * @return Entry
+     */
+    public function cancelRequest(int $eventId, int $userId): Entry;
+    
     /**
      * 1エントリーレコードに対し支払済にする
      *
@@ -58,5 +68,5 @@ interface EntryRepositoryContract
      * @param integer $paymentMethod
      * @return void
      */
-    public function sync(int $eventId, int $userId, int $paymentMethod): void;
+    public function sync(int $eventId, int $userId, ?int $paymentMethod): void;
 }

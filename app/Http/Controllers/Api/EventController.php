@@ -9,6 +9,7 @@ use App\Contracts\Repositories\EventRepositoryContract;
 use App\Contracts\Repositories\EntryRepositoryContract;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EntryConfirm;
+use App\Mail\CancelRequest;
 
 
 class EventController extends Controller
@@ -36,6 +37,13 @@ class EventController extends Controller
         $this->entryRepository = $entryRepository;
     }
 
+    /**
+     * イベントのエントリー処理
+     *
+     * @param integer $id
+     * @param EntryEvent $request
+     * @return void
+     */
     public function entry(int $id, EntryEvent $request)
     {
         $event = $this->eventRepository->findWithUsers($id);
@@ -66,5 +74,60 @@ class EventController extends Controller
             ));
 
         return response()->json('OK', 200);
+    }
+
+    /**
+     * キャンセル希望メールの送信
+     *
+     * @param int $id
+     */
+    public function cancelSendMail(int $id)
+    {
+        $user = Auth::user();
+        $event = $this->eventRepository->findById($id);
+
+        // 「エントリー」レコードのキャンセルリクエストをtrueにする
+        $entry = $this->entryRepository->cancelRequest($event->id, $user->id);
+
+        if ($entry) {
+            Mail::to(config('const.skillhack_mail'))
+                ->send(new CancelRequest($user->name, $event->id, $event->name, $entry->paid));
+            return response()->json('OK', 200);
+        }
+    }
+
+    /**
+     * イベントエントリーのキャンセル希望をリクエスト
+     *
+     * @param string $id
+     * @return void
+     */
+    public function cancel(int $id)
+    {
+        $event = $this->eventRepository->findWithUsers($id);
+
+        if (!$event) {
+            abort(404);
+        }
+
+        $this->entryRepository->sync($id, Auth::id(), NULL);
+
+        return response()->json(['event_id' => $id], 200);
+    }
+
+    /**
+     * PayPay支払いページのURLを生成
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function pay(int $id)
+    {
+        $event = $this->eventRepository->findById($id);
+
+        // PayPayQRコード生成と決済ページのURL生成
+        $redirectUrl = $this->eventRepository->getPayPayUrl($event->name, $event->price, $event->id);
+
+        return $redirectUrl;
     }
 }

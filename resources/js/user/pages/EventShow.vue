@@ -35,7 +35,7 @@
                     <button v-if="event.paymentButtonStatus === 1" class="button button__paypay" @click="payment">
                         PayPayで支払う
                     </button>
-                    <button v-if="event.paymentButtonStatus === 2" class="button button__paypay">
+                    <button v-if="event.paymentButtonStatus === 2" class="button button__paypay" @click="openModal">
                         振込先情報を表示
                     </button>
                     <button v-if="event.paymentButtonStatus === 3" class="button button__paid">
@@ -49,47 +49,28 @@
                     </button>
                 </div>
 
+                <!-- 振込先情報表示用モーダル -->
+                <modal @close="closeModal" v-if="modal">
+                    <p class="title">🏦 振込先情報</p>
+                    <p class="content">金融機関名：三菱東京UFJ銀行</p>
+                    <p class="content">支店名　　：渋谷支店</p>
+                    <p class="content">預金種別　：普通</p>
+                    <p class="content">口座番号　：1234567</p>
+                    <p class="content">口座名義　：タナカユウキ</p>
+                </modal>
+
                 <!--エントリーボタン-->
                 <div class="d-flex justify-content-center">
                     <a :href="routeToEntry" v-if="event.entryButtonStatus === 0" class="button button__join">
                         エントリーページへ
                     </a>
-                    <button v-else-if="event.entryButtonStatus === 1" class="button button__joined">
+                    <a :href="routeToCancel" v-else-if="event.entryButtonStatus === 1" class="button button__joined">
                         エントリーをキャンセルする
-                    </button>
+                    </a>
                     <button v-else-if="event.entryButtonStatus === 2" class="button button__paid">
                         キャンセル待ち
                     </button>
                 </div>
-
-                <!-- <div class="d-flex justify-content-center" v-if="event.joined_by_user">
-                    <button class="button button__paypay" @click="payment" v-show="!paid && !freeEvent">
-                        PayPayで支払う
-                    </button>
-                    <span class="button button__paid" v-show="paid && !freeEvent">
-                        支払済
-                    </span>
-                    <span class="button button__paid" v-show="!paid && freeEvent">
-                        無料イベントにつき支払不要
-                    </span>
-                </div>
-                
-                <div class="d-flex justify-content-center">
-                    <button
-                        class="button button__joined"
-                        @click="onJoinClick()"
-                        v-if="event.joined_by_user"
-                    >
-                        エントリーをやめる
-                    </button>
-                    <button
-                        class="button button__join"
-                        @click="onJoinClick()"
-                        v-else
-                    >
-                        エントリーページへ
-                    </button>
-                </div> -->
 
                 <!-- トップページへ戻る -->
                 <div class="d-flex justify-content-center mt-5 font-weight-bold">
@@ -103,10 +84,12 @@
 <script>
 import { OK } from '../../util'
 import Loader from '../../components/Loader.vue'
+import Modal from '../components/Modal'
 
 export default {
     components: {
-        Loader
+        Loader,
+        Modal
     },
     props: {
         propEvent: {
@@ -121,6 +104,14 @@ export default {
             type: String,
             required: true
         },
+        routeToCancel: {
+            type: String,
+            required: true
+        },
+        endpointToPaypay: {
+            type: String,
+            required: true
+        },
         s3Path: {
             type: String,
             required: true
@@ -132,29 +123,19 @@ export default {
             event: this.propEvent,
             paid: false,
             freeEvent: false,
+            modal: false
         }
     },
     methods: {
-        // ログインチェック
-        // onJoinClick () {
-        //     if (! this.$store.getters['auth/check']) {
-        //         alert('エントリー機能を使うにはログインしてください')
-        //         return false
-        //     }
-
-        //     // エントリー済の場合と未エントリーの場合で条件分岐
-        //     if (this.event.joined_by_user && this.evnet.date ) {
-        //         this.$router.push(`/events/${this.id}/cancel`);
-        //     } else {
-        //         this.loading = true
-        //         this.$router.push(`/events/${this.id}/entry`);
-        //     }
-        // },
         // Paypay決済ページへ遷移
         async payment () {
             this.loading = true
-            const response = await axios.get(`/api/events/${this.event.id}/pay`);
-            location.href = response.data;
+            const response = await axios.get(this.endpointToPaypay);
+            if (response.status === 200) {
+                location.href = response.data;
+            } else {
+                alert('URLの取得に失敗しました');
+            }
         },
         // イベントサムネイルのURLを設定
         imgPath(url) {
@@ -165,21 +146,12 @@ export default {
             }
             return url;
         },
-        // 支払い完了後の処理
-        async fetchPaid () {
-            console.log(this.event);
-            this.loading = true
-            const response = await axios.get(`/api/entry/${this.id}`);
-            
-            this.entry = response.data
-
-            if (this.entry.paid == false) {
-                this.paid = false
-            } else if (this.entry.paid == true) {
-                this.paid = true
-            }
-            this.loading = false
+        openModal() {
+            this.modal = true
         },
+        closeModal() {
+            this.modal = false
+        }
     },
 }
 </script>

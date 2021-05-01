@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-md-6 offset-md-2">
+    <div class="col-md-7 offset-md-2">
         <div class="card">
             <p class="card-header" style="background-color: rgba(0,0,0,.03);">イベント作成</p>
             <div class="card-body">
