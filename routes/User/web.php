@@ -26,7 +26,6 @@ Route::namespace('User')->name('user.')->group(function () {
     Route::middleware('verified', 'auth:user')->group(function() {
         // イベント関連
         Route::prefix('events')->name('events.')->group(function () { 
-            Route::get('/', 'EventController@index')->name('index');
             Route::get('/{id}', 'EventController@show')->name('show');
             Route::get('/{id}/entry', 'EventController@entryPage')->name('entry_page');
             Route::get('/{id}/cancel', 'EventController@cancelPage')->name('cancel_page');
