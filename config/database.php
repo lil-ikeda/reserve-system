@@ -5,7 +5,6 @@ use Illuminate\Support\Str;
 // HerokuのREDIS用
 if (getenv('REDIS_URL')) {
     $url = parse_url(getenv('REDIS_URL'));
-    dd($url);
 
     putenv('REDIS_HOST='.$url['host']);
     putenv('REDIS_PORT='.$url['port']);
