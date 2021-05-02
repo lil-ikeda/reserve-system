@@ -50,6 +50,7 @@ class VerificationController extends Controller
 
     /**
      * Show the email verification notice.
+     * 新規登録直後ではなく、新規登録→ログインのあと処理が通る
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
@@ -86,6 +87,7 @@ class VerificationController extends Controller
         // }
 
         // return redirect($this->redirectPath())->with('verified', true);
+
         if ($request->route('id') != $request->user()->getKey()) {
             throw new AuthorizationException;
         }

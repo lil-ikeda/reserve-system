@@ -58,6 +58,11 @@ class RegisterController extends Controller
         return Auth::guard('user');
     }
 
+    /**
+     * 新規登録画面の表示
+     *
+     * @return void
+     */
     public function showRegistrationForm()
     {
         $circles = $this->circleRepository->getAll()->toArray();
@@ -103,5 +108,15 @@ class RegisterController extends Controller
             // TODO: S3へのファイルアップロード実装後に追加
             // 'avatar' => $data['image']
         ]);
+    }
+
+    /**
+     * 仮登録直後に遷移させるページ
+     *
+     * @return void
+     */
+    public function registered()
+    {
+        return view('user.auth.verify');
     }
 }

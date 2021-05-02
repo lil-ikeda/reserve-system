@@ -35,9 +35,3 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('admins/pay', 'PayPayController@paypay')->name('admins.paypay');
     });
 });
-
-//Route::middleware('auth:web')->group(function () {
-    // Route::get('/{any?}', function () {
-    //     return view('user.index');
-    // })->where('any', '.+');
-//});

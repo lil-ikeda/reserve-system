@@ -44,6 +44,11 @@ class LoginController extends Controller
     {
         return view('admin.auth.login');
     }
+
+    public function redirectPath()
+    {
+        return route('admin.events.index');
+    }
     
     /**
      * Get the guard to be used during registration.

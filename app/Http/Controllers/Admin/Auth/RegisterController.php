@@ -8,7 +8,6 @@ use App\Models\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +50,11 @@ class RegisterController extends Controller
         return Auth::guard('admin');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('admin.auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -61,7 +65,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -79,15 +83,5 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-    }
-
-    /**
-     * 新規登録後の処理をオーバーライド
-     */
-    public function registered(Request $request, $user)
-    {
-        $user->save();
-
-        return $user;
     }
 }
