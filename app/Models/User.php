@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Notifications\VerifyEmail;
+use App\Notifications\CustomVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -47,13 +47,13 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * ユーザー新規登録　メールアドレス認証メール送信
+     * ユーザー新規登録 メールアドレス認証メール送信
      *
      * @return void
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail(true));
+        $this->notify(new CustomVerifyEmail(true));
     }
 
     /** アソシエーション **/
