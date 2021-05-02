@@ -147,8 +147,14 @@ return [
 
     'attributes' => [
         'password' => 'パスワード',
+        'password_confirmation' => '性別',
         'image' => 'サムネイル',
         'name' => '名前',
+        'email' => 'メールアドレス',
+        'phone' => '電話番号',
+        'circle_id' => '出身サークル',
+        'birthday' => '生年月日',
+        'sex' => '性別',
         'description' => '詳細',
         'date' => '日程',
         'open_time' => '開始時間',

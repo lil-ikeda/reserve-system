@@ -79,13 +79,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'file' => ['nullable', 'file', 'mimes:jpg,jpeg,png'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'sex' => ['required', Rule::in([config('const.sex.male.id'), config('const.sex.female.id'), config('const.sex.do_not_answer.id')])],
+            'phone' => ['required', 'string', 'regex:/\d{2,5}-\d{2,4}-\d{3,4}/'],
             'circle_id' => ['required', 'integer', 'exists:circles,id'],
             'birthday' => ['required'],
+            'sex' => ['required', Rule::in([config('const.sex.male.id'), config('const.sex.female.id'), config('const.sex.do_not_answer.id')])],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'file' => ['nullable', 'file', 'mimes:jpg,jpeg,png'],
         ]);
     }
 
@@ -101,9 +102,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'sex' => $data['sex'],
             'circle_id' => $data['circle_id'],
             'birthday' => $data['birthday'],
+            'sex' => $data['sex'],
             'password' => Hash::make($data['password']),
             // TODO: S3へのファイルアップロード実装後に追加
             // 'avatar' => $data['image']

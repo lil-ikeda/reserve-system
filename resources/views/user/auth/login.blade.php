@@ -9,27 +9,26 @@
             <div class="login-wrapper">
                 <!-- ログイン -->
                 <div class="panel">
-                    <!-- <form :action="propLoginRoute" method="post"> -->
                     <form action="{{ route('user.login') }}" method="POST">
                         @csrf
-                        @error('failed')
-                            <span class="invalid-feedback" role="alert">
-                              {{ $message }}
-                            </span>
-                        @enderror
                         <!-- 入力フォーム -->
                         <label for="email">メールアドレス</label>
-                        <input name="email" type="text" id="email" class="@error('email') is-invalid @enderror">
+                        <input name="email" type="text" id="email" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="tanaka@example.com">
                         @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                {{ $errors->first('email') }}
-                            </span>
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('email') }}
+                        </span>
                         @enderror
                         <label for="password">パスワード</label>
-                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror">
+                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="英数字8文字以上">
                         @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                {{ $errors->first('password') }}
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('password') }}
+                        </span>
+                        @enderror
+                        @error('failed')
+                            <span class="invalid-feedback d-block" role="alert" >
+                              {{ $message }}
                             </span>
                         @enderror
                         <div class="d-flex justify-content-center">
