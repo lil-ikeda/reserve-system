@@ -73,17 +73,14 @@ class VerificationController extends Controller
         if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
             throw new AuthorizationException;
         }
-        Log::debug(1);
 
         if ($user->hasVerifiedEmail()) {
             return redirect($this->redirectPath());
         }
-        Log::debug(2);
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($user));
         }
-        Log::debug(3);
 
         return redirect($this->redirectPath())->with('verified', true);
     }
