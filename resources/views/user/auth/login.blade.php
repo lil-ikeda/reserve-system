@@ -19,8 +19,8 @@
                             {{ $errors->first('email') }}
                         </span>
                         @enderror
-                        <label for="password">パスワード</label>
-                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="英数字8文字以上">
+                        <label for="password">パスワード</label><span class="text-black-50"> ※8文字以上の半角英数字・記号</span>
+                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="password">
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             {{ $errors->first('password') }}
