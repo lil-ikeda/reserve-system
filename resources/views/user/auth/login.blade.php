@@ -20,7 +20,7 @@
                         </span>
                         @enderror
                         <label for="password">パスワード</label><span class="text-black-50"> ※8文字以上の半角英数字・記号</span>
-                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="password">
+                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="password" autocomplete="off">
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             {{ $errors->first('password') }}
@@ -38,7 +38,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-center mt-5">
-                  <div>アカウントをお持ちでない方は<a href="{{ route('user.register') }}">こちら</a></div>
+                  <div>アカウントをお持ちでない方は<a href="{{ route('user.register') }}" class="font-weight-bold">こちら</a></div>
               </div>
         </div>
     </div>

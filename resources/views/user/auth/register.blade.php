@@ -13,7 +13,7 @@
         >
         </Register>
         <div class="d-flex justify-content-center mt-5">
-            <div>既にアカウントをお持ちの方は<a href="{{ route('user.login') }}">こちら</a></div>
+            <div>既にアカウントをお持ちの方は<a href="{{ route('user.login') }}" class="font-weight-bold">こちら</a></div>
         </div>
     </div>
 </div>

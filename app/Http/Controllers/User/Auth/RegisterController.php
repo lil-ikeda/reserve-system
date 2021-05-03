@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'file' => ['nullable', 'file', 'mimes:jpg,jpeg,png'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'regex:/\d{2,5}-\d{2,4}-\d{3,4}/'],
+            'phone' => ['required', 'string'],
             'circle_id' => ['required', 'integer', 'exists:circles,id'],
             'birthday' => ['required'],
             'sex' => ['required', Rule::in([config('const.sex.male.id'), config('const.sex.female.id'), config('const.sex.do_not_answer.id')])],

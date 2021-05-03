@@ -58,12 +58,12 @@
                         {{ propErrors.sex[0] }}
                     </div>
                     <label for="password">パスワード</label><span class="text-black-50"> ※8文字以上の半角英数字・記号</span>
-                    <input type="password" id="password" name="password" v-model="olds.password" placeholder="password">
+                    <input type="password" id="password" name="password" v-model="olds.password" placeholder="password" autocomplete="off">
                     <div class="invalid-feedback d-block" v-if="propErrors.password">
                         {{ propErrors.password[0] }}
                     </div>
                     <label for="password_confirmation">パスワード確認用</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" v-model="olds.password_confirmation" placeholder="password">
+                    <input type="password" id="password_confirmation" name="password_confirmation" v-model="olds.password_confirmation" placeholder="password" autocomplete="off">
                     <div class="invalid-feedback d-block" v-if="propErrors.password_confirmation">
                         {{ propErrors.password_confirmation[0] }}
                     </div>
@@ -96,7 +96,7 @@ import Loader from '../../components/Loader.vue';
                 type: Array
             },
             propErrors: {
-                type: Object
+                type: [Object, Array]
             },
             propOld: {
                 type: [Object, Array]
@@ -117,6 +117,7 @@ import Loader from '../../components/Loader.vue';
             // セレクトボックスの初期値セット
             if (this.olds.length === 0) {
                 this.olds = {
+                    birthday: this.formatDate(new Date()),
                     sex: '',
                     circle_id: ''
                 }
@@ -156,6 +157,13 @@ import Loader from '../../components/Loader.vue';
             },
             submit() {
                 this.loading = true;
+            },
+            // 日付をYYYY-MM-DDの書式で返すメソッド
+            formatDate(date) {
+                var y = date.getFullYear();
+                var m = ('00' + (date.getMonth()+1)).slice(-2);
+                var d = ('00' + date.getDate()).slice(-2);
+                return (y + '-' + m + '-' + d);
             }
         },
     }
