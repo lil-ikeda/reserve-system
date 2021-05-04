@@ -7,6 +7,7 @@
   left: 0;
   margin-top: 57px;
   transition: transform 250ms ease-in-out;
+  display: none;
   opacity: 0;
 }
 
@@ -43,6 +44,7 @@ input[type="checkbox"]:checked ~ #sidebar-wrapper {
 
 input[type="checkbox"]:checked ~ .sidebar-overray {
   animation: fadeIn 0.7s cubic-bezier(0.33, 1, 0.68, 1) 1 forwards;
+  display: block;
 }
 
 @keyframes fadeIn {
