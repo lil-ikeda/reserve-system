@@ -4,6 +4,9 @@
 @stop
 
 @section('content')
+<?php
+phpinfo();
+?>
     <!-- Style -->
     <div class="container p-0">
         <div class="col-md-5 offset-md-2 col-sm-12 p-0">
