@@ -84,7 +84,8 @@ class EventController extends Controller
             $image
         );
 
-        return redirect()->route('admin.events.index');
+        return redirect()->route('admin.events.index')
+            ->with('flash_message', trans('message.success.event.create'));
     }
 
     /**
@@ -131,7 +132,8 @@ class EventController extends Controller
             $image
         );
 
-        return redirect()->route('admin.events.index');
+        return redirect()->route('admin.events.index')
+            ->with('flash_message', trans('message.success.event.update'));
     }
 
     /**
@@ -144,7 +146,8 @@ class EventController extends Controller
     {
         $this->eventRepository->destroy($id);
 
-        return redirect(route('admin.events.index'));
+        return redirect(route('admin.events.index'))
+            ->with('flash_message', trans('message.success.event.delete'));
     }
 
     /**
@@ -170,6 +173,7 @@ class EventController extends Controller
      */
     public function sendMail(SendMailToEntries $request, int $id)
     {
+        // TODO: 分割・非同期で送信する処理を追加する
         $userNames = $request->input('user_names');
         $userMails = $request->input('user_mails');
         $numberOfUsers = count($userNames);
@@ -183,6 +187,7 @@ class EventController extends Controller
                 ));
         }
 
-        return redirect(route('admin.events.show', $id));
+        return redirect(route('admin.events.show', $id))
+            ->with('flash_message', trans('message.success.sendmail.to_all'));
     }
 }

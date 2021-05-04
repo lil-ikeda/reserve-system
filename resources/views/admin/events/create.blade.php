@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-<div class="container">
-    <div class="col-md-7 offset-md-2">
+<div class="container p-0">
+    <div class="col-md-7 offset-md-2 p-0">
         <div class="card">
             <p class="card-header" style="background-color: rgba(0,0,0,.03);">イベント作成</p>
             <div class="card-body">
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-info">登録</button>
+                    <button type="submit" class="btn btn-primary">登録</button>
                 </div>
             </form>
         </div>

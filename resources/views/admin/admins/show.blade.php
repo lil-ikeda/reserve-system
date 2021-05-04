@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="">
-                    <strong>メールアドレス：　</strong>{{ $admin->email }}
+                    <strong>メールアドレス：</strong>{{ $admin->email }}
                 </div>
             </div>
         </div>

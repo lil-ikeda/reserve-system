@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-info">送信</button>
+                        <button type="submit" class="btn btn-primary" role="button">送信</button>
                     </div>
                 </form>
             </div>

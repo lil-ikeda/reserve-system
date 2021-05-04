@@ -71,7 +71,7 @@
                 if (url == null) {
                     url = '/img/noimage.png'
                 } else {
-                    url = s3Path + url
+                    url = this.s3Path + url
                 }
                 return url;
             }

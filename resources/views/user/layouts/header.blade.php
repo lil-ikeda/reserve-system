@@ -7,14 +7,20 @@
         </a>
 
         @auth('user')
-        <div class="header__link" v-if='isLogin'>
+        <div class="header__link">
             <a class="" href="{{ route('user.logout') }}"
-                onclick="event.preventDefault();
+            onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">ログアウト
             </a>
             <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
+            {{-- TODO: アイコンクリックでユーザーメニューを表示させる --}}
+            @if(Auth::user()->avatar)
+                <img src="{{ config('const.s3').Auth::user()->avatar }}" style="width: 40px; border-radius: 50%;">
+            @else
+                <span style="font-size: 30px;">😋</span>
+            @endif
         </div>
         @endauth
 

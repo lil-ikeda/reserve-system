@@ -104,7 +104,7 @@
                         </div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-info">更新</button>
+                    <button type="submit" class="btn btn-primary" role="button">更新</button>
                 </form>
             </div>
         </div>

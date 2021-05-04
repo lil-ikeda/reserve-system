@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Contracts\Repositories\CircleRepositoryContract;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -98,6 +99,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $image = $data['file'] ?? NULL;
+        // S3へのアップロード
+        if(!is_null($image)) {
+            $path = Storage::disk('s3')->putfile('/users/avatar', $image, 'public');
+            $url = Storage::disk('s3')->url($path);
+            $storePath = '/users/avatar/' . basename(parse_url($url, PHP_URL_PATH));
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -106,8 +115,7 @@ class RegisterController extends Controller
             'birthday' => $data['birthday'],
             'sex' => $data['sex'],
             'password' => Hash::make($data['password']),
-            // TODO: S3へのファイルアップロード実装後に追加
-            // 'avatar' => $data['image']
+            'avatar' => $storePath ?? ''
         ]);
     }
 

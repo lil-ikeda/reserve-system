@@ -7,6 +7,18 @@
 <?php
 phpinfo();
 ?>
+    {{-- 正常系フラッシュ --}}
+    @if (session('flash_message'))
+        <div class="alert alert-primary" role="alert">
+            {{ session('flash_message')}}
+        </div>
+    @endif
+    {{-- 異常系フラッシュ --}}
+    @if (session('error_message'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('flash_message')}}
+        </div>
+    @endif
     <!-- Style -->
     <div class="container p-0">
         <div class="col-md-5 offset-md-2 col-sm-12 p-0">

@@ -7,6 +7,18 @@
 @stop
 
 @section('content')
+    {{-- 正常系フラッシュ --}}
+    @if (session('flash_message'))
+        <div class="alert alert-primary" role="alert">
+            {{ session('flash_message')}}
+        </div>
+    @endif
+    {{-- 異常系フラッシュ --}}
+    @if (session('error_message'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('flash_message')}}
+        </div>
+    @endif
     <div class="container">
         <div class="col-md-6 col-sm-12 offset-md-2">
             <div class="card">
@@ -14,25 +26,30 @@
                     ユーザー招待
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.admins.send.invitemail') }}" method="POST" class="d-flex justify-content-between">
+                    <form action="{{ route('admin.admins.send.invitemail') }}" method="POST">
                         @csrf
                         @method('POST')
-                        <input type="email" name="email" placeholder="tanaka@example.com" style="width: 70%">
-                        <button type="submit" class="btn btn-info">送信</button>
+                        <div class="form-group">
+                            <label for="email">メールアドレス <span class="badge badge-danger">必須</span></label>
+                            <input type="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    value="{{ old('email') }}" placeholder="tanaka@example.com">
+                            @error('email')
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </div>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary d-block mt-3" role="button">招待する</button>
                     </form>
                 </div>
             </div>
         </div>
-{{--        <form href="{{ route('admin.admins.paypay') }}" method="POST">--}}
-{{--            @csrf--}}
-{{--            @method('POST')--}}
-{{--            <button type="submit">paypay</button>--}}
-{{--        </form>--}}
-        {{-- <a href="{{ route('admin.admins.paypay') }}">paypay</a> --}}
     </div>
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 @stop
 
 @section('js')

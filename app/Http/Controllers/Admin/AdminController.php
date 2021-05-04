@@ -60,6 +60,7 @@ class AdminController extends Controller
     {
         Mail::to($request->input('email'))->send(new Invite());
 
-        return redirect(route('admin.admins.invite'));
+        return redirect(route('admin.admins.invite'))
+            ->with('flash_message', trans('message.success.admin.invite'));
     }
 }
