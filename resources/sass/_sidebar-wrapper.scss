@@ -1,0 +1,61 @@
+.sidebar-overray {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 19;
+  left: 0;
+  margin-top: 57px;
+  transition: transform 250ms ease-in-out;
+  opacity: 0;
+}
+
+#sidebar-wrapper {
+  position: fixed;
+  z-index: 20;
+  background-color: #fff;
+  height: 100vh;
+  right: 0;
+  margin-top: 57px;
+  width: 250px;
+  transform: translateX(250px);
+  transition: transform 250ms ease-in-out;
+  .inner {
+    .title {
+      font-size: 24px;
+      margin-top: 24px;
+      text-align: center;
+    }
+    li {
+      font-weight: bold;
+      padding: 5px 20px;
+      cursor: pointer;
+    }
+    .fa-angle-right {
+      line-height: 66px;
+    }
+  }
+}
+
+input[type="checkbox"]:checked ~ #sidebar-wrapper {
+  transform: translateX(0);
+}
+
+input[type="checkbox"]:checked ~ .sidebar-overray {
+  animation: fadeIn 0.7s cubic-bezier(0.33, 1, 0.68, 1) 1 forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+input[type="checkbox"] {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  display: none;
+}
