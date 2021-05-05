@@ -36,10 +36,14 @@
                             </ul>
                         </div>
                         <!-- 入力フォーム -->
-                        <label for="login-email">メールアドレス</label>
-                        <input type="text" id="login-email" v-model="loginForm.email">
-                        <label for="login-password">パスワード</label>
-                        <input type="password" id="login-password" v-model="loginForm.password">
+                        <div class="form-group">
+                            <label for="login-email">メールアドレス</label>
+                            <input type="text" id="login-email" v-model="loginForm.email">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">パスワード</label>
+                            <input type="password" id="login-password" v-model="loginForm.password">
+                        </div>
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="button__join">ログイン</button>
                         </div>

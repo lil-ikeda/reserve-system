@@ -36,7 +36,7 @@
             <ul class="inner">
                 <li class="title">Menu</li>
                 <li class="d-flex justify-content-between">
-                    <a class="d-block" href="#">プロフィール</a>
+                    <a class="d-block" href="{{ route('user.users.mypage') }}">プロフィール</a>
                 </li>
                 <li class="d-flex justify-content-between">
                     <a class="d-block" href="{{ route('user.logout') }}"

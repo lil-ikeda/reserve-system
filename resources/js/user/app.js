@@ -12,6 +12,7 @@ import EventEntry from './pages/EventEntry'
 import EventEntryConfirm from './pages/EventEntryConfirm'
 import EventCancel from './pages/EventCancel'
 import EventCancelConfirm from './pages/EventCancelConfirm'
+import MyPage from './pages/MyPage'
 
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -58,6 +59,7 @@ const app = new Vue({
     EventEntry,
     EventEntryConfirm,
     EventCancel,
-    EventCancelConfirm
+    EventCancelConfirm,
+    MyPage
   }
 });

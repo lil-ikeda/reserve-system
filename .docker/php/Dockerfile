@@ -32,9 +32,5 @@ RUN apk --update --no-cache add \
   gd \
   intl \
   redis
-  # 本家(https://packagist.org/)が不調な時は日本版ミラーサイトを使用
-  # composer config -g repos.packagist composer https://packagist.jp
-  # composer plugin (https://github.com/hirak/prestissimo)
-  # composer global require hirak/prestissimo
 
 WORKDIR /app
