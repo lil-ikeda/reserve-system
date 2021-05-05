@@ -60,32 +60,6 @@ class VerificationController extends Controller
     }
 
     /**
-     * Mark the authenticated user's email address as verified.
-     *
-     * @param Request $request
-     * @param UserRepositoryContract $userRepository
-     * @return void
-     */
-    public function verify(Request $request, UserRepositoryContract $userRepository)
-    {
-        $user = $userRepository->findById($request->route('id'));
-        
-        if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
-            throw new AuthorizationException;
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return redirect($this->redirectPath());
-        }
-
-        if ($user->markEmailAsVerified()) {
-            event(new Verified($user));
-        }
-
-        return redirect($this->redirectPath())->with('verified', true);
-    }
-
-    /**
      * メール認証完了後
      *
      * @param  \Illuminate\Http\Request  $request
