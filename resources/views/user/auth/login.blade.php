@@ -12,20 +12,25 @@
                     <form action="{{ route('user.login') }}" method="POST">
                         @csrf
                         <!-- 入力フォーム -->
-                        <label for="email">メールアドレス</label>
-                        <input name="email" type="text" id="email" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="tanaka@example.com">
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $errors->first('email') }}
-                        </span>
-                        @enderror
-                        <label for="password">パスワード</label><span class="text-black-50"> ※8文字以上の半角英数字・記号</span>
-                        <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="password" autocomplete="off">
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $errors->first('password') }}
-                        </span>
-                        @enderror
+                        <div class="form-group">
+                            <label for="email">メールアドレス</label>
+                            <input name="email" type="text" id="email" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="tanaka@example.com">
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('email') }}
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="password" style="margin-bottom: 0;">パスワード</label>
+                            <span class="text-black-50 d-block"> ※8文字以上の半角英数字・記号</span>
+                            <input name="password" type="password" id="password" class="@error('password') is-invalid @enderror" placeholder="password" autocomplete="off">
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('password') }}
+                            </span>
+                            @enderror
+                        </div>
                         @error('failed')
                             <span class="invalid-feedback d-block" role="alert" >
                               {{ $message }}

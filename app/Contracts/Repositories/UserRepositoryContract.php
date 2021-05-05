@@ -5,6 +5,7 @@ namespace App\Contracts\Repositories;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Ramsey\Collection\Collection;
+use App\Repositories\Params\UserParams;
 
 interface UserRepositoryContract
 {
@@ -23,4 +24,13 @@ interface UserRepositoryContract
      * @return Arrayable
      */
     public function findById(int $id): Arrayable;
+
+    /**
+     * ユーザーのプロフィールを更新
+     *
+     * @param integer $userId
+     * @param UserParams $userParams
+     * @return void
+     */
+    public function update(int $userId, UserParams $userParams): void;
 }

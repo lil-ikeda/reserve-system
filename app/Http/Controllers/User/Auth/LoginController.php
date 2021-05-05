@@ -65,7 +65,7 @@ class LoginController extends Controller
 
     public function redirectPath()
     {
-        return route('user.verification.notice');
+        return route('user.events.index');
     }
 
     /**

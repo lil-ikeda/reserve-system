@@ -32,5 +32,11 @@ Route::namespace('User')->name('user.')->group(function () {
             Route::post('/{id}/entry', 'EventController@entry')->name('entry');
             Route::get('/{id}/paid', 'EventController@paid')->name('paid');
         });
+
+        // ユーザー関連
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/me', 'UserController@myPage')->name('mypage');
+            Route::post('/me', 'UserController@update')->name('update');
+        });
     });
 });
