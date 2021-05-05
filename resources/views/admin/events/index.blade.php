@@ -4,9 +4,6 @@
 @stop
 
 @section('content')
-<?php
-phpinfo();
-?>
     {{-- 正常系フラッシュ --}}
     @if (session('flash_message'))
         <div class="alert alert-primary" role="alert">
