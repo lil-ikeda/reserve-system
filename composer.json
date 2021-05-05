@@ -21,7 +21,9 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "nesbot/carbon": "^2.40",
         "paypayopa/php-sdk": "^0.8.0",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "rikudou/redis-helper": "^1.0",
+        "ext-redis": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -66,5 +68,12 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.jp",
+            "cannonical": false
+        }
+    ]
 }
